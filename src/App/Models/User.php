@@ -17,7 +17,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
-    public function save(): false
+    public function save(): bool
     {
         $this->validate();
 
@@ -52,7 +52,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
 
         // Password
-        if ($this->password != $this->password_confirmation) {
+        if ($this->password != $this->passwordConfirmation) {
             $this->errors[] = 'Password must match confirmation';
         }
 

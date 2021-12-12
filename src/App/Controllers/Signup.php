@@ -17,8 +17,11 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
     public function createAction()
     {
         $user = new User($_POST);
-        $user->save();
 
-        View::renderTemplate('Signup/success');
+        if ($user->save()) {
+            View::renderTemplate('Signup/success');
+        } else {
+            var_dump($user->errors);
+        }
     }
 }
