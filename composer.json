@@ -1,0 +1,19 @@
+{
+    "name": "ilyamur/php-mvc",
+    "description": "Basic MVC barebone",
+    "autoload": {
+        "psr-4": {
+            "Ilyamur\\PhpMvc\\": "src/",
+            "Ilyamur\\PhpMvc\\Config\\": "config/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ilya Mur",
+            "email": "ilyamur@hotmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

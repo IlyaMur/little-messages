@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Sign up
+{% endblock %}
+
+{% block body %}
+
+	<h1>Sign up</h1>
+
+	<form action="/signup/create" method="post">
+		<div>
+			<label for="inputName">Name</label>
+			<input id="inputName" name="name" placeholder="name" type="text" autofocus>
+		</div>
+		<div>
+			<label for="inputEmail">Email address
+			</label>
+			<input id="inputEmail" name="email" placeholder="email address" type="text">
+		</div>
+		<div>
+			<label for="inputPassword">Password
+			</label>
+			<input id="inputPassword" name="password" placeholder="password" type="password">
+		</div>
+		<div>
+			<label for="inputPasswordConfirmation">Repeat password
+			</label>
+			<input id="inputPasswordConfirmation" name="passwordConfirmation" placeholder="repeat password" type="password">
+		</div>
+		<button type="submit">Sign up</button>
+	</form>
+
+{% endblock %}
