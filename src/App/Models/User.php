@@ -39,19 +39,16 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         return false;
     }
 
-    public function validate()
+    public function validate(): void
     {
-        // Name
         if ($this->name == '') {
             $this->errors[] = 'Name is required';
         }
 
-        // email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
             $this->errors[] = 'Invalid email';
         }
 
-        // Password
         if ($this->password != $this->passwordConfirmation) {
             $this->errors[] = 'Password must match confirmation';
         }
@@ -67,5 +64,21 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         if (preg_match('/.*\d+.*/i', $this->password) == 0) {
             $this->errors[] = 'Password needs at least one number';
         }
+
+        if ($this->emailExists()) {
+            $this->errors[] = 'Invalid email';
+        }
+    }
+
+    protected function emailExists(): bool
+    {
+        $sql = 'SELECT * FROM users
+                WHERE email = :email';
+
+        $stmt  = static::getDB()->prepare($sql);
+        $stmt->bindValue('email', $this->email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch() !== false;
     }
 }
