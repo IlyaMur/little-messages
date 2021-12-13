@@ -9,13 +9,18 @@ use Ilyamur\PhpMvc\App\Models\User;
 
 class Login extends \Ilyamur\PhpMvc\Core\Controller
 {
-    public function newAction()
+    public function newAction(): void
     {
         View::renderTemplate('Login/new');
     }
 
-    public function createAction()
+    public function createAction(): void
     {
-        $user = User::findByEmail($_POST['email']);
+        if (User::authenticate($_POST['email'], $_POST['password'])) {
+            header('location: http://' . $_SERVER['HTTP_HOST'] . '/', true, 303);
+            exit;
+        }
+
+        View::renderTemplate('Login/new');
     }
 }

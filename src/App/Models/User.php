@@ -10,7 +10,8 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 {
     public array $errors = [];
 
-    public function __construct(array $data)
+
+    public function __construct(array $data = [])
     {
         foreach ($data as $key => $val) {
             $this->$key = $val;
@@ -68,10 +69,10 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
     public static function emailExists(string $email): bool
     {
-        return static::findByEmail($email) !== false;
+        return !is_null(static::findByEmail($email));
     }
 
-    public static function findByEmail(string $email)
+    public static function findByEmail(string $email): ?User
     {
         $sql = 'SELECT * FROM users
                 WHERE email = :email';
@@ -79,7 +80,21 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt = static::getDB()->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
-        return $stmt->fetch();
+        $user = $stmt->fetch();
+
+        return $user ? $user : null;
+    }
+
+    public static function authenticate(string $email, string $password): ?User
+    {
+        $user = static::findByEmail($email);
+
+        if ($user && password_verify($password, $user->password_hash)) {
+            return $user;
+        }
+
+        return null;
     }
 }
