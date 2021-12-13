@@ -65,18 +65,18 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Password needs at least one number';
         }
 
-        if ($this->emailExists()) {
+        if (static::emailExists($this->email)) {
             $this->errors[] = 'Email already taken';
         }
     }
 
-    protected function emailExists(): bool
+    public static function emailExists(string $email): bool
     {
         $sql = 'SELECT * FROM users
                 WHERE email = :email';
 
         $stmt  = static::getDB()->prepare($sql);
-        $stmt->bindValue('email', $this->email, PDO::PARAM_STR);
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->fetch() !== false;

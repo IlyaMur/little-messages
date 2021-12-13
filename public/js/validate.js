@@ -20,6 +20,7 @@ $('#formSignup').validate({
         email: {
             required: true,
             email: true,
+            remote: '/account/validate-email',
         },
         password: {
             required: true,
@@ -28,6 +29,11 @@ $('#formSignup').validate({
         },
         password_confirmation: {
             equalTo: '#inputPassword',
+        }
+    },
+    messages: {
+        email: {
+            remote: 'email already taken',
         },
     },
 });
