@@ -68,13 +68,18 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
     public static function emailExists(string $email): bool
     {
+        return static::findByEmail($email) !== false;
+    }
+
+    public static function findByEmail(string $email)
+    {
         $sql = 'SELECT * FROM users
                 WHERE email = :email';
 
-        $stmt  = static::getDB()->prepare($sql);
+        $stmt = static::getDB()->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
-        return $stmt->fetch() !== false;
+        return $stmt->fetch();
     }
 }
