@@ -17,8 +17,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
     public function createAction(): void
     {
         if (User::authenticate($_POST['email'], $_POST['password'])) {
-            header('location: http://' . $_SERVER['HTTP_HOST'] . '/', true, 303);
-            exit;
+            $this->redirect('/');
         }
 
         View::renderTemplate('Login/new', ['email' => $_POST['email']]);

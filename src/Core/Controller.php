@@ -33,4 +33,15 @@ abstract class Controller
     public function after()
     {
     }
+
+    protected static function redirect(string $url): void
+    {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            $protocol = 'https';
+        } else {
+            $protocol = 'http';
+        }
+        header("location: $protocol://" . $_SERVER['HTTP_HOST'] . $url, true, 303);
+        exit;
+    }
 }
