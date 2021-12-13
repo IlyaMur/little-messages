@@ -21,7 +21,7 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
         if ($user->save()) {
             View::renderTemplate('Signup/success');
         } else {
-            var_dump($user->errors);
+            View::renderTemplate('Signup/new', ['user' => $user]);
         }
     }
 }

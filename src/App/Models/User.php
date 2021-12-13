@@ -66,7 +66,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
 
         if ($this->emailExists()) {
-            $this->errors[] = 'Invalid email';
+            $this->errors[] = 'Email already taken';
         }
     }
 
