@@ -54,11 +54,11 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Please enter at least 6 characters for the password';
         }
 
-        if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
+        if (preg_match('/.*[a-z]+.*/i', $this->password) === 0) {
             $this->errors[] = 'Password needs at least one letter';
         }
 
-        if (preg_match('/.*\d+.*/i', $this->password) == 0) {
+        if (preg_match('/.*\d+.*/i', $this->password) === 0) {
             $this->errors[] = 'Password needs at least one number';
         }
 

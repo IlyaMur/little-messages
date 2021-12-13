@@ -21,6 +21,6 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
             exit;
         }
 
-        View::renderTemplate('Login/new');
+        View::renderTemplate('Login/new', ['email' => $_POST['email']]);
     }
 }
