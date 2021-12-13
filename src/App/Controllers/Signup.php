@@ -19,9 +19,14 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
         $user = new User($_POST);
 
         if ($user->save()) {
-            View::renderTemplate('Signup/success');
+            header('location: http://' . $_SERVER['HTTP_HOST'] . '/signup/success', true, 303);
         } else {
             View::renderTemplate('Signup/new', ['user' => $user]);
         }
+    }
+
+    public function successAction()
+    {
+        View::renderTemplate('Signup/success');
     }
 }
