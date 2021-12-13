@@ -16,7 +16,11 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
 
     public function createAction(): void
     {
-        if (User::authenticate($_POST['email'], $_POST['password'])) {
+        $user = User::authenticate($_POST['email'], $_POST['password']);
+
+        if ($user) {
+            $_SESSION['userId'] = $user->id;
+
             $this->redirect('/');
         }
 

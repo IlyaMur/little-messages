@@ -15,8 +15,13 @@
 	<body>
 		<nav>
 			<a href="/">Home</a>
-			<a href="/login">Log in</a>
-			<a href="/signup/new">Sign up</a>
+			{% if session.userId %}
+				{{session.userId}}
+			{% else %}
+				<a href="/login">Log in</a>
+				<a href="/signup/new">Sign up</a>
+			{% endif %}
+
 		</nav>
 
 		{% block body %}{% endblock %}

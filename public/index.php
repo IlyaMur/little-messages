@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-error_reporting(E_ALL);
 
 /**
  * Front Controller
@@ -11,9 +10,11 @@ error_reporting(E_ALL);
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
+error_reporting(E_ALL);
 set_error_handler('Ilyamur\PhpMvc\Core\Error::errorHandler');
 set_exception_handler('Ilyamur\PhpMvc\Core\Error::exceptionHandler');
 
+session_start();
 /**
  * Routing
  */
