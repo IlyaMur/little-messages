@@ -14,6 +14,7 @@ $.validator.addMethod(
     },
     'Must contain at least one letter and one number'
 );
+
 $('#formSignup').validate({
     rules: {
         name: 'required',
@@ -27,9 +28,6 @@ $('#formSignup').validate({
             minlength: 6,
             validPassword: true,
         },
-        password_confirmation: {
-            equalTo: '#inputPassword',
-        }
     },
     messages: {
         email: {
@@ -37,3 +35,9 @@ $('#formSignup').validate({
         },
     },
 });
+
+$('#inputPassword').hideShowPassword({
+    show: false,
+    innerToggle: 'focus'
+})
+

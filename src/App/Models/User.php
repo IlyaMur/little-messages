@@ -49,10 +49,6 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Invalid email';
         }
 
-        if ($this->password != $this->passwordConfirmation) {
-            $this->errors[] = 'Password must match confirmation';
-        }
-
         if (strlen($this->password) < 6) {
             $this->errors[] = 'Please enter at least 6 characters for the password';
         }
