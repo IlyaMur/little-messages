@@ -23,6 +23,7 @@ $router = new Ilyamur\PhpMvc\Core\Router();
 
 $router->add(route: '', params: ['controller' => 'Home', 'action' => 'index']);
 $router->add(route: 'login', params: ['controller' => 'Login', 'action' => 'new']);
+$router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'destroy']);
 
 $router->add(route: '{controller}/{action}');
 $router->add(route: '{controller}/{id:\d+}/{action}');

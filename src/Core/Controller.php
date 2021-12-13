@@ -34,7 +34,7 @@ abstract class Controller
     {
     }
 
-    protected static function redirect(string $url): void
+    protected function redirect(string $url): void
     {
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
             $protocol = 'https';
