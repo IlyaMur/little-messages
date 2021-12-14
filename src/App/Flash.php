@@ -4,11 +4,18 @@ namespace Ilyamur\PhpMvc\App;
 
 class Flash
 {
-    public static function addMessage(string $msg): void
+    const SUCCESS = 'success';
+    const INFO  = 'info';
+    const WARNING  = 'warning';
+
+    public static function addMessage(string $msg, string $type = 'success'): void
     {
         $_SESSION['flashNotification'] = $_SESSION['flashNotification'] ?? [];
 
-        $_SESSION['flashNotification'][] = $msg;
+        $_SESSION['flashNotification'][] = [
+            'body' => $msg,
+            'type' => $type
+        ];
     }
 
     public static function getMessages(): ?array

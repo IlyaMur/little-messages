@@ -51,7 +51,7 @@ abstract class Controller
     public function requireLogin(): void
     {
         if (!Auth::getUser()) {
-            Flash::addMessage('Please log in first');
+            Flash::addMessage('Please log in first', Flash::INFO);
             Auth::rememberRequestedPage();
             $this->redirect('/login');
         }

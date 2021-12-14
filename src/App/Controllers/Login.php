@@ -26,7 +26,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
 
             $this->redirect(Auth::getReturnToPage());
         }
-        Flash::addMessage('Login unsuccessful, please try again');
+        Flash::addMessage('Login unsuccessful, please try again', Flash::WARNING);
 
         View::renderTemplate('Login/new', ['email' => $_POST['email']]);
     }
