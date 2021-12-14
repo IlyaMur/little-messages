@@ -9,12 +9,9 @@ use Ilyamur\PhpMvc\Core\View;
 
 class Items extends \Ilyamur\PhpMvc\Core\Controller
 {
-    public function indexAction()
+    public function indexAction(): void
     {
-        if (!Auth::isLoggedIn()) {
-            Auth::rememberRequestedPage();
-            $this->redirect('/login');
-        }
+        $this->requireLogin();
 
         View::renderTemplate('Items/index');
     }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\Core;
 
+use Ilyamur\PhpMvc\App\Auth;
+
 abstract class Controller
 {
     protected array $route_params = [];
@@ -43,5 +45,13 @@ abstract class Controller
         }
         header("location: $protocol://" . $_SERVER['HTTP_HOST'] . $url, true, 303);
         exit;
+    }
+
+    public function requireLogin(): void
+    {
+        if (!Auth::isLoggedIn()) {
+            Auth::rememberRequestedPage();
+            $this->redirect('/login');
+        }
     }
 }
