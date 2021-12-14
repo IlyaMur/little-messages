@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\App;
 
+use Ilyamur\PhpMvc\App\Models\User;
+
 class Auth
 {
     public static function login($user): void
@@ -46,5 +48,14 @@ class Auth
     public static function getReturnToPage(): string
     {
         return $_SESSION['returnTo'] ?? '/';
+    }
+
+    public static function getUser(): ?User
+    {
+        if (isset($_SESSION['userId'])) {
+            return $user = User::findById((int) $_SESSION['userId']);
+        }
+
+        return null;
     }
 }

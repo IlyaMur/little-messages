@@ -97,4 +97,21 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
         return null;
     }
+
+    public static function findById(int $userId): ?User
+    {
+        $sql = 'SELECT * from users
+                WHERE id = :id';
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue('id', $userId, PDO::PARAM_INT);
+
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $user = $stmt->fetch();
+
+        return $user ? $user : null;
+    }
 }

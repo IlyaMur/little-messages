@@ -16,6 +16,7 @@ class View
             $loader = new \Twig\Loader\FilesystemLoader('../src/App/Views');
             $twig = new \Twig\Environment($loader);
             $twig->addGlobal('isLogged', Auth::isLoggedIn());
+            $twig->addGlobal('user', Auth::getUser());
         }
 
         echo $twig->render($template . '.html.twig', $args);
