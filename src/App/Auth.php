@@ -6,13 +6,13 @@ namespace Ilyamur\PhpMvc\App;
 
 class Auth
 {
-    public static function login($user)
+    public static function login($user): void
     {
         session_regenerate_id(true);
         $_SESSION['userId'] = $user->id;
     }
 
-    public static function logout()
+    public static function logout(): void
     {
         $_SESSION = [];
 
@@ -33,8 +33,18 @@ class Auth
         session_destroy();
     }
 
-    public static function isLoggedIn()
+    public static function isLoggedIn(): bool
     {
         return isset($_SESSION['userId']);
+    }
+
+    public static function rememberRequestedPage(): void
+    {
+        $_SESSION['returnTo'] = $_SERVER['REQUEST_URI'];
+    }
+
+    public static function getReturnToPage(): string
+    {
+        return $_SESSION['returnTo'] ?? '/';
     }
 }

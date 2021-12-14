@@ -22,7 +22,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
         if ($user) {
             Auth::login($user);
 
-            $this->redirect('/');
+            $this->redirect(Auth::getReturnToPage());
         }
 
         View::renderTemplate('Login/new', ['email' => $_POST['email']]);
