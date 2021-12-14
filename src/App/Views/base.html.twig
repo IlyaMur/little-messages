@@ -14,9 +14,9 @@
 	</head>
 	<body>
 		<nav>
-			{% if isLogged %}
+			{% if currentUser.name %}
 				Hello
-				{{ user.name }}
+				{{ currentUser.name }}
 				<a href="/">Home</a>
 				<a href="/items/index">Items</a>
 

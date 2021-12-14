@@ -35,11 +35,6 @@ class Auth
         session_destroy();
     }
 
-    public static function isLoggedIn(): bool
-    {
-        return isset($_SESSION['userId']);
-    }
-
     public static function rememberRequestedPage(): void
     {
         $_SESSION['returnTo'] = $_SERVER['REQUEST_URI'];
@@ -53,7 +48,7 @@ class Auth
     public static function getUser(): ?User
     {
         if (isset($_SESSION['userId'])) {
-            return $user = User::findById((int) $_SESSION['userId']);
+            return User::findById((int) $_SESSION['userId']);
         }
 
         return null;
