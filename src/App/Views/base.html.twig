@@ -14,9 +14,8 @@
 	</head>
 	<body>
 		<nav>
-			{% if session.userId %}
-				User ID:
-				{{session.userId}}
+			{% if isLogged %}
+				You are logged in
 				<a href="/">Home</a>
 				<a href="/logout">Log out</a>
 			{% else %}

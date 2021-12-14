@@ -32,4 +32,9 @@ class Auth
 
         session_destroy();
     }
+
+    public static function isLoggedIn()
+    {
+        return isset($_SESSION['userId']);
+    }
 }

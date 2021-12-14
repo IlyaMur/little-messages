@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\Core;
 
+use Ilyamur\PhpMvc\App\Auth;
+
 class View
 {
     public static function renderTemplate(string $template, array $args = [])
@@ -13,7 +15,7 @@ class View
         if ($twig === null) {
             $loader = new \Twig\Loader\FilesystemLoader('../src/App/Views');
             $twig = new \Twig\Environment($loader);
-            $twig->addGlobal('session', $_SESSION);
+            $twig->addGlobal('isLogged', Auth::isLoggedIn());
         }
 
         echo $twig->render($template . '.html.twig', $args);
