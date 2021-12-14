@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\Core;
 
 use Ilyamur\PhpMvc\App\Auth;
+use Ilyamur\PhpMvc\App\Flash;
 
 abstract class Controller
 {
@@ -50,6 +51,7 @@ abstract class Controller
     public function requireLogin(): void
     {
         if (!Auth::getUser()) {
+            Flash::addMessage('Please log in first');
             Auth::rememberRequestedPage();
             $this->redirect('/login');
         }
