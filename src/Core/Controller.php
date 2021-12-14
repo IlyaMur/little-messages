@@ -9,7 +9,7 @@ use Ilyamur\PhpMvc\App\Flash;
 
 abstract class Controller
 {
-    protected array $route_params = [];
+    protected array $routeParams = [];
 
     public function __call(string $methodName, array $args): void
     {
@@ -25,9 +25,9 @@ abstract class Controller
         }
     }
 
-    public function __construct(array $route_params)
+    public function __construct(array $routeParams)
     {
-        $this->route_params = $route_params;
+        $this->routeParams = $routeParams;
     }
 
     public function before()

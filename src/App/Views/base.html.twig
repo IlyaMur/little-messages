@@ -13,6 +13,7 @@
 		</title>
 	</head>
 	<body>
+
 		<nav>
 			{% if currentUser.name %}
 				Hello
@@ -28,6 +29,13 @@
 				<a href="/signup/new">Sign up</a>
 			{% endif %}
 		</nav>
+
+		{% for message in flashMessages %}
+			<div>
+				{{ message }}
+			</div>
+		{% endfor %}
+
 
 		{% block body %}{% endblock %}
 
