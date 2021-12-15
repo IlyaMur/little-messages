@@ -22,7 +22,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
         $rememberMe = isset($_POST['rememberMe']);
 
         if ($user) {
-            Auth::login($user);
+            Auth::login($user, $rememberMe);
             Flash::addMessage('You age logged in');
 
             $this->redirect(Auth::getReturnToPage());

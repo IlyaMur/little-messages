@@ -8,9 +8,14 @@ use Ilyamur\PhpMvc\App\Models\User;
 
 class Auth
 {
-    public static function login($user): void
+    public static function login($user, $rememberMe): void
     {
+        if ($rememberMe) {
+            $user->rememberLogin();
+        }
+
         session_regenerate_id(true);
+
         $_SESSION['userId'] = $user->id;
     }
 

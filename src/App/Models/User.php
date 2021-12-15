@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\App\Models;
 
 use PDO;
+use Ilyamur\PhpMvc\App\Token;
 
 class User extends \Ilyamur\PhpMvc\Core\Model
 {
@@ -113,5 +114,25 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $user = $stmt->fetch();
 
         return $user ? $user : null;
+    }
+
+    public function rememberLogin(): bool
+    {
+        $token = new Token();
+        $hashedToken = $token->getHash();
+
+        $expiryTimestamp = time() + 60 * 60 * 24 * 30; // 30 дней
+
+        $sql = 'INSERT INTO remembered_logins (token_hash, user_id, expires_at)
+                VALUES (:tokenHash, :userId, :expiresAt)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue('tokenHash', $hashedToken, PDO::PARAM_STR);
+        $stmt->bindValue('userId', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue('expiresAt', date('Y-m-d H-i-s', $expiryTimestamp), PDO::PARAM_STR);
+
+        return $stmt->execute();
     }
 }
