@@ -75,12 +75,14 @@ class Auth
 
         $rememberedLogin = RememberedLogin::findByToken($cookie);
 
-        if ($rememberedLogin) {
+        if ($rememberedLogin && !$rememberedLogin->hasExpired()) {
             $user = $rememberedLogin->getUserByToken();
 
             static::login($user, false);
 
             return $user;
         }
+
+        return null;
     }
 }

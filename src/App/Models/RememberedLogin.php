@@ -35,4 +35,9 @@ class RememberedLogin extends \Ilyamur\PhpMvc\Core\Model
     {
         return User::findById((int) $this->user_id);
     }
+
+    public function hasExpired(): bool
+    {
+        return strtotime($this->expires_at) < time();
+    }
 }
