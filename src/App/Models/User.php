@@ -121,7 +121,8 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $token = new Token();
         $hashedToken = $token->getHash();
 
-        $expiryTimestamp = time() + 60 * 60 * 24 * 30; // 30 дней
+        $this->expiresAt = time() + 60 * 60 * 24 * 30; // 30 дней
+        $this->rememberToken = $token->getValue();
 
         $sql = 'INSERT INTO remembered_logins (token_hash, user_id, expires_at)
                 VALUES (:tokenHash, :userId, :expiresAt)';
@@ -131,7 +132,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->bindValue('tokenHash', $hashedToken, PDO::PARAM_STR);
         $stmt->bindValue('userId', $this->id, PDO::PARAM_INT);
-        $stmt->bindValue('expiresAt', date('Y-m-d H-i-s', $expiryTimestamp), PDO::PARAM_STR);
+        $stmt->bindValue('expiresAt', date('Y-m-d H-i-s', $this->expiresAt), PDO::PARAM_STR);
 
         return $stmt->execute();
     }

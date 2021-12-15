@@ -10,8 +10,13 @@ class Auth
 {
     public static function login($user, $rememberMe): void
     {
-        if ($rememberMe) {
-            $user->rememberLogin();
+        if ($rememberMe && $user->rememberLogin()) {
+            setcookie(
+                name: 'rememberMe',
+                value: $user->rememberToken,
+                expires_or_options: $user->expiresAt,
+                path: '/'
+            );
         }
 
         session_regenerate_id(true);
