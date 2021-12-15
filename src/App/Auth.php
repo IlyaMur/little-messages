@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\App;
 
+use Ilyamur\PhpMvc\App\Models\RememberedLogin;
 use Ilyamur\PhpMvc\App\Models\User;
 
 class Auth
@@ -61,6 +62,25 @@ class Auth
             return User::findById((int) $_SESSION['userId']);
         }
 
-        return null;
+        return static::loginFromRememberCookie();
+    }
+
+    protected static function loginFromRememberCookie(): ?User
+    {
+        $cookie = $_COOKIE['rememberMe'] ?? false;
+
+        if (!$cookie) {
+            return null;
+        }
+
+        $rememberedLogin = RememberedLogin::findByToken($cookie);
+
+        if ($rememberedLogin) {
+            $user = $rememberedLogin->getUserByToken();
+
+            static::login($user, false);
+
+            return $user;
+        }
     }
 }
