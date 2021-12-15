@@ -16,6 +16,11 @@
 			<label for="inputPassword">Password</label>
 			<input type="password" name="password" id="inputPassword" placeholder="Password" autofocus>
 		</div>
+		<div>
+			<label for="rememberMe">
+				<input {{ rememberMe ? 'checked' : '' }} type="checkbox" name="rememberMe" id="rememberMe">Remember me
+			</label>
+		</div>
 
 		<button type="submit">Log in</button>
 	</form>

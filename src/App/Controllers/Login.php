@@ -19,6 +19,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
     public function createAction(): void
     {
         $user = User::authenticate($_POST['email'], $_POST['password']);
+        $rememberMe = isset($_POST['rememberMe']);
 
         if ($user) {
             Auth::login($user);
@@ -28,7 +29,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
         }
         Flash::addMessage('Login unsuccessful, please try again', Flash::WARNING);
 
-        View::renderTemplate('Login/new', ['email' => $_POST['email']]);
+        View::renderTemplate('Login/new', ['email' => $_POST['email'], 'rememberMe' => $rememberMe]);
     }
 
     public function destroyAction(): void
