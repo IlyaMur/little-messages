@@ -9,7 +9,7 @@ use \Mailjet\Client;
 
 class Mail
 {
-    public static function send(string $to, string $subject, string $text, string $html): void
+    public static function send(string $to, string $subject, string $text, string $html, string $name): void
     {
         $apikey = getenv('MJ_APIKEY_PUBLIC');
         $apisecret = getenv('MJ_APIKEY_PRIVATE');
@@ -26,7 +26,7 @@ class Mail
                     'To' => [
                         [
                             'Email' => $to,
-                            'Name' => "You"
+                            'Name' => $name
                         ]
                     ],
                     'Subject' => $subject,

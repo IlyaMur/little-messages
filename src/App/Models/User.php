@@ -188,7 +188,8 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             to: $this->email,
             subject: 'Password reset hash',
             text: $text,
-            html: $html
+            html: $html,
+            name: $this->name
         );
     }
 }
