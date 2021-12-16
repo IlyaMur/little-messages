@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Forgot password
+{% endblock %}
+
+{% block body %}
+	<h1>Request password reset</h1>
+	<form method="post">
+		<div>
+			<label for="inputEmail">Email address</label>
+			<input type="email" name="inputEmail" autofocus required placeholder="Email address">
+		</div>
+
+		<button type="submit">Send password reset</button>
+	</form>
+{% endblock %}

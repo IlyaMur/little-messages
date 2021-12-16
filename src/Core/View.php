@@ -20,6 +20,6 @@ class View
             $twig->addGlobal('flashMessages', Flash::getMessages());
         }
 
-        echo $twig->render($template . '.html.twig', $args);
+        echo $twig->render(ucfirst($template) . '.html.twig', $args);
     }
 }
