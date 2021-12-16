@@ -12,7 +12,7 @@ class Home extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function indexAction()
     {
-        View::renderTemplate('home/index');
+        View::renderTemplate('home/index.html');
     }
 
     public function before()

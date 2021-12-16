@@ -9,7 +9,7 @@ use Ilyamur\PhpMvc\App\Flash;
 
 class View
 {
-    public static function renderTemplate(string $template, array $args = [])
+    public static function getTemplate(string $template, array $args = [])
     {
         static $twig = null;
 
@@ -20,6 +20,13 @@ class View
             $twig->addGlobal('flashMessages', Flash::getMessages());
         }
 
-        echo $twig->render(ucfirst($template) . '.html.twig', $args);
+
+
+        return $twig->render(ucfirst($template) . '.twig', $args);
+    }
+
+    public static function renderTemplate(string $template, array $args = []): void
+    {
+        echo static::getTemplate($template, $args);
     }
 }

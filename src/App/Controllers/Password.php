@@ -11,13 +11,13 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function forgotAction(): void
     {
-        View::renderTemplate('password/forgot');
+        View::renderTemplate('password/forgot.html');
     }
 
     public function requestResetAction(): void
     {
         User::sendPasswordRequest($_POST['inputEmail']);
 
-        View::renderTemplate('password/reset_requested');
+        View::renderTemplate('password/reset_requested.html');
     }
 }

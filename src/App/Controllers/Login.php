@@ -13,7 +13,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function newAction(): void
     {
-        View::renderTemplate('Login/new');
+        View::renderTemplate('Login/new.html');
     }
 
     public function createAction(): void
@@ -29,7 +29,7 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
         }
         Flash::addMessage('Login unsuccessful, please try again', Flash::WARNING);
 
-        View::renderTemplate('Login/new', ['email' => $_POST['email'], 'rememberMe' => $rememberMe]);
+        View::renderTemplate('Login/new.html', ['email' => $_POST['email'], 'rememberMe' => $rememberMe]);
     }
 
     public function destroyAction(): void

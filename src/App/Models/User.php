@@ -7,6 +7,7 @@ namespace Ilyamur\PhpMvc\App\Models;
 use PDO;
 use Ilyamur\PhpMvc\App\Mail;
 use Ilyamur\PhpMvc\App\Token;
+use Ilyamur\PhpMvc\Core\View;
 
 class User extends \Ilyamur\PhpMvc\Core\Model
 {
@@ -181,12 +182,12 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
 
         $url = "$protocol://" . $_SERVER['HTTP_HOST'] . "/password/reset/" . $this->passwordResetToken;
-        $text = 'Please click on the following URL to reset your password' . $url;
-        $html = "Please click <a href=\"$url\">here</a> to reset your password";
+        $text = View::getTemplate('password/reset_email.txt', ['url' => $url]);
+        $html = View::getTemplate('password/reset_email.html', ['url' => $url]);
 
         Mail::send(
             to: $this->email,
-            subject: 'Password reset hash',
+            subject: 'Password reset',
             text: $text,
             html: $html,
             name: $this->name

@@ -11,6 +11,6 @@ class Items extends Authenticated
 {
     public function indexAction(): void
     {
-        View::renderTemplate('Items/index');
+        View::renderTemplate('Items/index.html');
     }
 }
