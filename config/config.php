@@ -12,5 +12,5 @@ class Config
     const DB_PASSWORD = '';
 
     const SHOW_ERRORS = true;
-    const SECRET_KEY = 'qQmYVUIvY2665Je9763A6VMJYGShzmxd';
+    const SECRET_KEY = 'dummykey';
 }
