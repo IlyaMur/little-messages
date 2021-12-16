@@ -5,7 +5,8 @@
 
 {% block body %}
 	<h1>Request password reset</h1>
-	<form method="post">
+
+	<form action="/password/request-reset" method="post">
 		<div>
 			<label for="inputEmail">Email address</label>
 			<input type="email" name="inputEmail" autofocus required placeholder="Email address">

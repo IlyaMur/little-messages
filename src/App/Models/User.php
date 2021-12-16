@@ -136,4 +136,12 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
         return $stmt->execute();
     }
+
+    public static function sendPasswordRequest(string $email): void
+    {
+        $user = static::findByEmail($email);
+        if ($user) {
+            // start reset process
+        }
+    }
 }
