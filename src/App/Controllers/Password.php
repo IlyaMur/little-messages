@@ -20,4 +20,11 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
 
         View::renderTemplate('password/reset_requested.html');
     }
+
+    public function resetAction()
+    {
+        $token = $this->routeParams['token'];
+
+        echo $token;
+    }
 }

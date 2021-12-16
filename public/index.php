@@ -15,6 +15,7 @@ set_error_handler('Ilyamur\PhpMvc\Core\Error::errorHandler');
 set_exception_handler('Ilyamur\PhpMvc\Core\Error::exceptionHandler');
 
 session_start();
+
 /**
  * Routing
  */
@@ -28,5 +29,7 @@ $router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'des
 $router->add(route: '{controller}/{action}');
 $router->add(route: '{controller}/{id:\d+}/{action}');
 $router->add(route: 'admin/{controller}/{action}', params: ['namespace' => 'Admin']);
+$router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
+
 
 $router->dispatch($_SERVER['QUERY_STRING']);
