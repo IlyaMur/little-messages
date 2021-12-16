@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\App\Models;
 
 use PDO;
+use Ilyamur\PhpMvc\App\Mail;
 use Ilyamur\PhpMvc\App\Token;
 
 class User extends \Ilyamur\PhpMvc\Core\Model
@@ -141,7 +142,9 @@ class User extends \Ilyamur\PhpMvc\Core\Model
     {
         $user = static::findByEmail($email);
         if ($user) {
-            $user->startPasswordReset();
+            if ($user->startPasswordReset()) {
+                $user->sendPasswordResetEmail();
+            }
         }
     }
 
@@ -149,11 +152,12 @@ class User extends \Ilyamur\PhpMvc\Core\Model
     {
         $token = new Token();
         $hashToken = $token->getHash();
+        $this->passwordResetToken = $token->getValue();
 
         $expiryTimestamp = time() + 60 * 60 * 2;
 
         $sql = 'UPDATE users
-                SET password_reset_hash = :token_hash
+                SET password_reset_hash = :token_hash,
                     password_reset_expires_at = :expires_at
                 WHERE id = :id';
 
@@ -166,5 +170,25 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 
         return $stmt->execute();
+    }
+
+    protected function sendPasswordResetEmail(): void
+    {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            $protocol = 'https';
+        } else {
+            $protocol = 'http';
+        }
+
+        $url = "$protocol://" . $_SERVER['HTTP_HOST'] . "/password/reset/" . $this->passwordResetToken;
+        $text = 'Please click on the following URL to reset your password' . $url;
+        $html = "Please click <a href=\"$url\">here</a> to reset your password";
+
+        Mail::send(
+            to: $this->email,
+            subject: 'Password reset hash',
+            text: $text,
+            html: $html
+        );
     }
 }
