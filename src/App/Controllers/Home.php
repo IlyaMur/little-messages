@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\App\Controllers;
 
 use Ilyamur\PhpMvc\App\Auth;
+use Ilyamur\PhpMvc\App\Mail;
 use \Ilyamur\PhpMvc\Core\View;
 
 class Home extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function indexAction()
     {
-        View::renderTemplate('Home/index', [
-            'name' => 'John Doe',
-            'colors' => ['red', 'green', 'blue'],
-        ]);
+        View::renderTemplate('Home/index');
     }
 
     public function before()
