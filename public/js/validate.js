@@ -15,7 +15,7 @@ $.validator.addMethod(
     'Must contain at least one letter and one number'
 );
 
-$('#formSignup').validate({
+$('.formSignup').validate({
     rules: {
         name: 'required',
         email: {
@@ -23,6 +23,21 @@ $('#formSignup').validate({
             email: true,
             remote: '/account/validate-email',
         },
+        password: {
+            required: true,
+            minlength: 6,
+            validPassword: true,
+        },
+    },
+    messages: {
+        email: {
+            remote: 'email already taken',
+        },
+    },
+});
+
+$('#formPassword').validate({
+    rules: {
         password: {
             required: true,
             minlength: 6,

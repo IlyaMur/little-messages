@@ -27,10 +27,10 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
 
         $user = User::findByPasswordReset($token);
 
-        var_dump($user);
-        exit;
-
         if ($user) {
+            View::renderTemplate('password/reset.html');
+        } else {
+            echo 'Nothing to show';
         }
     }
 }
