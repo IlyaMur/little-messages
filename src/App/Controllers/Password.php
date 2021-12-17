@@ -36,7 +36,7 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
         $user = $this->findUserAndExit($token);
 
         if ($user->resetPassword($_POST['password'])) {
-            echo 'password is valid';
+            View::renderTemplate('password/reset_success.html');
         } else {
             View::renderTemplate('password/reset.html', ['token' => $token, 'user' => $user]);
         }
