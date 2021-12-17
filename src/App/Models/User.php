@@ -104,7 +104,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
     {
         $user = static::findByEmail($email);
 
-        if ($user && password_verify($password, $user->password_hash)) {
+        if ($user && password_verify($password, $user->password_hash) && $user->is_active) {
             return $user;
         }
 
