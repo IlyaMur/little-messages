@@ -30,7 +30,7 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
         };
     }
 
-    public function resetPasswordAction()
+    public function resetPasswordAction(): void
     {
         $token = $_POST['token'];
         $user = $this->findUserAndExit($token);

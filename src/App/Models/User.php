@@ -26,9 +26,13 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $this->validate();
 
         if (empty($this->errors)) {
+            $token = new Token();
+            $tokenHash = $token->getHash();
+            $this->activationToken = $token->getValue();
+
             $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-            $sql = 'INSERT INTO users (name, email, password_hash)
-                VALUES (:name, :email, :password_hash)';
+            $sql = 'INSERT INTO users (name, email, password_hash, activation_hash)
+                    VALUES (:name, :email, :password_hash, :activation_hash)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
@@ -36,6 +40,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':password_hash', $passwordHash, PDO::PARAM_STR);
+            $stmt->bindValue(':activation_hash', $tokenHash, PDO::PARAM_STR);
 
             return $stmt->execute();
         }
@@ -128,7 +133,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $token = new Token();
         $hashedToken = $token->getHash();
 
-        $this->expiresAt = time() + 60 * 60 * 24 * 30; // 30 дней
+        $this->expiresAt = time() + 60 * 60 * 24 * 30;
         $this->rememberToken = $token->getValue();
 
         $sql = 'INSERT INTO remembered_logins (token_hash, user_id, expires_at)
@@ -193,9 +198,9 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         Mail::send(
             to: $this->email,
             subject: 'Password reset',
+            name: $this->name,
             text: $text,
-            html: $html,
-            name: $this->name
+            html: $html
         );
     }
 
@@ -246,5 +251,26 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt->bindValue('password_hash', $passwordHash, PDO::PARAM_STR);
 
         return $stmt->execute();
+    }
+
+    public function sendActivationEmail(): void
+    {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            $protocol = 'https';
+        } else {
+            $protocol = 'http';
+        }
+
+        $url = "$protocol://" . $_SERVER['HTTP_HOST'] . "/signup/activate/" . $this->activationToken;
+        $text = View::getTemplate('signup/activation_email.txt', ['url' => $url]);
+        $html = View::getTemplate('signup/activation_email.html', ['url' => $url]);
+
+        Mail::send(
+            to: $this->email,
+            subject: 'Account activation',
+            name: $this->name,
+            text: $text,
+            html: $html
+        );
     }
 }
