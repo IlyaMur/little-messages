@@ -273,4 +273,22 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             html: $html
         );
     }
+
+    public static function activate(string $value)
+    {
+        $token = new Token($value);
+        $hashedToken = $token->getHash();
+
+        $sql = 'UPDATE users
+                SET is_active = 1,
+                    activation_hash = NULL
+                WHERE activation_hash = :hashedToken';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue('hashedToken', $hashedToken, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
 }
