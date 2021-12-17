@@ -65,13 +65,18 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Password needs at least one number';
         }
 
-        if (static::emailExists($this->email)) {
+        if (static::emailExists($this->email, isset($this->id))) {
             $this->errors[] = 'Email already taken';
         }
     }
 
-    public static function emailExists(string $email): bool
+    public static function emailExists(string $email, bool $ignoreId): bool
     {
+
+        if ($ignoreId) {
+            return false;
+        }
+
         return !is_null(static::findByEmail($email));
     }
 
@@ -216,5 +221,14 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
 
         return null;
+    }
+
+    public function resetPassword(string $password)
+    {
+        $this->password = $password;
+
+        $this->validate();
+
+        return (empty($this->errors));
     }
 }

@@ -25,7 +25,7 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
     {
         $token = $this->routeParams['token'];
 
-        if ($this->checkTokenAndGetUser($token)) {
+        if ($this->findUserAndExit($token)) {
             View::renderTemplate('password/reset.html', ['token' => $token]);
         };
     }
@@ -33,13 +33,16 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
     public function resetPasswordAction()
     {
         $token = $_POST['token'];
+        $user = $this->findUserAndExit($token);
 
-        if ($this->checkTokenAndGetUser($token)) {
-            echo 'reset password';
+        if ($user->resetPassword($_POST['password'])) {
+            echo 'password is valid';
+        } else {
+            View::renderTemplate('password/reset.html', ['token' => $token, 'user' => $user]);
         }
     }
 
-    protected function checkTokenAndGetUser($token): ?User
+    protected function findUserAndExit($token)
     {
         $user = User::findByPasswordReset($token);
 
@@ -48,6 +51,6 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
         }
 
         View::renderTemplate('password/token_expired.html');
-        return null;
+        exit;
     }
 }
