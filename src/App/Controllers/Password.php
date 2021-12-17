@@ -24,13 +24,28 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
     public function resetAction()
     {
         $token = $this->routeParams['token'];
+        $this->getUserOrExit($token);
 
+        View::renderTemplate('password/reset.html', ['token' => $token]);
+    }
+
+    public function resetPasswordAction()
+    {
+        $token = $_POST['token'];
+        $this->getUserOrExit($token);
+
+        echo 'reset password';
+    }
+
+    protected function getUserOrExit($token)
+    {
         $user = User::findByPasswordReset($token);
 
         if ($user) {
-            View::renderTemplate('password/reset.html');
+            return $user;
         } else {
-            echo 'Nothing to show';
+            View::renderTemplate('password/token_expired.html');
+            exit;
         }
     }
 }
