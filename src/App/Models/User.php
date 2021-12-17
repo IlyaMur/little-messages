@@ -211,6 +211,10 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt->execute();
         $user = $stmt->fetch();
 
-        return $user ? $user : null;
+        if ($user && strtotime($user->password_reset_expires_at) > time()) {
+            return $user;
+        }
+
+        return null;
     }
 }
