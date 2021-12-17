@@ -25,6 +25,12 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
     {
         $token = $this->routeParams['token'];
 
-        echo $token;
+        $user = User::findByPasswordReset($token);
+
+        var_dump($user);
+        exit;
+
+        if ($user) {
+        }
     }
 }

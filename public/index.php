@@ -31,5 +31,4 @@ $router->add(route: '{controller}/{id:\d+}/{action}');
 $router->add(route: 'admin/{controller}/{action}', params: ['namespace' => 'Admin']);
 $router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
 
-
 $router->dispatch($_SERVER['QUERY_STRING']);

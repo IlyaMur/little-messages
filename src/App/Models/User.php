@@ -193,4 +193,24 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             name: $this->name
         );
     }
+
+    public static function findByPasswordReset(string $token): ?User
+    {
+        $token = new Token($token);
+        $hashedToken = $token->getHash();
+
+        $sql = 'SELECT * FROM users
+                WHERE password_reset_hash = :token_hash';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue('token_hash', $hashedToken, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+        $user = $stmt->fetch();
+
+        return $user ? $user : null;
+    }
 }
