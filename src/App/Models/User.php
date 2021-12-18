@@ -70,19 +70,22 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Password needs at least one number';
         }
 
-        if (static::emailExists($this->email, isset($this->id))) {
+        if (static::emailExists($this->email, $this->id ?? null)) {
             $this->errors[] = 'Email already taken';
         }
     }
 
-    public static function emailExists(string $email, bool $ignoreId): bool
+    public static function emailExists(string $email, bool $ignoreId = null): bool
     {
+        $user = static::findByEmail($email);
 
-        if ($ignoreId) {
-            return false;
+        if ($user) {
+            if ($user->id != $ignoreId) {
+                return true;
+            }
         }
 
-        return !is_null(static::findByEmail($email));
+        return false;
     }
 
     public static function findByEmail(string $email): ?User

@@ -19,8 +19,11 @@
 			{% if currentUser.name %}
 				Hello
 				{{ currentUser.name }}
+				|
 				<a href="/">Home</a>
 				<a href="/items/index">Items</a>
+				<a href="/profile/show">Profile</a>
+
 
 				<a href="/logout">Log out</a>
 			{% else %}

@@ -2,12 +2,18 @@
 
 {% block body %}
 	<h1>Profile</h1>
-	<div>
-		Name:
-		{{ user.name }}
-	</div>
-	<div>
-		Email:
-		{{ user.email }}
-	</div>
+	<dl>
+		<dt>Name:</dt>
+		<dd>
+			{{ user.name }}
+		</dd>
+
+		<dt>Email:</dt>
+		<dd>
+			{{ user.email }}
+		</dd>
+	</dl>
+
+	<a href="/profile/edit">Edit profile</a>
+
 {% endblock %}

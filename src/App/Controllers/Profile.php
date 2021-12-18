@@ -13,4 +13,11 @@ class Profile extends \Ilyamur\PhpMvc\App\Controllers\Authenticated
             'user' => Auth::getUser()
         ]);
     }
+
+    public function editAction()
+    {
+        View::renderTemplate('profile/edit.html', [
+            'user' => Auth::getUser()
+        ]);
+    }
 }

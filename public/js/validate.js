@@ -36,6 +36,27 @@ $('.formSignup').validate({
     },
 });
 
+$('#formProfile').validate({
+    rules: {
+        name: 'required',
+        email: {
+            required: true,
+            email: true,
+            remote: '/account/validate-email',
+        },
+        password: {
+            required: true,
+            minlength: 6,
+            validPassword: true,
+        },
+    },
+    messages: {
+        email: {
+            remote: 'email already taken',
+        },
+    },
+});
+
 $('#formPassword').validate({
     rules: {
         password: {
