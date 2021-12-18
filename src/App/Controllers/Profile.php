@@ -12,6 +12,8 @@ class Profile extends Authenticated
 {
     protected function before()
     {
+        parent::before();
+
         $this->user = Auth::getUser();
     }
 
