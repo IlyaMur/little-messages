@@ -16,23 +16,26 @@
 	<body>
 
 		<nav>
-			{% if currentUser.name %}
-				Hello
-				{{ currentUser.name }}
-				|
-				<a href="/">Home</a>
-				<a href="/items/index">Items</a>
-				<a href="/profile/show">Profile</a>
+			<ul>
+				<li>
+					<a href="/">Home</a>
+				</li>
+				{% if currentUser.name %}
+					<li>
+						<a href="/profile/show">Profile</a>
+					</li>
+					<li>
+						<a href="/logout">Log out</a>
+					</li>
+				{% else %}
+					<li>
+						<a href="/login">Log in</a>
+					</li>
 
-
-				<a href="/logout">Log out</a>
-			{% else %}
-				<a href="/items/index">Items</a>
-				<a href="/">Home</a>
-				<a href="/login">Log in</a>
-				<a href="/signup/new">Sign up</a>
-			{% endif %}
+				{% endif %}
+			</ul>
 		</nav>
+
 
 		{% for message in flashMessages %}
 			<div class="alert alert-{{ message.type }}">
@@ -42,6 +45,5 @@
 
 
 		{% block body %}{% endblock %}
-
 	</body>
 </html>
