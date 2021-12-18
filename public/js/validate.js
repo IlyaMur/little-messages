@@ -51,7 +51,6 @@ $('#formProfile').validate({
             }
         },
         password: {
-            required: true,
             minlength: 6,
             validPassword: true,
         },

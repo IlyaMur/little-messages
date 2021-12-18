@@ -277,10 +277,14 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         );
     }
 
-    public static function activate(string $value)
+    public static function activate(string $value): bool
     {
         $token = new Token($value);
         $hashedToken = $token->getHash();
+
+        if (!static::findActivationToken($hashedToken)) {
+            return false;
+        };
 
         $sql = 'UPDATE users
                 SET is_active = 1,
@@ -292,6 +296,21 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->bindValue('hashedToken', $hashedToken, PDO::PARAM_STR);
 
+        return $stmt->execute();
+    }
+
+    protected static function findActivationToken(string $hashedToken): bool
+    {
+        $sql = 'SELECT activation_hash FROM users
+                WHERE activation_hash = :hashedToken';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue('hashedToken', $hashedToken, PDO::PARAM_STR);
+
         $stmt->execute();
+
+        return $stmt->fetch() ? true : false;
     }
 }

@@ -34,13 +34,21 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
     public function activateAction(): void
     {
         $tokenValue = $this->routeParams['token'];
-        User::activate($tokenValue);
 
-        $this->redirect('/signup/activated');
+        if (User::activate($tokenValue)) {
+            $this->redirect('/signup/activated');
+        }
+
+        $this->redirect('/signup/not-activated');
     }
 
     public function activatedAction(): void
     {
         View::renderTemplate('signup/activated.html');
+    }
+
+    public function notActivatedAction(): void
+    {
+        View::renderTemplate('signup/not_activated.html');
     }
 }

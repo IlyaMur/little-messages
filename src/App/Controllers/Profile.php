@@ -20,4 +20,9 @@ class Profile extends \Ilyamur\PhpMvc\App\Controllers\Authenticated
             'user' => Auth::getUser()
         ]);
     }
+
+    public function update()
+    {
+        $user = Auth::getUser();
+    }
 }

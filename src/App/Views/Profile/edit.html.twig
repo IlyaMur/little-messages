@@ -17,21 +17,20 @@
 		</ul>
 	{% endif %}
 
-	<form id="formProfile" method="post">
+	<form action="/profile/update" id="formProfile" method="post">
 
 		<div>
 			<label for="inputName">Name</label>
 			<input value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" required>
 		</div>
 		<div>
-			<label for="inputEmail">Email address
-			</label>
+			<label for="inputEmail">Email address</label>
 			<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required>
 		</div>
 		<div>
-			<label for="inputPassword">Password
-			</label>
-			<input id="inputPassword" name="password" placeholder="password" type="password" required>
+			<label for="inputPassword">Password</label>
+			<input id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock">
+			<span id="helpBlock">Leave blank to keep current password</span>
 		</div>
 
 		<button type="submit">Save</button>
@@ -39,7 +38,7 @@
 	</form>
 
 	<script>
-		const userId = '{{ user.id }}'
+		const userId = '{{ user.id }}';
 	</script>
 
 {% endblock %}
