@@ -6,7 +6,7 @@ namespace Ilyamur\PhpMvc\App\Controllers;
 
 abstract class Authenticated extends \Ilyamur\PhpMvc\Core\Controller
 {
-    public function before()
+    protected function before()
     {
         $this->requireLogin();
     }

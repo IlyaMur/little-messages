@@ -30,10 +30,10 @@ abstract class Controller
         $this->routeParams = $routeParams;
     }
 
-    public function before()
+    protected function before()
     {
     }
-    public function after()
+    protected function after()
     {
     }
 
