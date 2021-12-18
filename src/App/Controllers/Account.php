@@ -10,7 +10,7 @@ class Account extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function validateEmailAction()
     {
-        $isValid = !User::emailExists($_GET['email']);
+        $isValid = !User::emailExists($_GET['email'], $_GET['ignoreId'] ?? null);
 
         header('Content-Type: application/json');
 

@@ -75,12 +75,12 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
-    public static function emailExists(string $email, bool $ignoreId = null): bool
+    public static function emailExists(string $email, ?string $ignoreId = null): bool
     {
         $user = static::findByEmail($email);
 
         if ($user) {
-            if ($user->id != $ignoreId) {
+            if ($user->id !== $ignoreId) {
                 return true;
             }
         }

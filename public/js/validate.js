@@ -1,3 +1,4 @@
+
 $.validator.addMethod(
     'validPassword',
     function (value, element, param) {
@@ -15,7 +16,7 @@ $.validator.addMethod(
     'Must contain at least one letter and one number'
 );
 
-$('.formSignup').validate({
+$('#formSignup').validate({
     rules: {
         name: 'required',
         email: {
@@ -42,7 +43,12 @@ $('#formProfile').validate({
         email: {
             required: true,
             email: true,
-            remote: '/account/validate-email',
+            remote: {
+                url: '/account/validate-email',
+                data: {
+                    ignoreId: () => userId
+                }
+            }
         },
         password: {
             required: true,
