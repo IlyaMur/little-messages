@@ -58,6 +58,14 @@ class User extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Invalid email';
         }
 
+        if (static::emailExists($this->email, $this->id ?? null)) {
+            $this->errors[] = 'Email already taken';
+        }
+
+        if (empty($this->password)) {
+            return;
+        }
+
         if (strlen($this->password) < 6) {
             $this->errors[] = 'Please enter at least 6 characters for the password';
         }
@@ -68,10 +76,6 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
         if (preg_match('/.*\d+.*/i', $this->password) === 0) {
             $this->errors[] = 'Password needs at least one number';
-        }
-
-        if (static::emailExists($this->email, $this->id ?? null)) {
-            $this->errors[] = 'Email already taken';
         }
     }
 
@@ -312,5 +316,46 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt->execute();
 
         return $stmt->fetch() ? true : false;
+    }
+
+    public function updateProfile(array $data): bool
+    {
+        $this->name = $data['name'];
+        $this->email = $data['email'];
+
+        //  validate only if value was provided
+        if ($data['password'] !== '') {
+            $this->password = $data['password'];
+        }
+
+        $this->validate();
+
+        if (empty($this->errors)) {
+            $sql = 'UPDATE users
+                    SET name = :name,
+                        email = :email';
+
+            if (isset($this->password)) {
+                $sql .= ', password_hash = :password_hash';
+            }
+
+            $sql .= "\nWHERE id = :id";
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            if (isset($this->password)) {
+                $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
+                $stmt->bindValue('password_hash', $passwordHash, PDO::PARAM_STR);
+            }
+
+            $stmt->bindValue('name', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue('email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
+
+        return false;
     }
 }
