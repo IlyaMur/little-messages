@@ -11,6 +11,9 @@ class Config
     const DB_USER = 'root';
     const DB_PASSWORD = '';
 
+    const ROOT_URL = '/';
+    const APP_VERSION = '1.0.0';
+
     const SHOW_ERRORS = true;
     const SECRET_KEY = 'dummykey';
 }
