@@ -7,11 +7,14 @@
 	<h1>Request password reset</h1>
 
 	<form action="/password/request-reset" method="post">
-		<div>
+		<div class="form-group">
+
 			<label for="inputEmail">Email address</label>
-			<input type="email" name="inputEmail" autofocus required placeholder="Email address">
+			<input class="form-control" type="email" name="inputEmail" autofocus required placeholder="Email address">
+
 		</div>
 
-		<button type="submit">Send password reset</button>
+		<button class="btn btn-primary" type="submit">Send password reset</button>
+
 	</form>
 {% endblock %}

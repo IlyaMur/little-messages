@@ -19,21 +19,27 @@
 
 	<form action="/profile/update" id="formProfile" method="post">
 
-		<div>
+		<div class="form-group">
 			<label for="inputName">Name</label>
-			<input value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" required>
+			<input class="form-control" value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" required>
+
 		</div>
-		<div>
+		<div class="form-group">
+
 			<label for="inputEmail">Email address</label>
-			<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required>
+			<input class="form-control" value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required>
+
 		</div>
-		<div>
+		<div class="form-group">
+
 			<label for="inputPassword">Password</label>
-			<input id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock">
-			<span id="helpBlock">Leave blank to keep current password</span>
+			<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock">
+			<span id="helpBlock" class="form-text text-muted">Leave blank to keep current password</span>
+
 		</div>
 
-		<button type="submit">Save</button>
+		<button class="btn btn-primary" type="submit">Save</button>
+
 		<a href="/profile/show">Cancel</a>
 	</form>
 
