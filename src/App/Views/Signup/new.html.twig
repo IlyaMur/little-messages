@@ -17,25 +17,26 @@
 					<div class="form-group">
 						<label for="inputName">Name</label>
 						<input value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" autofocus required class="form-control form-control-lg ">
-
 					</div>
 					<div class="form-group">
-
 						<label for="inputEmail">Email address
 						</label>
 						<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required class="form-control form-control-lg">
-
-
 					</div>
 					<div class="form-group">
 
 						<label for="inputPassword">Password
 						</label>
-						<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control form-control-lg">
 
-
+						<div class="input-group">
+							<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control form-control-lg" data-toggle="password">
+							<div class="input-group-append">
+								<span class="input-group-text">
+									<i class="fa fa-eye"></i>
+								</span>
+							</div>
+						</div>
 					</div>
-
 					<button class="btn btn-primary" type="submit">Sign up</button>
 
 
@@ -55,5 +56,4 @@
 			{% endfor %}
 		</ul>
 	{% endif %}
-
 {% endblock %}
