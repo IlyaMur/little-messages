@@ -11,7 +11,7 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function newAction(): void
     {
-        View::renderTemplate('Signup/new.html');
+        View::renderTemplate('signup/new.html');
     }
 
     public function createAction(): void
@@ -22,13 +22,13 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
             $user->sendActivationEmail();
             $this->redirect('/signup/success');
         } else {
-            View::renderTemplate('Signup/new.html', ['user' => $user]);
+            View::renderTemplate('signup/new.html', ['user' => $user]);
         }
     }
 
     public function successAction(): void
     {
-        View::renderTemplate('Signup/success.html');
+        View::renderTemplate('signup/success.html');
     }
 
     public function activateAction(): void

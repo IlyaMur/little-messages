@@ -5,7 +5,47 @@
 
 {% block body %}
 
-	<h1>Sign up</h1>
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<div class="card card-body bg-light mt-5">
+				<h2 class="text-center">
+					Sign up
+				</h2>
+				<p class="text-center">Please fill out this form to register with us</p>
+
+				<form id="formSignup" action="/signup/create" method="post">
+					<div class="form-group">
+						<label for="inputName">Name</label>
+						<input value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" autofocus required class="form-control form-control-lg ">
+
+					</div>
+					<div class="form-group">
+
+						<label for="inputEmail">Email address
+						</label>
+						<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required class="form-control form-control-lg">
+
+
+					</div>
+					<div class="form-group">
+
+						<label for="inputPassword">Password
+						</label>
+						<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control form-control-lg">
+
+
+					</div>
+
+					<button class="btn btn-primary" type="submit">Sign up</button>
+
+
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
 
 	{% if user.errors is not empty %}
 		<p>Errors:</p>
@@ -15,31 +55,5 @@
 			{% endfor %}
 		</ul>
 	{% endif %}
-
-	<form id="formSignup" action="/signup/create" method="post">
-		<div class="form-group">
-			<label for="inputName">Name</label>
-			<input value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" autofocus required class="form-control">
-
-		</div>
-		<div class="form-group">
-
-			<label for="inputEmail">Email address
-			</label>
-			<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required class="form-control">
-
-		</div>
-		<div class="form-group">
-
-			<label for="inputPassword">Password
-			</label>
-			<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control">
-
-		</div>
-
-		<button class="btn btn-primary" type="submit">Sign up</button>
-
-
-	</form>
 
 {% endblock %}
