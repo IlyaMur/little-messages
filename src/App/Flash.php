@@ -20,7 +20,7 @@ class Flash
 
     public static function getMessages(): ?array
     {
-        if (!isset($_SESSION['flashNotification'])) {
+        if (empty($_SESSION['flashNotification'])) {
             return null;
         }
 

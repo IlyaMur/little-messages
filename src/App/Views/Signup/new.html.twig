@@ -7,7 +7,7 @@
 	<div class="col-md-6 mx-auto">
 		<div class="card card-body bg-light mt-5">
 			<h2 class="text-center">
-				Sign up
+				Create An Account
 			</h2>
 			<p class="text-center">Please fill out this form to register with us</p>
 
@@ -21,19 +21,17 @@
 					</ul>
 				{% endif %}
 				<div class="form-group">
-					<label for="inputName">Name</label>
+					<label for="inputName">Name:</label>
 					<input value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" autofocus required class="form-control form-control-lg">
 				</div>
 				<div class="form-group">
-					<label for="inputEmail">Email address
+					<label for="inputEmail">Email address:
 					</label>
-					<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required class="form-control form-control-lg">
+					<input value="{{ user.email }}" id="inputEmail" name="email" placeholder="email" type="email" required class="form-control form-control-lg">
 				</div>
 				<div class="form-group">
 
-					<label for="inputPassword">Password
-					</label>
-
+					<label for="inputPassword">Password:</label>
 					<div class="input-group">
 						<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control form-control-lg" data-toggle="password">
 						<div class="input-group-append">

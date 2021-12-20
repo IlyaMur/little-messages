@@ -110,7 +110,11 @@ class User extends \Ilyamur\PhpMvc\Core\Model
     {
         $user = static::findByEmail($email);
 
-        if ($user && password_verify($password, $user->password_hash) && $user->is_active) {
+        if (
+            $user &&
+            password_verify($password, $user->password_hash) &&
+            $user->is_active
+        ) {
             return $user;
         }
 
@@ -158,6 +162,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
     public static function sendPasswordRequest(string $email): void
     {
         $user = static::findByEmail($email);
+
         if ($user) {
             if ($user->startPasswordReset()) {
                 $user->sendPasswordResetEmail();

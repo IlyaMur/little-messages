@@ -8,18 +8,18 @@
 		<div class="card card-body bg-light mt-5">
 			<div class="text-center">
 				<h2>
-					Login
+					Log In
 				</h2>
 				<p>Please fill in your credentials to log in</p>
 			</div>
 			<form action="/login/create" method="POST">
 				<div class="form-group">
-					<label for="inputEmail">Email address</label>
-					<input value="{{ email }}" type="email" name="email" id="inputEmail" placeholder="Email address" autofocus class="form-control form-control-lg">
+					<label for="inputEmail">Email address:</label>
+					<input value="{{ email }}" type="email" name="email" id="inputEmail" placeholder="email" autofocus class="form-control form-control-lg" required>
 				</div>
 
 				<div class="form-group">
-					<label for="inputPassword">Password</label>
+					<label for="inputPassword">Password:</label>
 					<div class="input-group">
 						<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control form-control-lg" data-toggle="password">
 						<div class="input-group-append">
