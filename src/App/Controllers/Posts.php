@@ -35,11 +35,10 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
         $post = new Post($_POST);
 
         if ($post->save()) {
-            // todo when success
-
-        } else {
-
-            View::renderTemplate('posts/new.html', ['post' => $post]);
+            Flash::addMessage('Post Added', Flash::SUCCESS);
+            $this->redirect('/');
         }
+
+        View::renderTemplate('posts/new.html', ['post' => $post]);
     }
 }

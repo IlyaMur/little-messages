@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\App\Models;
 
 use PDO;
+use Ilyamur\PhpMvc\App\Auth;
 
 class Post extends \Ilyamur\PhpMvc\Core\Model
 {
@@ -28,14 +29,23 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
-    public function save()
+    public function save(): bool
     {
         $this->validate();
 
         if (empty($this->errors)) {
-            // save post to db
-        }
+            $sql = 'INSERT INTO posts (title, body, user_id)
+                    VALUES (:title, :body, :user_id)';
 
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+            $stmt->bindValue(':body', $this->body, PDO::PARAM_STR);
+            $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
 
         return false;
     }
