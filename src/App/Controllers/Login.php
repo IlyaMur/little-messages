@@ -13,6 +13,10 @@ class Login extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function newAction(): void
     {
+        if (Auth::getUser()) {
+            $this->redirect('/');
+        };
+
         View::renderTemplate('Login/new.html');
     }
 

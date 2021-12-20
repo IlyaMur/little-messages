@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\App\Controllers;
 
+use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\Core\View;
 use Ilyamur\PhpMvc\App\Models\User;
 
@@ -11,6 +12,10 @@ class Signup extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function newAction(): void
     {
+        if (Auth::getUser()) {
+            $this->redirect('/');
+        };
+
         View::renderTemplate('signup/new.html');
     }
 
