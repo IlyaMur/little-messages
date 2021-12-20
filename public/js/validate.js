@@ -79,6 +79,17 @@ $('#formProfile').validate({
     },
 });
 
+$('#formPost').validate({
+    rules: {
+        title: 'required',
+        body: 'required'
+    },
+    messages: {
+        title: 'title is required',
+        body: 'post body is required'
+    }
+});
+
 $('#formPassword').validate({
     rules: {
         password: {

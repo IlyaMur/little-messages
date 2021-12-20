@@ -22,7 +22,7 @@ session_start();
 
 $router = new Ilyamur\PhpMvc\Core\Router();
 
-$router->add(route: '', params: ['controller' => 'Pages', 'action' => 'index']);
+$router->add(route: '', params: ['controller' => 'Posts', 'action' => 'index']);
 $router->add(route: 'login', params: ['controller' => 'Login', 'action' => 'new']);
 $router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'destroy']);
 $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);

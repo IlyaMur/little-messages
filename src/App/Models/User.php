@@ -49,7 +49,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 
     public function validate(): void
     {
-        if ($this->name == '') {
+        if (trim($this->name) === '') {
             $this->errors[] = 'Name is required';
         }
 

@@ -15,15 +15,26 @@
 			</h2>
 			<p>Create a post with this form</p>
 		</div>
-		<form action="{{ urlRoot }}post/create" method="POST">
+		<form id="formPost" action="{{ urlRoot }}posts/create" method="post">
+			{% if post.errors is not empty %}
+				<p>Errors:</p>
+				<ul>
+					{% for error in post.errors %}
+						<li>{{ error }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+
 			<div class="form-group">
 				<label for="inputTitle">Title:</label>
-				<input value="{{ inputTitle }}" type="text" name="inputTitle" id="inputTitle" class="form-control form-control-lg" autofocus required>
+				<input value="{{ post.title }}" type="text" name="title" id="inputTitle" class="form-control form-control-lg" autofocus>
+
 			</div>
 			<div class="form-group">
 				<label for="inputBody">Post:</label>
 				<div class="input-group">
-					<textarea id="inputBody" name="inputBody" type="text" required class="form-control form-control-lg">{{ inputBody }}</textarea>
+					<textarea id="body" name="body" type="text" class="form-control form-control-lg">{{ post.body }}</textarea>
+
 				</div>
 			</div>
 
