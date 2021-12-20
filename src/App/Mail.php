@@ -21,7 +21,7 @@ class Mail
                 [
                     'From' => [
                         'Email' => "ilyamur@hotmail.com",
-                        'Name' => "Me"
+                        'Name' => "myPosts"
                     ],
                     'To' => [
                         [

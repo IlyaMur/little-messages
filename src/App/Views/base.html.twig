@@ -23,18 +23,13 @@
 		</title>
 	</head>
 	<body>
-		{% include "navbar.html.twig" %}
+		{% include "partials/_navbar.html.twig" %}
+
 		<div class="container">
 			<div class="row">
-				<div class="col">
-					{% for message in flashMessages %}
-						<div class="alert alert-{{ message.type }}">
-							{{ message.body }}
-						</div>
-					{% endfor %}
-					{% block body %}{% endblock %}
+				<div class="col"> {% block body %}{% endblock %}
+					</div>
 				</div>
 			</div>
 		</body>
-	</body>
-</html></div></body></html>
+	</html>

@@ -44,6 +44,7 @@ class Auth
         }
 
         session_destroy();
+
         static::forgetLogin();
     }
 
