@@ -4,17 +4,28 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Request password reset</h1>
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<div class="card card-body bg-light mt-5">
+				<h2 class="text-center">
+					Password reset
+				</h2>
 
-	<form action="/password/request-reset" method="post">
-		<div class="form-group">
+				<form action="/password/request-reset" method="post">
+					<div class="form-group">
 
-			<label for="inputEmail">Email address</label>
-			<input class="form-control" type="email" name="inputEmail" autofocus required placeholder="Email address">
+						<label for="inputEmail">Email address</label>
+						<input class="form-control" type="email" name="inputEmail" autofocus required placeholder="Email address">
+					</div>
 
+					<div class="row">
+						<div class="col-6">
+							<input class="btn btn-success btn-block" type="submit" value="Send password reset">
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
+	</div>
 
-		<button class="btn btn-primary" type="submit">Send password reset</button>
-
-	</form>
 {% endblock %}

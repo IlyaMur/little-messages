@@ -4,29 +4,37 @@
 {% endblock %}
 
 {% block body %}
+	<div class="row">
+		<div class="col-md-6 mx-auto">
+			<div class="card card-body bg-light mt-5">
+				<h2 class="text-center">
+					Reset your password
 
-	<h1>Sign up</h1>
+				</h2>
 
-	{% if user.errors is not empty %}
-		<p>Errors:</p>
-		<ul>
-			{% for error in user.errors %}
-				<li>{{ error }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
 
-	<form action="/password/reset-password" id="formPassword" method="post">
-		<input type="hidden" name="token" value="{{ token }}">
-		<div class="form-group">
+				{% if user.errors is not empty %}
+					<p>Errors:</p>
+					<ul>
+						{% for error in user.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
 
-			<label for="inputPassword">Password
-			</label>
-			<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" required>
+				<form action="/password/reset-password" id="formPassword" method="post">
+					<input type="hidden" name="token" value="{{ token }}">
+					<div class="form-group">
+
+						<label for="inputPassword">Password
+						</label>
+						<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" required>
+					</div>
+					<button class="btn btn-primary" type="submit">Reset password</button>
+				</form>
+			</div>
 		</div>
+	</div>
 
-		<button class="btn btn-primary" type="submit">Reset password</button>
-
-	</form>
 
 {% endblock %}

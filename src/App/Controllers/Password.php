@@ -16,8 +16,10 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
 
     public function requestResetAction(): void
     {
+        if (empty($_POST['inputEmail'])) {
+            return;
+        }
         User::sendPasswordRequest($_POST['inputEmail']);
-
         View::renderTemplate('password/reset_requested.html');
     }
 
@@ -32,6 +34,7 @@ class Password extends \Ilyamur\PhpMvc\Core\Controller
 
     public function resetPasswordAction(): void
     {
+
         $token = $_POST['token'];
         $user = $this->findUserAndExit($token);
 

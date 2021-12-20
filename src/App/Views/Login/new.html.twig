@@ -4,30 +4,53 @@
 {% endblock %}
 
 {% block body %}
+	<div class="col-md-6 mx-auto">
+		<div class="card card-body bg-light mt-5">
+			<div class="text-center">
+				<h2>
+					Login
+				</h2>
+				<p>Please fill in your credentials to log in</p>
+			</div>
+			<form action="/login/create" method="POST">
+				<div class="form-group">
+					<label for="inputEmail">Email address</label>
+					<input value="{{ email }}" type="email" name="email" id="inputEmail" placeholder="Email address" autofocus class="form-control form-control-lg">
+				</div>
 
-	<h1>Log in</h1>
+				<div class="form-group">
+					<label for="inputPassword">Password</label>
+					<div class="input-group">
+						<input id="inputPassword" name="password" placeholder="password" type="password" required class="form-control form-control-lg" data-toggle="password">
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i class="fa fa-eye"></i>
+							</span>
+						</div>
+					</div>
+				</div>
 
-	<form action="/login/create" method="POST">
-		<div class="form-group">
-			<label for="inputEmail">Email address</label>
-			<input value="{{ email }}" type="email" name="email" id="inputEmail" placeholder="Email address" autofocus class="form-control">
+				<div class="checkbox">
+					<label for="rememberMe">
+						<input {{ rememberMe ? 'checked' : '' }} type="checkbox" name="rememberMe" id="rememberMe">
+						Remember me
+					</label>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<input type="submit" value="Log in" class="btn btn-success btn-block">
+
+					</div>
+					<div class="col">
+						<a href="/password/forgot" class="btn btn-light btn-block">Forgot password?</a>
+
+
+					</div>
+				</div>
+
+
+			</form>
 		</div>
-
-		<div class="form-group">
-			<label for="inputPassword">Password</label>
-			<input type="password" name="password" id="inputPassword" placeholder="Password" class="form-control">
-		</div>
-		<div class="checkbox">
-			<label for="rememberMe">
-				<input {{ rememberMe ? 'checked' : '' }} type="checkbox" name="rememberMe" id="rememberMe">
-				Remember me
-			</label>
-		</div>
-
-		<button class="btn btn-primary" type="submit">Log in</button>
-
-		<a href="/password/forgot">Forgot password?</a>
-
-	</form>
-
+	</div>
 {% endblock %}

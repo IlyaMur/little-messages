@@ -13,7 +13,6 @@ class User extends \Ilyamur\PhpMvc\Core\Model
 {
     public array $errors = [];
 
-
     public function __construct(array $data = [])
     {
         foreach ($data as $key => $val) {
