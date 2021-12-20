@@ -13,10 +13,18 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
     {
         $posts = Post::getPosts();
 
-        $data = [
+        View::renderTemplate('posts/index.html', [
             'posts' => $posts
-        ];
+        ]);
+    }
 
-        View::renderTemplate('posts/index.html', $data);
+    public function newAction(): void
+    {
+        View::renderTemplate('posts/new.html');
+    }
+
+    public function createAction()
+    {
+        View::renderTemplate('posts/new.html');
     }
 }

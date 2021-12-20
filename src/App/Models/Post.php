@@ -24,7 +24,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             FROM posts AS p
             JOIN users AS u
             ON u.id = p.user_id
-            ORDER BY p.created_at DESC'
+            ORDER BY createdAt DESC'
         );
 
         return $result->fetchAll(PDO::FETCH_CLASS, get_called_class());

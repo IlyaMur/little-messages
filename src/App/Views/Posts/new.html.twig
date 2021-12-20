@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Log in
+{% endblock %}
+{% block body %}
+	<a href="{{ urlRoot }}posts" class="btn btn-light">
+		<i class="fa fa-backward">
+			Back</i>
+	</a>
+	<div class="card card-body bg-light mt-3">
+		{% include "partials/_flash.html.twig" %}
+		<div class="text-center">
+			<h2>
+				Add Post
+			</h2>
+			<p>Create a post with this form</p>
+		</div>
+		<form action="{{ urlRoot }}post/create" method="POST">
+			<div class="form-group">
+				<label for="inputTitle">Title:</label>
+				<input value="{{ inputTitle }}" type="text" name="inputTitle" id="inputTitle" class="form-control form-control-lg" autofocus required>
+			</div>
+			<div class="form-group">
+				<label for="inputBody">Post:</label>
+				<div class="input-group">
+					<textarea id="inputBody" name="inputBody" type="text" required class="form-control form-control-lg">{{ inputBody }}</textarea>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-success">Submit</button>
+		</form>
+	</div>
+{% endblock %}
