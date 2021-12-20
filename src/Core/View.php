@@ -19,7 +19,7 @@ class View
             $twig = new \Twig\Environment($loader);
             $twig->addGlobal('currentUser', Auth::getUser());
             $twig->addGlobal('flashMessages', Flash::getMessages());
-            $twig->addGlobal('urlRoot', Config::ROOT_URL);
+            $twig->addGlobal('APP_ROOT', Config::ROOT_URL);
         }
 
 

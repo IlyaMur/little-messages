@@ -26,9 +26,13 @@
 			<h4 class="card-title">{{ post.title }}</h4>
 			<div class="bg-light p-2 mb-3">
 				Written by
-				{{ post.author }}
+				<strong>
+					{{ post.author }}
+				</strong>
+
 				on
-				{{ post.createdAt }}
+				{{ post.createdAt|date("d/m/y H:i") }}
+
 			</div>
 			<p class="card-text">{{ post.body }}</p>
 			<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>

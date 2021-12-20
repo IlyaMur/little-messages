@@ -28,6 +28,7 @@ $router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'des
 $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);
 
 $router->add(route: 'posts', params: ['controller' => 'posts', 'action' => 'index']);
+$router->add(route: 'posts/show/{id:\d+}', params: ['controller' => 'posts', 'action' => 'show']);
 
 $router->add(route: '{controller}/{action}');
 $router->add(route: '{controller}/{id:\d+}/{action}');

@@ -3,10 +3,11 @@
 {% block title %}Log in
 {% endblock %}
 {% block body %}
-	<a href="{{ urlRoot }}posts" class="btn btn-light">
+	<a href="{{ APP_ROOT }}posts" class="btn btn-light">
 		<i class="fa fa-backward">
 			Back</i>
 	</a>
+
 	<div class="card card-body bg-light mt-3">
 		{% include "partials/_flash.html.twig" %}
 		<div class="text-center">
@@ -15,7 +16,7 @@
 			</h2>
 			<p>Create a post with this form</p>
 		</div>
-		<form id="formPost" action="{{ urlRoot }}posts/create" method="post">
+		<form id="formPost" action="{{ APP_ROOT }}posts/create" method="post">
 			{% if post.errors is not empty %}
 				<p>Errors:</p>
 				<ul>

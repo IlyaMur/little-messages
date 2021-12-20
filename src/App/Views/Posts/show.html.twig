@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Post
+{% endblock %}
+
+{% block body %}
+	<a href="{{ APP_ROOT }}posts" class="btn btn-light">
+		<i class="fa fa-backward"></i>
+		Back
+	</a>
+	<h1>{{ post.title }}</h1>
+	<div class="bg-secondary text-white p-2 mb-3">
+		Written by
+		{{ user.name }}
+		on
+		{{ post.created_at|date("d/m/Y H:i") }}
+	</div>
+
+	<p>{{ post.body }}</p>
+
+	{% if post.user_id == currentUser.id %}
+		<hr>
+		<a href="{{ APP_ROOT }}posts/edit/{{ post.id }}" class="btn btn-dark">Edit</a>
+
+		<form class="pull-right" action="{{ APP_ROOT }}posts/destroy/{{ post.id }}" method="post">
+			<button class="btn btn-danger" type="submit">Delete</button>
+		</form>
+	{% endif %}
+{% endblock %}

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
 	<div class="container">
-		<a class="navbar-brand" href="{{ urlRoot }}">myPosts</a>
+		<a class="navbar-brand" href="{{ APP_ROOT }}">myPosts</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -9,27 +9,27 @@
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="{{ urlRoot }}posts">Home
+					<a class="nav-link" href="{{ APP_ROOT }}posts">Home
 
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ urlRoot }}pages/about">About</a>
+					<a class="nav-link" href="{{ APP_ROOT }}pages/about">About</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				{% if currentUser %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ urlRoot }}login/destroy">Logout
+						<a class="nav-link" href="{{ APP_ROOT }}login/destroy">Logout
 						</a>
 					</li>
 				{% else %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ urlRoot }}signup/new">Register
+						<a class="nav-link" href="{{ APP_ROOT }}signup/new">Register
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ urlRoot }}login">Login</a>
+						<a class="nav-link" href="{{ APP_ROOT }}login">Login</a>
 					</li>
 				{% endif %}
 

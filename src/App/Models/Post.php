@@ -69,4 +69,22 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         return $result->fetchAll(PDO::FETCH_CLASS, get_called_class());
     }
+
+    public static function findById(int $postsId): ?Post
+    {
+        $sql = 'SELECT * from posts
+                WHERE id = :id';
+
+        $db = static::getDB();
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue('id', $postsId, PDO::PARAM_INT);
+
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $post = $stmt->fetch();
+
+        return $post ? $post : null;
+    }
 }
