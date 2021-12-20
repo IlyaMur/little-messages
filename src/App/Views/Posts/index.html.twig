@@ -20,9 +20,15 @@
 
 	{% for post in posts %}
 		<div class="card card-body mb-3">
-			<h4 class="card-title">
-				{{ post.title }}
-			</h4>
+			<h4 class="card-title">{{ post.title }}</h4>
+			<div class="bg-light p-2 mb-3">
+				Written by
+				{{ post.author }}
+				on
+				{{ post.createdAt }}
+			</div>
+			<p class="card-text">{{ post.body }}</p>
+			<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
 		</div>
 	{% endfor %}
 
