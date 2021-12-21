@@ -2,39 +2,40 @@
 
 declare(strict_types=1);
 
-/**
- * Front Controller
- * 
- * PHP version 8.0
- */
+echo 'test';
+// /**
+//  * Front Controller
+//  * 
+//  * PHP version 8.0
+//  */
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+// require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-error_reporting(E_ALL);
-set_error_handler('Ilyamur\PhpMvc\Core\Error::errorHandler');
-set_exception_handler('Ilyamur\PhpMvc\Core\Error::exceptionHandler');
+// error_reporting(E_ALL);
+// set_error_handler('Ilyamur\PhpMvc\Core\Error::errorHandler');
+// set_exception_handler('Ilyamur\PhpMvc\Core\Error::exceptionHandler');
 
-session_start();
+// session_start();
 
-/**
- * Routing
- */
+// /**
+//  * Routing
+//  */
 
-$router = new Ilyamur\PhpMvc\Core\Router();
+// $router = new Ilyamur\PhpMvc\Core\Router();
 
-$router->add(route: '', params: ['controller' => 'Posts', 'action' => 'index']);
+// $router->add(route: '', params: ['controller' => 'Posts', 'action' => 'index']);
 
-$router->add(route: 'login', params: ['controller' => 'Login', 'action' => 'new']);
-$router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'destroy']);
-$router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);
-$router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
+// $router->add(route: 'login', params: ['controller' => 'Login', 'action' => 'new']);
+// $router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'destroy']);
+// $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);
+// $router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
 
-$router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
+// $router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
 
-$router->add(route: '{controller}/{action}');
-$router->add(route: '{controller}/{id:\d+}/{action}');
+// $router->add(route: '{controller}/{action}');
+// $router->add(route: '{controller}/{id:\d+}/{action}');
 
-$router->add(route: 'admin/{controller}/{action}', params: ['namespace' => 'Admin']);
+// $router->add(route: 'admin/{controller}/{action}', params: ['namespace' => 'Admin']);
 
 
-$router->dispatch($_SERVER['QUERY_STRING']);
+// $router->dispatch($_SERVER['QUERY_STRING']);
