@@ -6,10 +6,10 @@ namespace Ilyamur\PhpMvc\Config;
 
 class Config
 {
-    const DB_HOST = '127.0.0.1';
-    const DB_NAME = 'mvclogin';
-    const DB_USER = 'root';
-    const DB_PASSWORD = '';
+    const DB_HOST = getenv('DB_HOST');
+    const DB_NAME = getenv('DB_NAME');
+    const DB_USER = getenv('DB_USER');
+    const DB_PASSWORD = getenv('DB_PASSWORD');
 
     const ROOT_URL = '/';
     const APP_VERSION = '1.0.0';
