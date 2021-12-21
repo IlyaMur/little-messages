@@ -14,10 +14,10 @@ abstract class Model
         static $db = null;
 
         if ($db === null) {
-            $host = Config::DB_HOST;
-            $dbname = Config::DB_NAME;
-            $username = Config::DB_USER;
-            $password = Config::DB_PASSWORD;
+            $host = getenv('DB_HOST');
+            $dbname = getenv('DB_NAME');
+            $username = getenv('DB_USER');
+            $password = getenv('DB_PASSWORD');
 
             $db = new PDO(
                 "mysql:host=$host;dbname=$dbname;charset=utf8",
