@@ -7,9 +7,12 @@ declare(strict_types=1);
  * 
  * PHP version 8.0
  */
+
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
 echo getenv('DB_HOST');
 exit;
-require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 error_reporting(E_ALL);
 set_error_handler('Ilyamur\PhpMvc\Core\Error::errorHandler');
