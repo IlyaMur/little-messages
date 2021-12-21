@@ -11,9 +11,6 @@ class Mail
 {
     public static function send(string $to, string $subject, string $text, string $html, string $name): void
     {
-        $apikey = getenv('MJ_APIKEY_PUBLIC');
-        $apisecret = getenv('MJ_APIKEY_PRIVATE');
-
         $mj = new Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'), true, ['version' => 'v3.1']);
 
         $body = [
@@ -21,7 +18,7 @@ class Mail
                 [
                     'From' => [
                         'Email' => "ilyamur@hotmail.com",
-                        'Name' => "myPosts"
+                        'Name' => "myPosts App"
                     ],
                     'To' => [
                         [
