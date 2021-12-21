@@ -6,14 +6,17 @@
 {% block body %}
 	{% include "partials/_flash.html.twig" %}
 
-	<a href="{{ APP_ROOT }}posts" class="btn btn-light">
+	<a href="{{ APP_ROOT }}" class="btn btn-light">
 		<i class="fa fa-backward"></i>
 		Back
 	</a>
 	<h1>{{ post.title }}</h1>
 	<div class="bg-secondary text-white p-2 mb-3">
 		Written by
-		{{ user.name }}
+		<strong>
+			{{ user.name }}
+		</strong>
+
 		on
 		{{ post.created_at|date("d/m/Y H:i") }}
 	</div>
@@ -25,7 +28,10 @@
 		<a href="{{ APP_ROOT }}posts/edit/{{ post.id }}" class="btn btn-dark">Edit</a>
 
 		<form class="pull-right" action="{{ APP_ROOT }}posts/destroy/{{ post.id }}" method="post">
-			<button class="btn btn-danger" type="submit">Delete</button>
+			<button id="deletePost" class="btn btn-danger" type="submit">Delete</button>
 		</form>
 	{% endif %}
+
+	<script src="{{ APP_ROOT }}js/script.js"></script>
+
 {% endblock %}

@@ -6,15 +6,16 @@
 
 
 {% block body %}
-
-	<h2>About us</h2>
-	<p>
-		{{ description }}
-	</p>
-	<p>
-		v.
-		{{appVersion}}
-	</p>
+	<div class="col-md-6 mx-auto mt-3">
 
 
-</p></div></div>{% endblock %}
+		<h1>About us</h1>
+		<p class="mt-4">
+			{{ description }}
+		</p>
+		<p>
+			v.
+			{{appVersion}}
+		</p>
+	</div>
+{% endblock %}

@@ -4,47 +4,49 @@
 {% endblock %}
 
 {% block body %}
+	<div class="col-md-6 mx-auto mt-3">
 
-	<h1>Profile</h1>
+		<h1>Edit Profile</h1>
+
+		{% if user.errors is not empty %}
+			<p>Errors:</p>
+			<ul>
+				{% for error in user.errors %}
+					<li>{{ error }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<form action="{{ APP_ROOT }}profile/update" id="formProfile" method="post">
 
 
-	{% if user.errors is not empty %}
-		<p>Errors:</p>
-		<ul>
-			{% for error in user.errors %}
-				<li>{{ error }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
+			<div class="form-group">
+				<label for="inputName">Name</label>
+				<input class="form-control" value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" required>
 
-	<form action="/profile/update" id="formProfile" method="post">
+			</div>
+			<div class="form-group">
 
-		<div class="form-group">
-			<label for="inputName">Name</label>
-			<input class="form-control" value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" required>
+				<label for="inputEmail">Email address</label>
+				<input class="form-control" value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required>
 
-		</div>
-		<div class="form-group">
+			</div>
+			<div class="form-group">
 
-			<label for="inputEmail">Email address</label>
-			<input class="form-control" value="{{ user.email }}" id="inputEmail" name="email" placeholder="email address" type="email" required>
+				<label for="inputPassword">Password</label>
+				<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock">
+				<span id="helpBlock" class="form-text text-muted">Leave blank to keep current password</span>
 
-		</div>
-		<div class="form-group">
+			</div>
 
-			<label for="inputPassword">Password</label>
-			<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock">
-			<span id="helpBlock" class="form-text text-muted">Leave blank to keep current password</span>
+			<button class="btn btn-primary" type="submit">Save</button>
 
-		</div>
+			<a href="/profile/show">Cancel</a>
+		</form>
 
-		<button class="btn btn-primary" type="submit">Save</button>
-
-		<a href="/profile/show">Cancel</a>
-	</form>
-
-	<script>
-		const userId = '{{ user.id }}';
-	</script>
+		<script>
+			const userId = '{{ user.id }}';
+		</script>
+	</div>
 
 {% endblock %}

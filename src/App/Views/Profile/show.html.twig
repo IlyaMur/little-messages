@@ -1,13 +1,24 @@
 {% extends "base.html.twig" %}
 
-{% block body %}
-	<h1>Profile</h1>
-	<dl class="row">
-		<dt class="col-sm-3">Name:</dt>
-		<dd class="col-sm-9">{{ user.name }}</dd>
+{% block title %}
+	{{ user.name }}
+	Profile
+{% endblock %}
 
-		<dt class="col-sm-3">Email:</dt>
-		<dd class="col-sm-9">{{ user.email }}</dd>
-	</dl>
-	<a href=" /profile/edit">Edit profile</a>
+{% block body %}
+	<div class="col-md-6 mx-auto mt-3">
+
+		<h1>Profile</h1>
+		<dl class="row mt-4">
+
+			<dt class="col-sm-3">Name:</dt>
+			<dd class="col-sm-9">{{ user.name }}</dd>
+
+			<dt class="col-sm-3">Email:</dt>
+			<dd class="col-sm-9">{{ user.email }}</dd>
+		</dl>
+		<a href="{{ APP_ROOT }}profile/edit">Edit profile</a>
+	</div>
+
+
 {% endblock %}

@@ -111,12 +111,15 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 
         if (!$post || $post->user_id !== Auth::getUser()->id) {
             Flash::addMessage('You can\'t delete this post', Flash::WARNING);
-            $this->redirect('/');
+            $this->redirect("/posts/show/$post->id");
         }
 
         if ($post->delete()) {
             Flash::addMessage('Post was deleted');
             $this->redirect('/');
+        } else {
+            Flash::addMessage('Something went wrong', Flash::WARNING);
+            $this->redirect("/posts/show/$post->id");
         }
     }
 }
