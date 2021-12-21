@@ -7,7 +7,8 @@ declare(strict_types=1);
  * 
  * PHP version 8.0
  */
-
+echo getenv('DB_HOST');
+exit;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 error_reporting(E_ALL);

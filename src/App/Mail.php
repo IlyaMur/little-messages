@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\App;
 
-echo getenv('DB_HOST');
-exit;
-
 use \Mailjet\Resources;
 use \Mailjet\Client;
 
