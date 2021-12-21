@@ -23,21 +23,18 @@ session_start();
 $router = new Ilyamur\PhpMvc\Core\Router();
 
 $router->add(route: '', params: ['controller' => 'Posts', 'action' => 'index']);
+
 $router->add(route: 'login', params: ['controller' => 'Login', 'action' => 'new']);
 $router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'destroy']);
 $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);
+$router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
 
-$router->add(route: 'posts', params: ['controller' => 'posts', 'action' => 'index']);
-$router->add(route: 'posts/show/{id:\d+}', params: ['controller' => 'posts', 'action' => 'show']);
-$router->add(route: 'posts/edit/{id:\d+}', params: ['controller' => 'posts', 'action' => 'edit']);
-$router->add(route: 'posts/update/{id:\d+}', params: ['controller' => 'posts', 'action' => 'update']);
+$router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
 
 $router->add(route: '{controller}/{action}');
 $router->add(route: '{controller}/{id:\d+}/{action}');
 
 $router->add(route: 'admin/{controller}/{action}', params: ['namespace' => 'Admin']);
-$router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
-
 
 
 $router->dispatch($_SERVER['QUERY_STRING']);

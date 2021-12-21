@@ -322,7 +322,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         return $stmt->fetch() ? true : false;
     }
 
-    public function updateProfile(array $data): bool
+    public function update(array $data): bool
     {
         $this->name = $data['name'];
         $this->email = $data['email'];

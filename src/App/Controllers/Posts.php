@@ -32,6 +32,10 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 
     public function createAction()
     {
+        if (!Auth::getUser()) {
+            $this->requireLogin();
+        }
+
         $post = new Post($_POST);
 
         if ($post->save()) {
@@ -84,22 +88,35 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->requireLogin();
         }
 
-        $post = Post::findById(
-            (int) $this->routeParams['id']
-        );
+        $post = Post::findById((int) $this->routeParams['id']);
 
         if (!$post || $post->user_id !== Auth::getUser()->id) {
             Flash::addMessage('You can\'t edit this post', Flash::WARNING);
             $this->redirect('/');
         }
 
-        if ($post->updatePost($_POST)) {
+        if ($post->update($_POST)) {
             Flash::addMessage('Changes saved');
             $this->redirect("/posts/show/$post->id");
         }
 
-        View::renderTemplate('posts/edit.html', [
-            'post' => $post
-        ]);
+        View::renderTemplate('posts/edit.html', ['post' => $post]);
+    }
+
+    public function destroy()
+    {
+        $post = Post::findById(
+            (int) $this->routeParams['id']
+        );
+
+        if (!$post || $post->user_id !== Auth::getUser()->id) {
+            Flash::addMessage('You can\'t delete this post', Flash::WARNING);
+            $this->redirect('/');
+        }
+
+        if ($post->delete()) {
+            Flash::addMessage('Post was deleted');
+            $this->redirect('/');
+        }
     }
 }

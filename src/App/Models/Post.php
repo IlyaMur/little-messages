@@ -88,7 +88,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return $post ? $post : null;
     }
 
-    public function updatePost(array $data): bool
+    public function update(array $data): bool
     {
         $this->title = $data['title'];
         $this->body = $data['body'];
@@ -113,5 +113,18 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         }
 
         return false;
+    }
+
+    public function delete(): bool
+    {
+        $sql = 'DELETE FROM posts
+                WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 }
