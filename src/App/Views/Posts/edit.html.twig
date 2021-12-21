@@ -1,21 +1,23 @@
 {% extends "base.html.twig" %}
 
-{% block title %}New Post
+{% block title %}Log in
 {% endblock %}
 {% block body %}
 	<a href="{{ APP_ROOT }}posts" class="btn btn-light">
 		<i class="fa fa-backward"></i>
 		Back
 	</a>
+
+
 	<div class="card card-body bg-light mt-3">
 		{% include "partials/_flash.html.twig" %}
 		<div class="text-center">
 			<h2>
-				Add Post
+				Edit Post
 			</h2>
-			<p>Create a post with this form</p>
+			<p>Edit a post with this form</p>
 		</div>
-		<form id="formPost" action="{{ APP_ROOT }}posts/create" method="post">
+		<form id="formPost" action="{{ APP_ROOT }}posts/update/{{ post.id }}" method="post">
 			{% if post.errors is not empty %}
 				<p>Errors:</p>
 				<ul>

@@ -24,8 +24,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
     public function newAction(): void
     {
         if (!Auth::getUser()) {
-            Flash::addMessage('You need to login for posting', Flash::INFO);
-            $this->redirect('/');
+            $this->requireLogin();
         }
 
         View::renderTemplate('posts/new.html');
@@ -59,5 +58,48 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
         );
 
         View::renderTemplate('posts/show.html', ['post' => $post, 'user' => $user]);
+    }
+
+    public function editAction(): void
+    {
+        if (!Auth::getUser()) {
+            $this->requireLogin();
+        }
+
+        $post = Post::findById(
+            (int) $this->routeParams['id']
+        );
+
+        if (!$post || $post->user_id !== Auth::getUser()->id) {
+            Flash::addMessage('You can\'t edit this post', Flash::WARNING);
+            $this->redirect('/');
+        }
+
+        View::renderTemplate('posts/edit.html', ['post' => $post]);
+    }
+
+    public function updateAction(): void
+    {
+        if (!Auth::getUser()) {
+            $this->requireLogin();
+        }
+
+        $post = Post::findById(
+            (int) $this->routeParams['id']
+        );
+
+        if (!$post || $post->user_id !== Auth::getUser()->id) {
+            Flash::addMessage('You can\'t edit this post', Flash::WARNING);
+            $this->redirect('/');
+        }
+
+        if ($post->updatePost($_POST)) {
+            Flash::addMessage('Changes saved');
+            $this->redirect("/posts/show/$post->id");
+        }
+
+        View::renderTemplate('posts/edit.html', [
+            'post' => $post
+        ]);
     }
 }

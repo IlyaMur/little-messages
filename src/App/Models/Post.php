@@ -87,4 +87,31 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         return $post ? $post : null;
     }
+
+    public function updatePost(array $data): bool
+    {
+        $this->title = $data['title'];
+        $this->body = $data['body'];
+
+        $this->validate();
+
+        if (empty($this->errors)) {
+
+            $sql = 'UPDATE posts
+                    SET title = :title,
+                        body = :body
+                    WHERE id = :id';
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue('title', $this->title, PDO::PARAM_STR);
+            $stmt->bindValue('body', $this->body, PDO::PARAM_STR);
+            $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
+
+        return false;
+    }
 }
