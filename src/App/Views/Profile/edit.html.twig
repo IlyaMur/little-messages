@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Profile
+{% block title %}Edit Profile
 {% endblock %}
 
 {% block body %}
@@ -40,10 +40,18 @@
 				<div class="form-group">
 
 					<label for="inputPassword">Password</label>
-					<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock">
-					<span id="helpBlock" class="form-text text-muted">Leave blank to keep current password</span>
+					<div class="input-group">
+						<input class="form-control" id="inputPassword" name="password" placeholder="password" type="password" aria-describedby="helpBlock" data-toggle="password">
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i class="fa fa-eye"></i>
+							</span>
+						</div>
+					</div>
+
 
 				</div>
+				<span id="helpBlock" class="form-text text-muted">Leave blank to keep current password</span>
 
 				<button class="btn btn-dark" type="submit">Save</button>
 			</form>
