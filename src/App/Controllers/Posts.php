@@ -9,6 +9,7 @@ use Ilyamur\PhpMvc\App\Flash;
 use Ilyamur\PhpMvc\Core\View;
 use Ilyamur\PhpMvc\App\Models\Post;
 use Ilyamur\PhpMvc\App\Models\User;
+use Ilyamur\PhpMvc\App\Models\Comment;
 
 class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
@@ -61,7 +62,18 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             (int) $post->user_id
         );
 
-        View::renderTemplate('posts/show.html', ['post' => $post, 'user' => $user]);
+        $postComments = Comment::getCommentsById(
+            (int) $this->routeParams['id']
+        );
+
+        View::renderTemplate(
+            'posts/show.html',
+            [
+                'post' => $post,
+                'user' => $user,
+                'comments' => $postComments
+            ]
+        );
     }
 
     public function editAction(): void
