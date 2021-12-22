@@ -34,7 +34,8 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
                 FROM comments AS c
                 JOIN users AS u
                 ON c.user_id = u.id
-                WHERE c.post_id = :post_id';
+                WHERE c.post_id = :post_id
+                ORDER BY c.created_at DESC';
 
         $db = static::getDB();
 
@@ -60,6 +61,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
 
             $stmt->bindValue(':body', $this->commentBody, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
+            $stmt->bindValue(':post_id', $this->postId, PDO::PARAM_INT);
 
             return $stmt->execute();
         }

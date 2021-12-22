@@ -58,4 +58,10 @@ abstract class Controller
         Auth::rememberRequestedPage();
         $this->redirect('/login');
     }
+
+    protected function toRootWithWarning(string $msg = 'Nothing found')
+    {
+        Flash::addMessage($msg, Flash::WARNING);
+        $this->redirect('/');
+    }
 }

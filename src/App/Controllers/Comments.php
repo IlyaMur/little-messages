@@ -15,17 +15,15 @@ class Comments extends Authenticated
     public function createAction()
     {
         $comment = new Comment($_POST);
-
-        if ($comment->save()) {
-            Flash::addMessage('Comment Added', Flash::SUCCESS);
-            $this->redirect('/');
-        }
-
         $post = Post::findById((int) $_POST['postId']);
 
         if (!$post) {
-            Flash::addMessage('Nothing found', Flash::WARNING);
-            $this->redirect('/');
+            $this->toRootWithWarning();
+        }
+
+        if ($comment->save()) {
+            Flash::addMessage('Comment Added', Flash::SUCCESS);
+            $this->redirect("/posts/show/$post->id");
         }
 
         View::renderTemplate(

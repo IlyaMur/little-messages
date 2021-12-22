@@ -54,8 +54,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
         );
 
         if (!$post) {
-            Flash::addMessage('Nothing found', Flash::WARNING);
-            $this->redirect('/');
+            $this->toRootWithWarning();
         }
 
         $postComments = Comment::getCommentsById(
