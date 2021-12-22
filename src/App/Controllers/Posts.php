@@ -58,10 +58,6 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->redirect('/');
         }
 
-        $user = User::findById(
-            (int) $post->user_id
-        );
-
         $postComments = Comment::getCommentsById(
             (int) $this->routeParams['id']
         );
@@ -70,7 +66,6 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             'posts/show.html',
             [
                 'post' => $post,
-                'user' => $user,
                 'comments' => $postComments
             ]
         );

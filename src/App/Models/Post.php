@@ -72,8 +72,13 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
     public static function findById(int $postsId): ?Post
     {
-        $sql = 'SELECT * from posts
-                WHERE id = :id';
+        $sql = 'SELECT 
+                    u.name AS author,
+                    p.*
+                FROM posts AS p
+                JOIN users AS u
+                ON p.user_id = u.id
+                WHERE p.id = :id';
 
         $db = static::getDB();
 
@@ -84,6 +89,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
         $post = $stmt->fetch();
+
 
         return $post ? $post : null;
     }

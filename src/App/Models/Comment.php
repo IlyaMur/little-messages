@@ -18,8 +18,8 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
 
     public function validate(): void
     {
-        if (trim($this->body) === '') {
-            $this->errors[] = 'Comments body is required';
+        if (trim($this->commentBody) === '') {
+            $this->errors[] = 'Write something in a comment...';
         }
     }
 
@@ -52,14 +52,13 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         $this->validate();
 
         if (empty($this->errors)) {
-            $sql = 'INSERT INTO posts (title, body, user_id)
-                    VALUES (:title, :body, :user_id)';
+            $sql = 'INSERT INTO comments (body, user_id, post_id)
+                    VALUES (:body, :user_id, :post_id)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
-            $stmt->bindValue(':body', $this->body, PDO::PARAM_STR);
+            $stmt->bindValue(':body', $this->commentBody, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
 
             return $stmt->execute();
