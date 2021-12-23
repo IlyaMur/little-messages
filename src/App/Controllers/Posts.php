@@ -41,6 +41,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->requireLogin();
         }
 
+
         $post = new Post($_POST);
 
         if ($post->save()) {

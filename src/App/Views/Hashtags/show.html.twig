@@ -16,7 +16,8 @@
 
 	</div>
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-lg-8 col-md-8 mb-3">
+
 			{% if posts %}
 				{% for post in posts %}
 					<div class="card card-body">
@@ -44,7 +45,8 @@
 
 		</div>
 
-		<div class="col-md-3 comment-wrapper">
+		<div class="col-lg-3 col-md-4 comment-wrapper">
+
 			<h4 class="text-center">Last 5 comments</h4>
 			{% if comments %}
 				<ul id="commentListMain" class="comment-section media-list mt-4 bg-light">
@@ -62,7 +64,7 @@
 
 								</strong>
 								<p>
-									{{ comment.body | u.truncate(20, '...') }}
+									{{ comment.body | u.truncate(15, '...') }}
 								</p>
 								<a href="{{APP_ROOT}}posts/show/{{ comment.postId }}">
 									{{ comment.postTitle | u.truncate(17, '...') }}

@@ -8,7 +8,7 @@
 	{% include "partials/_flash.html.twig" %}
 	<div class="row">
 		{% if currentUser %}
-			<div class="col-md-9 mb-2">
+			<div class="col-md-9 mb-3">
 				<a href="{{ appRoot }}/posts/new" class="btn btn-primary pull-right">
 					<i class="fa fa-pencil"></i>
 					Add Post
@@ -17,9 +17,9 @@
 		{% endif %}
 	</div>
 	<div class="row">
-		<div class="col-md-1">
-			<h6 class="text-center">
-				Popular Hashtags:
+		<div class="col-md-1 mb-2">
+			<h6>
+				#tags:
 			</h6>
 
 			{% for hashtag in hashtags %}
@@ -30,7 +30,9 @@
 			{% endfor %}
 		</div>
 
-		<div class="col-md-8">
+		<div class="col-lg-8 col-md-11 mb-3">
+
+
 			{% for post in posts %}
 				<div class="card card-body">
 					<h4 class="card-title">{{ post.title }}</h4>
@@ -52,7 +54,9 @@
 			{% endfor %}
 		</div>
 
-		<div class="col-md-3 comment-wrapper">
+		<div class="col-lg-3 col-md-4 comment-wrapper">
+
+
 			<h4 class="text-center">Last 5 comments</h4>
 			{% if comments %}
 				<ul id="commentListMain" class="comment-section media-list mt-4 bg-light">
@@ -70,7 +74,7 @@
 
 								</strong>
 								<p>
-									{{ comment.body | u.truncate(20, '...') }}
+									{{ comment.body | u.truncate(15, '...') }}
 								</p>
 								<a href="{{ APP_ROOT }}posts/show/{{ comment.postId }}">
 
