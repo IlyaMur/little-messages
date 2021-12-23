@@ -17,7 +17,20 @@
 		{% endif %}
 	</div>
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-1">
+			<h6 class="text-center">
+				Popular Hashtags:
+			</h6>
+
+			{% for hashtag in hashtags %}
+				<a href="/hashtags/show/{{hashtag.body}}">
+					{{ hashtag.body}}
+				</a>
+
+			{% endfor %}
+		</div>
+
+		<div class="col-md-8">
 			{% for post in posts %}
 				<div class="card card-body">
 					<h4 class="card-title">{{ post.title }}</h4>
@@ -34,7 +47,7 @@
 					{% endautoescape  %}
 
 
-					<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
+					<a href="{{ APP_ROOT }}posts/show/{{ post.id }}" class="btn btn-dark">More</a>
 				</div>
 			{% endfor %}
 		</div>
@@ -59,7 +72,8 @@
 								<p>
 									{{ comment.body | u.truncate(20, '...') }}
 								</p>
-								<a href="posts/show/{{ comment.postId }}">
+								<a href="{{ APP_ROOT }}posts/show/{{ comment.postId }}">
+
 									{{ comment.postTitle | u.truncate(17, '...') }}
 								</a>
 							</div>

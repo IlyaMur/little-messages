@@ -35,8 +35,9 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
 
     static function getLastHashtags($number = 10)
     {
-        $sql = "SELECT * FROM hashtags 
-                ORDER BY id
+        $sql = "SELECT hashtag AS body, id
+                FROM hashtags 
+                ORDER BY id DESC
                 LIMIT $number";
 
         return static::getDB()->query($sql)->fetchAll();

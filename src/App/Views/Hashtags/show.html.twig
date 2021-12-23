@@ -7,14 +7,13 @@
 {% block body %}
 	{% include "partials/_flash.html.twig" %}
 	<div class="row">
-		{% if currentUser %}
-			<div class="col-md-9 mb-2">
-				<a href="{{ appRoot }}/posts/new" class="btn btn-primary pull-right">
-					<i class="fa fa-pencil"></i>
-					Add Post
-				</a>
-			</div>
-		{% endif %}
+		<div class="col">
+			<h2 class="mb-3">Posts with
+				<a href="{{APP_ROOT}}hashtags/show/{{hashtag}}">#{{hashtag}}</a>
+
+			</h2>
+		</div>
+
 	</div>
 	<div class="row">
 		<div class="col-md-9">
@@ -33,13 +32,13 @@
 						{% autoescape false %}
 							<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
 						{% endautoescape  %}
-						<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
+						<a href="{{ APP_ROOT }}posts/show/{{ post.id }}" class="btn btn-dark">More</a>
 					</div>
 				{% endfor %}
 			{% else %}
-				<h2 class="text-center mt-5">
+				<h3 class="text-center mt-5">
 					Nothing found...
-				</h2>
+				</h3>
 
 			{% endif %}
 
@@ -65,11 +64,12 @@
 								<p>
 									{{ comment.body | u.truncate(20, '...') }}
 								</p>
-								<a href="posts/show/{{ comment.postId }}">
+								<a href="{{APP_ROOT}}posts/show/{{ comment.postId }}">
 									{{ comment.postTitle | u.truncate(17, '...') }}
 								</a>
 							</div>
 						</li>
+
 					{% endfor %}
 				{% else %}
 					No comments yet...

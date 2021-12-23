@@ -19,6 +19,13 @@ class Hashtags extends \Ilyamur\PhpMvc\Core\Controller
 
         $comments = Comment::getLastComments();
 
-        View::renderTemplate('hashtags/show.html', ['posts' => $posts, 'comments' => $comments]);
+        View::renderTemplate(
+            'hashtags/show.html',
+            [
+                'hashtag' => $this->routeParams['hashtag'],
+                'posts' => $posts,
+                'comments' => $comments
+            ]
+        );
     }
 }
