@@ -74,10 +74,14 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         $sql = "SELECT
                     c.created_at AS createdAt,
                     u.name AS author,
-                    c.body AS body
+                    c.body AS body,
+                    p.title AS postTitle,
+                    p.id AS postId
                 FROM comments AS c
                 JOIN users AS u
                 ON c.user_id = u.id
+                JOIN posts AS p
+                ON c.post_id = p.id
                 ORDER BY c.created_at DESC
                 LIMIT $number";
 

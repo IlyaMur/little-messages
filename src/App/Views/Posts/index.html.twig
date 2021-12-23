@@ -6,12 +6,9 @@
 
 {% block body %}
 	{% include "partials/_flash.html.twig" %}
-	<div class="row mb-3">
-		<div class="col-md-6">
-			<h1>Posts</h1>
-		</div>
+	<div class="row">
 		{% if currentUser %}
-			<div class="col-md-3">
+			<div class="col-md-9 mb-2">
 				<a href="{{ appRoot }}/posts/new" class="btn btn-primary pull-right">
 					<i class="fa fa-pencil"></i>
 					Add Post
@@ -34,7 +31,8 @@
 						{{ post.createdAt|date("d/m/y H:i") }}
 
 					</div>
-					<p class="card-text">{{ post.body }}</p>
+					<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
+
 					<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
 				</div>
 			{% endfor %}
@@ -44,24 +42,28 @@
 
 			<h4 class="text-center">Last 5 comments</h4>
 			{% if comments %}
-				<ul class="media-list mt-5">
+				<ul id="commentListMain" class="media-list mt-4">
 					{% for comment in comments %}
 						<li class="media">
 							<a href="#" class="pull-left">
-								<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle inline-block-image">
+								<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle index-avatar inline-block-image">
+
 							</a>
 							<div class="media-body">
 								<span class="text-muted pull-right">
 									<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
 								</span>
+								<strong class="comment-author text-dark">
+									{{ comment.author  }}
 
-								<p class="text-dark">{{ comment.author  }}</p>
-
-
-								<p class="mt-3">
-									{{ comment.body | u.truncate(12, ' ...') }}
-
+								</strong>
+								<p>
+									{{ comment.body | u.truncate(20, '...') }}
 								</p>
+								<a href="posts/show/{{ comment.postId }}">
+									{{ comment.postTitle | u.truncate(17, '...') }}
+
+								</a>
 							</div>
 						</li>
 					{% endfor %}

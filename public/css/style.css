@@ -1,10 +1,23 @@
+html {
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
+}
+
 .comment-wrapper .panel-body {
     overflow: auto;
 }
 
 .comment-wrapper .media-list .media img {
+    display: inline-block;
+    margin-right: 10px;
     width: 64px;
     height: 64px;
+    border: 2px solid #e5e7e8;
+}
+
+.index-avatar {
+    width: 28px !important;
+    height: 28px !important;
     border: 2px solid #e5e7e8;
 }
 
@@ -13,7 +26,15 @@
     margin-bottom: 25px;
 }
 
-.inline-block-image {
-    display: inline-block;
-    margin-right: 10px;
+.comment-padding {
+    padding: 12px 7px 7px 0;
+}
+
+#commentListMain {
+    padding-left: 15px;
+}
+
+.comment-author {
+    display: block;
+    margin-bottom: 1rem;
 }

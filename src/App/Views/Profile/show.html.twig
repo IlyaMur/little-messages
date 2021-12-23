@@ -8,7 +8,6 @@
 {% block body %}
 	{% include "partials/_flash.html.twig" %}
 
-
 	<div class="col-md-8 mx-auto">
 		<a href="{{ APP_ROOT }}" class=" btn btn-light">
 			<i class="fa fa-backward"></i>
@@ -19,12 +18,14 @@
 
 			<h1>Profile</h1>
 			<dl class="row mt-4">
-
 				<dt class="col-sm-3">Name:</dt>
 				<dd class="col-sm-9">{{ user.name }}</dd>
 
 				<dt class="col-sm-3">Email:</dt>
 				<dd class="col-sm-9">{{ user.email }}</dd>
+
+				<dt class="col-sm-3">Registration Date:</dt>
+				<dd class="col-sm-9">{{ user.created_at | date("Y / m / d") }}</dd>
 			</dl>
 
 			<div class="row">
