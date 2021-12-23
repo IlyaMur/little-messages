@@ -60,10 +60,12 @@
 				</ul>
 			{% endif %}
 			<form id="formComment" method="post" action="{{ APP_ROOT }}comments/create">
-				<textarea name='commentBody' class="form-control" placeholder="write a comment..." rows="3"></textarea><input type="hidden" value="{{ post.id }}" name="postId"><br><button class="btn btn-dark pull-right">Post</button>
+				<textarea name='commentBody' class="form-control" placeholder="write a comment..." rows="3"></textarea>
+				<input type="hidden" value="{{ post.id }}" name="postId"><br><button class="btn btn-dark pull-right">Post</button>
 			</form>
 		{% endif %}
-		<div class="clearfix"></div><hr>
+		<div class="clearfix"></div>
+		<hr>
 		{% if comments %}
 			<ul class="media-list">
 				{% for comment in comments %}
@@ -79,7 +81,10 @@
 						</div>
 					</li>
 				{% endfor %}
-				{% else %}No comments yet...</ul>
+			{% else %}
+				No comments yet...
+			</ul>
 		{% endif %}
 	</div>
-</div></div></div></div><script src="{{ APP_ROOT }}js/script.js"></script>{% endblock %}
+	<script src="{{ APP_ROOT }}js/script.js"></script>
+{% endblock %}
