@@ -32,8 +32,6 @@
 					{% autoescape false %}
 						<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
 					{% endautoescape  %}
-
-
 					<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
 				</div>
 			{% endfor %}

@@ -22,8 +22,9 @@ html {
 }
 
 .comment-wrapper .media-list .media {
-    border-bottom: 1px dashed #efefef;
-    margin-bottom: 25px;
+    border-bottom: 2px dashed #efefef;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .comment-padding {
@@ -37,4 +38,9 @@ html {
 .comment-author {
     display: block;
     margin-bottom: 1rem;
+}
+
+.comment-section {
+    padding: 10px;
+    border: 2px solid #e5e7e8;
 }

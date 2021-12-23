@@ -30,6 +30,7 @@ $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' =>
 $router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
 
 $router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
+$router->add(route: 'hashtags/{action}/{hashtag:[а-яa-z]+}', params: ['controller' => 'hashtags']);
 
 $router->add(route: '{controller}/{action}');
 $router->add(route: '{controller}/{id:\d+}/{action}');

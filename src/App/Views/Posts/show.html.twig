@@ -23,7 +23,10 @@
 		{{ post.created_at|date("d/m/Y H:i") }}
 	</div>
 
-	<p>{{ post.body }}</p>
+	{% autoescape false %}
+		<p>{{ post.body  }}</p>
+	{% endautoescape %}
+
 
 	{% if post.user_id == currentUser.id %}
 		<hr>

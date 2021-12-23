@@ -25,7 +25,7 @@ class Router
         // Convert variables with custom regexp {id:\d+}
         $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
 
-        $route = '/^' . $route . '$/i';
+        $route = '/^' . $route . '$/isu';
 
         $this->routes[$route] = $params;
     }

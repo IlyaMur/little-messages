@@ -10,6 +10,7 @@ use Ilyamur\PhpMvc\Core\View;
 use Ilyamur\PhpMvc\App\Models\Post;
 use Ilyamur\PhpMvc\App\Models\User;
 use Ilyamur\PhpMvc\App\Models\Comment;
+use Ilyamur\PhpMvc\App\Models\Hashtag;
 
 class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
@@ -46,10 +47,11 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->redirect('/');
         }
 
+        Flash::addMessage('Posts not added', Flash::WARNING);
         View::renderTemplate('posts/new.html', ['post' => $post]);
     }
 
-    public function show(): void
+    public function showAction(): void
     {
         $post = Post::findById(
             (int) $this->routeParams['id']

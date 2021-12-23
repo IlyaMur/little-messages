@@ -10,12 +10,15 @@ use Ilyamur\PhpMvc\App\Auth;
 class Post extends \Ilyamur\PhpMvc\Core\Model
 {
     public array $errors = [];
+    public array $hashtags = [];
 
     public function __construct(array $data = [])
     {
         foreach ($data as $key => $val) {
-            $this->$key = $val;
+            $this->$key = htmlspecialchars($val);
         }
+
+        preg_match_all(Hashtag::HASHTAG_REGEXP, $this->body, $this->hashtags);
     }
 
     public function validate(): void
@@ -44,7 +47,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             $stmt->bindValue(':body', $this->body, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
 
-            return $stmt->execute();
+            return $stmt->execute() && Hashtag::save($this, (int) $db->lastInsertId());
         }
 
         return false;
@@ -67,7 +70,13 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             ORDER BY createdAt DESC'
         );
 
-        return $result->fetchAll(PDO::FETCH_CLASS, get_called_class());
+        $posts = $result->fetchAll(PDO::FETCH_CLASS, get_called_class());
+
+        foreach ($posts as $post) {
+            $post->insertLinksToHashtags();
+        }
+
+        return $posts;
     }
 
     public static function findById(int $postsId): ?Post
@@ -90,8 +99,12 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         $post = $stmt->fetch();
 
+        if ($post) {
+            $post->insertLinksToHashtags();
+            return $post;
+        }
 
-        return $post ? $post : null;
+        return null;
     }
 
     public function update(array $data): bool
@@ -132,5 +145,41 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
 
         return $stmt->execute();
+    }
+
+    public static function findPostsByHashtag(string $hashtag): array
+    {
+        $sql = 'SELECT title, body,
+                    p.id AS id,
+                    p.user_id AS authorId,
+                    p.created_at AS createdAt,
+                    (SELECT users.name FROM users WHERE users.id = p.user_id) AS author
+                FROM posts AS p
+                JOIN hashtags_posts AS hp
+                ON p.id = hp.post_id
+                JOIN hashtags AS h
+                ON hp.hashtag_id = h.id
+                JOIN users AS u
+                ON u.id = p.user_id
+                WHERE h.hashtag = :hashtag';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue('hashtag', strtolower($hashtag), PDO::PARAM_STR);
+
+        $stmt->execute();
+
+        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, get_called_class());
+
+        foreach ($posts as $post) {
+            $post->insertLinksToHashtags();
+        }
+
+        return $posts;
+    }
+
+    protected function insertLinksToHashtags(): void
+    {
+        $this->body = preg_replace(Hashtag::HASHTAG_REGEXP, ' <a href="/hashtags/show/$1"> #$1</a> ', $this->body);
     }
 }

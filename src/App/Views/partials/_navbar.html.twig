@@ -8,11 +8,13 @@
 
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="{{ APP_ROOT }}profile/show">Profile
+				{% if currentUser %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ APP_ROOT }}profile/show">Profile
 
-					</a>
-				</li>
+						</a>
+					</li>
+				{% endif %}
 				<li class="nav-item">
 					<a class="nav-link" href="{{ APP_ROOT }}pages/about">About</a>
 				</li>
