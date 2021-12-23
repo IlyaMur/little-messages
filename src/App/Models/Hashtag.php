@@ -9,7 +9,7 @@ use Ilyamur\PhpMvc\App\Models\Post;
 
 class Hashtag extends \Ilyamur\PhpMvc\Core\Model
 {
-    const HASHTAG_REGEXP = '/\#([а-яa-z]+)/isu';
+    const HASHTAG_REGEXP = '/\#([а-яa-z]+)/iu';
 
     public static function save(Post $post, int $postId): bool
     {
@@ -19,7 +19,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
                           VALUES (:hashtag)';
         $stmt = $db->prepare($insertTagsSql);
 
-        foreach ($post->hashtags[0] as $hashtag) {
+        foreach (array_unique($post->hashtags[0]) as $hashtag) {
             $stmt->bindValue('hashtag', strtolower(substr($hashtag, 1)), PDO::PARAM_STR);
 
             if (
@@ -31,5 +31,14 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
         }
 
         return true;
+    }
+
+    static function getLastHashtags($number = 10)
+    {
+        $sql = "SELECT * FROM hashtags 
+                ORDER BY id
+                LIMIT $number";
+
+        return static::getDB()->query($sql)->fetchAll();
     }
 }

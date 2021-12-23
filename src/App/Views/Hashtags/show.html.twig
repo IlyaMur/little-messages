@@ -18,23 +18,31 @@
 	</div>
 	<div class="row">
 		<div class="col-md-9">
-			{% for post in posts %}
-				<div class="card card-body">
-					<h4 class="card-title">{{ post.title }}</h4>
-					<div class="bg-light p-1 mb-3">
-						Written by
-						<strong>
-							{{ post.author }}
-						</strong>
-						on
-						{{ post.createdAt|date("d/m/y H:i") }}
+			{% if posts %}
+				{% for post in posts %}
+					<div class="card card-body">
+						<h4 class="card-title">{{ post.title }}</h4>
+						<div class="bg-light p-1 mb-3">
+							Written by
+							<strong>
+								{{ post.author }}
+							</strong>
+							on
+							{{ post.createdAt|date("d/m/y H:i") }}
+						</div>
+						{% autoescape false %}
+							<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
+						{% endautoescape  %}
+						<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
 					</div>
-					{% autoescape false %}
-						<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
-					{% endautoescape  %}
-					<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			{% else %}
+				<h2 class="text-center mt-5">
+					Nothing found...
+				</h2>
+
+			{% endif %}
+
 		</div>
 
 		<div class="col-md-3 comment-wrapper">

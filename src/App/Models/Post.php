@@ -21,7 +21,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         preg_match_all(Hashtag::HASHTAG_REGEXP, $this->body, $this->hashtags);
     }
 
-    public function validate(): void
+    protected function validate(): void
     {
         if (trim($this->title) === '') {
             $this->errors[] = 'Title is required';
@@ -149,7 +149,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
     public static function findPostsByHashtag(string $hashtag): array
     {
-        $sql = 'SELECT title, body,
+        $sql = 'SELECT DISTINCT title, body,
                     p.id AS id,
                     p.user_id AS authorId,
                     p.created_at AS createdAt,
