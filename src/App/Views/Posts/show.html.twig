@@ -64,8 +64,8 @@
 
 						<div class="clearfix"></div>
 						<hr>
-						<ul class="media-list">
-							{% if comments %}
+						{% if comments %}
+							<ul class="media-list">
 								{% for comment in comments %}
 									<li class="media">
 										<a href="#" class="pull-left">
@@ -74,11 +74,8 @@
 										<div class="media-body">
 											<span class="text-muted pull-right">
 												<small class="text-muted">{{ comment.createdAt | date("d-m-y H:i") }}</small>
-
 											</span>
 											<strong class="text-dark">{{ comment.author  }}</strong>
-
-
 											<p>
 												{{ comment.body }}
 											</p>
@@ -87,10 +84,8 @@
 								{% endfor %}
 							{% else %}
 								No comments yet...
-
-
-							{% endif %}
-						</ul>
+							</ul>
+						{% endif %}
 					</div>
 				</div>
 			</div>

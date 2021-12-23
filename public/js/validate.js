@@ -105,12 +105,12 @@ $('#formPassword').validate({
     },
 });
 
-// $('#formComment').validate({
-//     rules: {
-//         commentBody: 'required'
-//     },
-//     messages: {
-//         commentBody: 'write something...'
-//     }
-// });
+$('#formComment').validate({
+    rules: {
+        commentBody: 'required'
+    },
+    messages: {
+        commentBody: 'write something...'
+    }
+});
 

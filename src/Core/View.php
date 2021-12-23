@@ -7,6 +7,7 @@ namespace Ilyamur\PhpMvc\Core;
 use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\App\Flash;
 use Ilyamur\PhpMvc\Config\Config;
+use Twig\Extra\String\StringExtension;
 
 class View
 {
@@ -17,6 +18,7 @@ class View
         if ($twig === null) {
             $loader = new \Twig\Loader\FilesystemLoader('../src/App/Views');
             $twig = new \Twig\Environment($loader);
+            $twig->addExtension(new StringExtension());
             $twig->addGlobal('currentUser', Auth::getUser());
             $twig->addGlobal('flashMessages', Flash::getMessages());
             $twig->addGlobal('APP_ROOT', Config::ROOT_URL);

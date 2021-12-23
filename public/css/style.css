@@ -12,3 +12,8 @@
     border-bottom: 1px dashed #efefef;
     margin-bottom: 25px;
 }
+
+.inline-block-image {
+    display: inline-block;
+    margin-right: 10px;
+}

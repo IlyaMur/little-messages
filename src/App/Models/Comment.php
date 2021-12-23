@@ -68,4 +68,21 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
 
         return false;
     }
+
+    static function getLastComments(int $number = 5): array
+    {
+        $sql = "SELECT
+                    c.created_at AS createdAt,
+                    u.name AS author,
+                    c.body AS body
+                FROM comments AS c
+                JOIN users AS u
+                ON c.user_id = u.id
+                ORDER BY c.created_at DESC
+                LIMIT $number";
+
+        $result = static::getDB()->query($sql, PDO::FETCH_CLASS, get_called_class());
+
+        return $result->fetchAll();
+    }
 }

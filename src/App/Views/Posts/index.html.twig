@@ -11,32 +11,66 @@
 			<h1>Posts</h1>
 		</div>
 		{% if currentUser %}
-			<div class="col-md-6">
+			<div class="col-md-3">
 				<a href="{{ appRoot }}/posts/new" class="btn btn-primary pull-right">
 					<i class="fa fa-pencil"></i>
 					Add Post
-
 				</a>
 			</div>
 		{% endif %}
 	</div>
+	<div class="row">
+		<div class="col-md-9">
+			{% for post in posts %}
+				<div class="card card-body">
+					<h4 class="card-title">{{ post.title }}</h4>
+					<div class="bg-light p-1 mb-3">
+						Written by
+						<strong>
+							{{ post.author }}
+						</strong>
 
-	{% for post in posts %}
-		<div class="card card-body">
-			<h4 class="card-title">{{ post.title }}</h4>
-			<div class="bg-light p-1 mb-3">
-				Written by
-				<strong>
-					{{ post.author }}
-				</strong>
+						on
+						{{ post.createdAt|date("d/m/y H:i") }}
 
-				on
-				{{ post.createdAt|date("d/m/y H:i") }}
-
-			</div>
-			<p class="card-text">{{ post.body }}</p>
-			<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
+					</div>
+					<p class="card-text">{{ post.body }}</p>
+					<a href="{{ appRoot }}/posts/show/{{ post.id }}" class="btn btn-dark">More</a>
+				</div>
+			{% endfor %}
 		</div>
-	{% endfor %}
+
+		<div class="col-md-3 comment-wrapper">
+
+			<h4 class="text-center">Last 5 comments</h4>
+			{% if comments %}
+				<ul class="media-list mt-5">
+					{% for comment in comments %}
+						<li class="media">
+							<a href="#" class="pull-left">
+								<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle inline-block-image">
+							</a>
+							<div class="media-body">
+								<span class="text-muted pull-right">
+									<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
+								</span>
+
+								<p class="text-dark">{{ comment.author  }}</p>
+
+
+								<p class="mt-3">
+									{{ comment.body | u.truncate(12, ' ...') }}
+
+								</p>
+							</div>
+						</li>
+					{% endfor %}
+				{% else %}
+					No comments yet...
+				</ul>
+			{% endif %}
+
+		</div>
+	</div>
 
 {% endblock %}

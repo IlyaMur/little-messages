@@ -15,11 +15,13 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function indexAction(): void
     {
-        $posts = Post::getPosts();
-
-        View::renderTemplate('posts/index.html', [
-            'posts' => $posts
-        ]);
+        View::renderTemplate(
+            'posts/index.html',
+            [
+                'posts' => Post::getPosts(),
+                'comments' => Comment::getLastComments()
+            ]
+        );
     }
 
     public function newAction(): void
