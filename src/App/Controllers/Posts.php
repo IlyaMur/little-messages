@@ -21,7 +21,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             [
                 'posts' => Post::getPosts(),
                 'comments' => Comment::getLastComments(),
-                'hashtags' => Hashtag::getLastHashtags()
+                'hashtags' => Hashtag::getLastActualHashtags()
             ]
         );
     }
