@@ -15,15 +15,13 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
     {
         $db = static::getDB();
 
-        $insertTagsSql = 'INSERT INTO hashtags (hashtag) VALUES (:hashtag)';
-
         foreach (array_unique($post->hashtags[0]) as $hashtag) {
             $tag = static::getDuplicateTag($hashtag);
 
             if ($tag) {
-                $isCorrect = $db->query("INSERT INTO hashtags_posts VALUES ({$tag['id']}, $postId)");
+                $isCorrect = $db->query("INSERT INTO hashtags_posts VALUES ($tag->id, $postId)");
             } else {
-                $stmt = $db->prepare($insertTagsSql);
+                $stmt = $db->prepare('INSERT INTO hashtags (hashtag) VALUES (:hashtag)');
                 $stmt->bindValue('hashtag', strtolower(substr($hashtag, 1)), PDO::PARAM_STR);
 
                 $isCorrect = $stmt->execute() && $db->query("INSERT INTO hashtags_posts VALUES ({$db->lastInsertId()}, $postId)");
@@ -37,7 +35,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
         return true;
     }
 
-    static function getDuplicateTag(string $hashtag): ?string
+    static function getDuplicateTag(string $hashtag): ?Hashtag
     {
         $db = static::getDB();
 
@@ -45,6 +43,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->bindValue('hashtag', strtolower(substr($hashtag, 1)), PDO::PARAM_STR);
         $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
         $tag = $stmt->fetch();
 
