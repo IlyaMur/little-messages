@@ -70,8 +70,7 @@
 									<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
 								</span>
 								<strong class="comment-author text-dark">
-									{{ comment.author  }}
-
+									{{ comment.author ? comment.author : 'anonym'  }}
 								</strong>
 								<p>
 									{{ comment.body | u.truncate(15, '...') }}

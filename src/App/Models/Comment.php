@@ -86,7 +86,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
                     p.title AS postTitle,
                     p.id AS postId
                 FROM comments AS c
-                JOIN users AS u
+                LEFT JOIN users AS u
                 ON c.user_id = u.id
                 JOIN posts AS p
                 ON c.post_id = p.id
