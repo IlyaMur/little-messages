@@ -10,7 +10,7 @@ use Ilyamur\PhpMvc\Core\View;
 use Ilyamur\PhpMvc\App\Models\Post;
 use Ilyamur\PhpMvc\App\Models\Comment;
 
-class Comments extends Authenticated
+class Comments extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function createAction()
     {
@@ -21,7 +21,7 @@ class Comments extends Authenticated
             $this->toRootWithWarning();
         }
 
-        if ($comment->save()) {
+        if ($comment->save($this->getCaptcha())) {
             Flash::addMessage('Comment Added', Flash::SUCCESS);
             $this->redirect("/posts/show/$post->id");
         }
@@ -31,7 +31,8 @@ class Comments extends Authenticated
             [
                 'comment' => $comment,
                 'post' => $post,
-                'comments' => Comment::getCommentsById((int) $_POST['postId'])
+                'comments' => Comment::getCommentsById((int) $_POST['postId']),
+                'captcha' => $this->generateCaptcha()
             ]
         );
     }

@@ -17,6 +17,7 @@
         "twig/twig": "^3.0",
         "mailjet/mailjet-apiv3-php": "^1.5",
         "twig/string-extra": "^3.3",
-        "twig/extra-bundle": "^3.3"
+        "twig/extra-bundle": "^3.3",
+        "gregwar/captcha": "^1.1"
     }
 }

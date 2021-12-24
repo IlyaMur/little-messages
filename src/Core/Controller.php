@@ -6,6 +6,7 @@ namespace Ilyamur\PhpMvc\Core;
 
 use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\App\Flash;
+use Gregwar\Captcha\CaptchaBuilder;
 
 abstract class Controller
 {
@@ -63,5 +64,19 @@ abstract class Controller
     {
         Flash::addMessage($msg, Flash::WARNING);
         $this->redirect('/');
+    }
+
+    protected function getCaptcha()
+    {
+        return $_SESSION['phrase'] ?? null;
+    }
+
+    protected function generateCaptcha()
+    {
+        $captcha = new CaptchaBuilder();
+        $captcha->build();
+        $_SESSION['phrase'] = $captcha->getPhrase();
+
+        return $captcha->inline();
     }
 }

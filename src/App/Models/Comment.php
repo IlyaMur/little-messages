@@ -16,10 +16,16 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
-    public function validate(): void
+    public function validate(string $correctCaptcha): void
     {
         if (trim($this->commentBody) === '') {
             $this->errors[] = 'Write something in a comment...';
+        }
+
+        if (!Auth::getUser()) {
+            if ($this->captcha !== $correctCaptcha) {
+                $this->errors[] = 'Incorrect captcha, please try again.';
+            }
         }
     }
 
@@ -32,7 +38,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
                     u.id AS userId,
                     c.created_at as createdAt
                 FROM comments AS c
-                JOIN users AS u
+                LEFT JOIN users AS u
                 ON c.user_id = u.id
                 WHERE c.post_id = :post_id
                 ORDER BY c.created_at DESC';
@@ -48,9 +54,9 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         return $stmt->fetchAll();
     }
 
-    public function save(): bool
+    public function save(string $captcha): bool
     {
-        $this->validate();
+        $this->validate($captcha);
 
         if (empty($this->errors)) {
             $sql = 'INSERT INTO comments (body, user_id, post_id)
@@ -59,8 +65,10 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
+            $userId = Auth::getUser() ? Auth::getUser()->id : null;
+
             $stmt->bindValue(':body', $this->commentBody, PDO::PARAM_STR);
-            $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
             $stmt->bindValue(':post_id', $this->postId, PDO::PARAM_INT);
 
             return $stmt->execute();

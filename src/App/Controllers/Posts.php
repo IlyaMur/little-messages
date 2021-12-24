@@ -11,6 +11,7 @@ use Ilyamur\PhpMvc\App\Models\Post;
 use Ilyamur\PhpMvc\App\Models\User;
 use Ilyamur\PhpMvc\App\Models\Comment;
 use Ilyamur\PhpMvc\App\Models\Hashtag;
+use Gregwar\Captcha\CaptchaBuilder;
 
 class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
@@ -41,7 +42,6 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->requireLogin();
         }
 
-
         $post = new Post($_POST);
 
         if ($post->save()) {
@@ -71,7 +71,8 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             'posts/show.html',
             [
                 'post' => $post,
-                'comments' => $postComments
+                'comments' => $postComments,
+                'captcha' => $this->generateCaptcha()
             ]
         );
     }

@@ -107,10 +107,12 @@ $('#formPassword').validate({
 
 $('#formComment').validate({
     rules: {
-        commentBody: 'required'
+        commentBody: 'required',
+        captcha: 'required'
     },
     messages: {
-        commentBody: 'write something...'
+        commentBody: 'write something...',
+        captcha: ''
     }
 });
 
