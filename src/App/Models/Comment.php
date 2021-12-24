@@ -24,7 +24,9 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
 
         if (!Auth::getUser()) {
             if ($this->captcha !== $correctCaptcha) {
-                $this->errors[] = 'Incorrect captcha, please try again.';
+                $this->errors[] = 'Incorrect captcha';
+
+                $this->captchaError = true;
             }
         }
     }

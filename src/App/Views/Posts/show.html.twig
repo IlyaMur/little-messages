@@ -45,21 +45,16 @@
 				<div class="panel panel-info">
 
 					<div class="panel-body mt-3">
-						{% if comment.errors is not empty %}
-							<p>Errors:</p>
-							<ul>
-								{% for error in comment.errors %}
-									<li>{{ error }}</li>
-								{% endfor %}
-							</ul>
-						{% endif %}
-
 						<form id="formComment" method="post" action="{{ APP_ROOT }}comments/create">
 							{% if not currentUser %}
 								<div class="pull-right mb-3">
 									<label for="captcha">Please insert captcha</label>
 
 									<input id="captcha" class="form-control" name="captcha" type="text">
+									<div class="invalid-feedback" {{ comment.captchaError ? "style=\"display:block\"" : '' }}>
+										Captcha is invalid, please try again
+									</div>
+
 									<div class="mb-3"></div>
 
 									<img class="pull-right" src="{{ captcha }}" alt="captcha">
@@ -67,7 +62,8 @@
 								</div>
 							{% endif %}
 
-							<textarea name='commentBody' class="form-control" placeholder="write a comment..." rows="3"></textarea>
+							<textarea name='commentBody' class="form-control" placeholder="write a comment..." rows="3">{{comment.commentBody}}</textarea>
+
 							<input type="hidden" value="{{ post.id }}" name="postId"><br><button class="btn btn-dark pull-right">Post</button>
 						</form>
 						<div class="clearfix"></div>
@@ -83,7 +79,6 @@
 											</span>
 											<strong class="text-dark">{{ comment.author ? comment.author : 'anonym'  }}
 											</strong>
-
 
 											<p class="pt-2">
 												{{ comment.body }}</p>

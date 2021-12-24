@@ -15,7 +15,10 @@ class Comments extends \Ilyamur\PhpMvc\Core\Controller
     public function createAction()
     {
         $comment = new Comment($_POST);
+
         $post = Post::findById((int) $_POST['postId']);
+
+
 
         if (!$post) {
             $this->toRootWithWarning();
