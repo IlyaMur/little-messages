@@ -7,11 +7,6 @@
             "Ilyamur\\PhpMvc\\Config\\": "config/"
         }
     },
-    "config": {
-        "platform": {
-            "php": "8.0.12"
-        }
-    },
     "authors": [
         {
             "name": "Ilya Mur",
@@ -23,6 +18,7 @@
         "mailjet/mailjet-apiv3-php": "^1.5",
         "twig/string-extra": "^3.3",
         "twig/extra-bundle": "^3.3",
-        "gregwar/captcha": "^1.1"
+        "gregwar/captcha": "^1.1",
+        "php": "^8.0.12" 
     }
 }
