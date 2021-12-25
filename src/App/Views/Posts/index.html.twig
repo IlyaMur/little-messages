@@ -44,9 +44,22 @@
 						on
 						{{ post.createdAt|date("d/m/y H:i") }}
 					</div>
-					{% autoescape false %}
-						<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
-					{% endautoescape  %}
+					{% if post.url %}
+						<div class="row mb-3">
+							<div class="col-3">
+								<img src="{{post.url}}" style="max-width:150px" class="img-thumbnail mx-auto d-block" alt="post cover">
+							</div>
+							<div class="col-9">
+								{% autoescape false %}
+									<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
+								{% endautoescape  %}
+							</div>
+						</div>
+					{% else %}
+						{% autoescape false %}
+							<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
+						{% endautoescape  %}
+					{% endif %}
 
 
 					<a href="{{ APP_ROOT }}posts/show/{{ post.id }}" class="btn btn-dark">More</a>

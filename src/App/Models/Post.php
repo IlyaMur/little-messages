@@ -6,18 +6,32 @@ namespace Ilyamur\PhpMvc\App\Models;
 
 use PDO;
 use Ilyamur\PhpMvc\App\Auth;
+use Ilyamur\PhpMvc\App\S3Helper;
+use Ilyamur\PhpMvc\App\Models\Hashtag;
 
 class Post extends \Ilyamur\PhpMvc\Core\Model
 {
+    const COVER_NAME = 'coverImage';
+    const MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg'];
+
     public array $errors = [];
     public array $hashtags = [];
 
-    public function __construct(array $data = [])
+    public function __construct(array $data = [], array $imgsData = [])
     {
         foreach ($data as $key => $val) {
             $this->$key = htmlspecialchars($val);
         }
 
+        foreach ($imgsData as $key => $val) {
+            $this->file[$key] = $val;
+        }
+
+        $this->parseHashtagsFromBody();
+    }
+
+    private function parseHashtagsFromBody()
+    {
         preg_match_all(Hashtag::HASHTAG_REGEXP, $this->body, $this->hashtags);
     }
 
@@ -32,25 +46,89 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
+    private function validateInputImage(): void
+    {
+        switch ($this->file[static::COVER_NAME]['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $this->errors[] = 'No file uploaded';
+                return;
+            case UPLOAD_ERR_INI_SIZE:
+                $this->errors[] = 'File is too large';
+                return;
+            default:
+                $this->errors[] = 'File not uploaded';
+                return;
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($finfo, $this->file[static::COVER_NAME]['tmp_name']);
+
+        if (!in_array($mimeType, static::MIME_TYPES)) {
+            $this->errors[] = 'Invalid format';
+            return;
+        }
+
+        if ($this->file[static::COVER_NAME]['size'] > 650000) {
+            $this->errors[] = 'File is too large';
+            return;
+        }
+
+        $pathinfo = pathinfo($this->file[static::COVER_NAME]['name']);
+        $base = $pathinfo['filename'];
+
+        $base = mb_substr(preg_replace('/[^a-zA-Z0-0_-]/', '_', $base), 0, 200);
+
+        $destination = __DIR__ . "/../../../uploads/$base." . $pathinfo['extension'];
+
+        $i = 1;
+        while (file_exists($destination)) {
+            $filename = $base . "-$i" . '.' . $pathinfo['extension'];
+            $destination = "../uploads/$filename";
+            $i++;
+        }
+
+        if (!move_uploaded_file($this->file[static::COVER_NAME]['tmp_name'], $destination)) {
+            $this->errors[] = 'Something wrong with file upload';
+            return;
+        }
+
+        $this->file['destination'] = $destination;
+    }
+
     public function save(): bool
     {
         $this->validate();
 
+        if (file_exists($this->file[static::COVER_NAME]['tmp_name'])) {
+            $this->validateInputImage();
+        }
+
         if (empty($this->errors)) {
-            $sql = 'INSERT INTO posts (title, body, user_id)
-                    VALUES (:title, :body, :user_id)';
+            $sql = 'INSERT INTO posts (title, body, user_id, cover_link)
+                    VALUES (:title, :body, :user_id, :cover_link)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
+            $imageUrl = isset($this->file['destination']) ? $this->saveToS3() :  null;
+
             $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
             $stmt->bindValue(':body', $this->body, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
+            $stmt->bindValue(':cover_link', $imageUrl, PDO::PARAM_STR);
 
             return $stmt->execute() && Hashtag::save($this, (int) $db->lastInsertId());
         }
 
         return false;
+    }
+
+    private function saveToS3(): string
+    {
+        $s3 = new S3Helper();
+        return $s3->uploadFile($this->file['destination']);
     }
 
     public static function getPosts(): array
@@ -61,6 +139,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             'SELECT title, body,
                 p.id AS id,
                 u.id AS authorId,
+                p.cover_link AS url,
                 p.created_at AS createdAt,
                 u.created_at AS authorRegDate,
                 u.name AS author
@@ -107,19 +186,30 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return null;
     }
 
-    public function update(array $data): bool
+    public function update(array $data, array $imgsData): bool
     {
         $this->title = $data['title'];
         $this->body = $data['body'];
 
+        foreach ($imgsData as $key => $val) {
+            $this->file[$key] = $val;
+        }
+
         $this->validate();
 
-        if (empty($this->errors)) {
+        if (file_exists($this->file[static::COVER_NAME]['tmp_name'])) {
+            $this->validateInputImage();
+        }
 
-            $sql = 'UPDATE posts
+        if (empty($this->errors)) {
+            $s3url = isset($this->file['destination']) ? $this->saveToS3() :  null;
+
+            $str = $s3url ? ', cover_link = :cover_link' : '';
+
+            $sql = "UPDATE posts
                     SET title = :title,
-                        body = :body
-                    WHERE id = :id';
+                        body = :body" . $str .
+                " WHERE id = :id";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
@@ -127,6 +217,16 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             $stmt->bindValue('title', $this->title, PDO::PARAM_STR);
             $stmt->bindValue('body', $this->body, PDO::PARAM_STR);
             $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
+            if ($s3url) {
+                $stmt->bindValue('cover_link', $s3url, PDO::PARAM_STR);
+            }
+
+            $isCorrect = $stmt->execute();
+
+            if ($s3url && $isCorrect) {
+                $s3 = new S3Helper();
+                $s3->deleteFile($this->cover_link);
+            }
 
             return $stmt->execute();
         }

@@ -3,7 +3,7 @@
 {% block title %}Log in
 {% endblock %}
 {% block body %}
-	<a href="{{ APP_ROOT }}posts" class="btn btn-light">
+	<a href="{{ APP_ROOT }}posts/show/{{ post.id }}" class="btn btn-light">
 		<i class="fa fa-backward"></i>
 		Back
 	</a>
@@ -17,7 +17,8 @@
 			</h2>
 			<p>Edit a post with this form</p>
 		</div>
-		<form id="formPost" action="{{ APP_ROOT }}posts/update/{{ post.id }}" method="post">
+		<form id="formPost" enctype="multipart/form-data" action="{{ APP_ROOT }}posts/update/{{ post.id }}" method="post">
+
 			{% if post.errors is not empty %}
 				<p>Errors:</p>
 				<ul>
@@ -28,16 +29,26 @@
 			{% endif %}
 
 			<div class="form-group">
-				<label for="inputTitle">Title:</label>
+				<label for="inputTitle">Title:
+
+				</label>
 				<input value="{{ post.title }}" type="text" name="title" id="inputTitle" class="form-control form-control-lg" autofocus>
 
 			</div>
 			<div class="form-group">
-				<label for="inputBody">Post:</label>
+				<label for="inputBody">Post:
+				</label>
+
 				<div class="input-group">
 					<textarea id="body" name="body" type="text" class="form-control form-control-lg">{{ post.body }}</textarea>
 
 				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="formFile" class="form-label">Add Post Cover</label>
+				<input name='coverImage' accept="image/*" class="form-control" type="file" id="formFile">
+
 			</div>
 
 			<button type="submit" class="btn btn-success">Submit</button>

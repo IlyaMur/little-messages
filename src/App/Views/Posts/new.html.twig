@@ -15,7 +15,8 @@
 			</h2>
 			<p>Create a post with this form</p>
 		</div>
-		<form id="formPost" action="{{ APP_ROOT }}posts/create" method="post">
+		<form id="formPost" enctype="multipart/form-data" action="{{ APP_ROOT }}posts/create" method="post">
+
 			{% if post.errors is not empty %}
 				<p>Errors:</p>
 				<ul>
@@ -26,19 +27,29 @@
 			{% endif %}
 
 			<div class="form-group">
-				<label for="inputTitle">Title:</label>
+				<label for="inputTitle">Title:
+					<sup>*</sup>
+				</label>
 				<input value="{{ post.title }}" type="text" name="title" id="inputTitle" class="form-control form-control-lg" autofocus>
 
 			</div>
 			<div class="form-group">
-				<label for="inputBody">Post:</label>
+				<label for="inputBody">Post:<sup>*</sup>
+				</label>
+
 				<div class="input-group">
 					<textarea id="body" name="body" type="text" class="form-control form-control-lg">{{ post.body }}</textarea>
 
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="formFile" class="form-label">Add Post Cover</label>
+				<input name='coverImage' accept="image/*" class="form-control" type="file" id="formFile">
+			</div>
 
 			<button type="submit" class="btn btn-success">Submit</button>
 		</form>
+		<br>
 	</div>
+
 {% endblock %}

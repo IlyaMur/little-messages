@@ -12,6 +12,7 @@ use Ilyamur\PhpMvc\App\Models\User;
 use Ilyamur\PhpMvc\App\Models\Comment;
 use Ilyamur\PhpMvc\App\Models\Hashtag;
 use Gregwar\Captcha\CaptchaBuilder;
+use Ilyamur\PhpMvc\App\S3Helper;
 
 class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
@@ -38,11 +39,14 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 
     public function createAction()
     {
+        // var_dump($_FILES);
+        // var_dump($_POST);
+        // exit;
         if (!Auth::getUser()) {
             $this->requireLogin();
         }
 
-        $post = new Post($_POST);
+        $post = new Post($_POST, $_FILES);
 
         if ($post->save()) {
             Flash::addMessage('Post Added', Flash::SUCCESS);
@@ -108,7 +112,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->redirect('/');
         }
 
-        if ($post->update($_POST)) {
+        if ($post->update($_POST, $_FILES)) {
             Flash::addMessage('Changes saved');
             $this->redirect("/posts/show/$post->id");
         }

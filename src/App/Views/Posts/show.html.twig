@@ -22,6 +22,12 @@
 		on
 		{{ post.created_at|date("d/m/Y H:i") }}
 	</div>
+	{% if post.cover_link %}
+		<div class="mb-5">
+			<img data-fancybox src="{{post.cover_link}}" style="max-width:350px" class="img-thumbnail mx-auto d-block" alt="post cover">
+		</div>
+	{% endif %}
+
 
 	{% autoescape false %}
 		<p>{{ post.body | raw|nl2br}}</p>
@@ -58,7 +64,6 @@
 									<div class="mb-3"></div>
 
 									<img class="pull-right" src="{{ captcha }}" alt="captcha">
-
 								</div>
 							{% endif %}
 
