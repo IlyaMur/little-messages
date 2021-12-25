@@ -228,7 +228,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
                 $s3->deleteFile($this->cover_link);
             }
 
-            return $stmt->execute();
+            return $isCorrect;
         }
 
         return false;
@@ -244,7 +244,14 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
 
-        return $stmt->execute();
+        $isCorrect = $stmt->execute();
+
+        if (isset($this->cover_link) && $isCorrect) {
+            $s3 = new S3Helper();
+            $s3->deleteFile($this->cover_link);
+        }
+
+        return $isCorrect;
     }
 
     public static function findPostsByHashtag(string $hashtag): array
