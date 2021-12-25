@@ -223,7 +223,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
             $isCorrect = $stmt->execute();
 
-            if ($s3url && $isCorrect) {
+            if (isset($this->cover_link) && $s3url && $isCorrect) {
                 $s3 = new S3Helper();
                 $s3->deleteFile($this->cover_link);
             }
