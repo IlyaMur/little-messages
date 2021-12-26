@@ -75,38 +75,6 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
-    private function generateUploadDestination(): void
-    {
-        $pathinfo = pathinfo($this->file[static::COVER_NAME]['name']);
-        $base = $pathinfo['filename'];
-
-        $base = mb_substr(preg_replace('/[^a-zA-Z0-0_-]/', '_', $base), 0, 200);
-
-        if (Config::AWS_STORING) {
-            $destination = dirname($_FILES['coverImage']["tmp_name"]) . '/' .  $base . '.' . $pathinfo['extension'];
-
-            rename($this->file[static::COVER_NAME]['tmp_name'], $destination);
-        } else {
-            $uploadPath = __DIR__ . "/../../../public/uploads/$base." . $pathinfo['extension'];
-
-            $i = 1;
-            while (file_exists($uploadPath)) {
-                $filename = $base . "-$i" . '.' . $pathinfo['extension'];
-                $uploadPath = __DIR__ . "/../../../public/uploads/$filename";
-                $i++;
-            }
-
-            if (!move_uploaded_file($this->file[static::COVER_NAME]['tmp_name'], $uploadPath)) {
-                throw new Exception('Error caused file uploading');
-            }
-
-            $destination = "/uploads/$filename";
-        }
-
-        $this->file['destination'] = $destination;
-    }
-
-
     public function save(): bool
     {
         $this->validate();
@@ -120,7 +88,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             if ($isFileUploaded) {
                 $this->generateUploadDestination();
 
-                $imgUrl = Config::AWS_STORING ? $this->saveToS3() : $this->file['destination'];
+                $imgUrl = Config::AWS_STORING ? $this->saveToS3(type: 'coverImage') : $this->file['destination'];
             } else {
                 $imgUrl = null;
             }
@@ -140,12 +108,6 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         }
 
         return false;
-    }
-
-    private function saveToS3(): string
-    {
-        $s3 = new S3Helper();
-        return $s3->uploadFile($this->file['destination']);
     }
 
     public static function getPosts(): array

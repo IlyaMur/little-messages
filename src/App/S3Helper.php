@@ -27,23 +27,24 @@ class S3Helper
         );
     }
 
-    private static function generateFileDestinationName(string $fileSrc): string
+    private static function generateFileDestinationName(string $fileSrc, string $type): string
     {
         return sprintf(
-            '%s/%s/%s',
+            '%s/%s/%s/%s',
             static::BUCKET_FOLDER,
-            substr(md5($fileSrc), 0, 2),
+            $type,
+            substr(bin2hex(random_bytes(10)), 0, 5),
             basename($fileSrc)
         );
     }
 
-    public function uploadFile(string $fileSrc): string
+    public function uploadFile(string $fileSrc, string $type): string
     {
         $source = fopen($fileSrc, 'rb');
 
         $result = $this->client->upload(
             getenv('S3_BUCKET_NAME'),
-            static::generateFileDestinationName($fileSrc),
+            static::generateFileDestinationName($fileSrc, $type),
             $source,
             static::ACL_PUBLIC_READ
         );
