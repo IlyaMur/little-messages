@@ -37,7 +37,7 @@ class S3Helper
         );
     }
 
-    public function uploadFile(string $fileSrc)
+    public function uploadFile(string $fileSrc): string
     {
         $source = fopen($fileSrc, 'rb');
 

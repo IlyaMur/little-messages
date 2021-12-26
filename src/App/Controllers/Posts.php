@@ -39,9 +39,6 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 
     public function createAction()
     {
-        // var_dump($_FILES);
-        // var_dump($_POST);
-        // exit;
         if (!Auth::getUser()) {
             $this->requireLogin();
         }

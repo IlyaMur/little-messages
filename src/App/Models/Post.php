@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\App\Models;
 
 use PDO;
+use Exception;
 use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\App\S3Helper;
+use Ilyamur\PhpMvc\Config\Config;
 use Ilyamur\PhpMvc\App\Models\Hashtag;
 
 class Post extends \Ilyamur\PhpMvc\Core\Model
@@ -53,13 +55,12 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
                 break;
             case UPLOAD_ERR_NO_FILE:
                 $this->errors[] = 'No file uploaded';
-                return;
+                break;
             case UPLOAD_ERR_INI_SIZE:
                 $this->errors[] = 'File is too large';
-                return;
+                break;
             default:
                 $this->errors[] = 'File not uploaded';
-                return;
         }
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -67,57 +68,73 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         if (!in_array($mimeType, static::MIME_TYPES)) {
             $this->errors[] = 'Invalid format';
-            return;
         }
 
         if ($this->file[static::COVER_NAME]['size'] > 650000) {
             $this->errors[] = 'File is too large';
-            return;
         }
+    }
 
+    private function generateUploadDestination(): void
+    {
         $pathinfo = pathinfo($this->file[static::COVER_NAME]['name']);
         $base = $pathinfo['filename'];
 
         $base = mb_substr(preg_replace('/[^a-zA-Z0-0_-]/', '_', $base), 0, 200);
 
-        $destination = __DIR__ . "/../../../uploads/$base." . $pathinfo['extension'];
+        if (Config::AWS_STORING) {
+            $destination = dirname($_FILES['coverImage']["tmp_name"]) . '/' .  $base . '.' . $pathinfo['extension'];
 
-        $i = 1;
-        while (file_exists($destination)) {
-            $filename = $base . "-$i" . '.' . $pathinfo['extension'];
-            $destination = "../uploads/$filename";
-            $i++;
-        }
+            rename($this->file[static::COVER_NAME]['tmp_name'], $destination);
+        } else {
+            $uploadPath = __DIR__ . "/../../../public/uploads/$base." . $pathinfo['extension'];
 
-        if (!move_uploaded_file($this->file[static::COVER_NAME]['tmp_name'], $destination)) {
-            $this->errors[] = 'Something wrong with file upload';
-            return;
+            $i = 1;
+            while (file_exists($uploadPath)) {
+                $filename = $base . "-$i" . '.' . $pathinfo['extension'];
+                $uploadPath = __DIR__ . "/../../../public/uploads/$filename";
+                $i++;
+            }
+
+            if (!move_uploaded_file($this->file[static::COVER_NAME]['tmp_name'], $uploadPath)) {
+                throw new Exception('Error caused file uploading');
+            }
+
+            $destination = "/uploads/$filename";
         }
 
         $this->file['destination'] = $destination;
     }
 
+
     public function save(): bool
     {
         $this->validate();
+        $isFileUploaded = file_exists($this->file[static::COVER_NAME]['tmp_name']);
 
-        if (file_exists($this->file[static::COVER_NAME]['tmp_name'])) {
+        if ($isFileUploaded) {
             $this->validateInputImage();
         }
 
         if (empty($this->errors)) {
+            if ($isFileUploaded) {
+                $this->generateUploadDestination();
+
+                $imgUrl = Config::AWS_STORING ? $this->saveToS3() : $this->file['destination'];
+            } else {
+                $imgUrl = null;
+            }
+
             $sql = 'INSERT INTO posts (title, body, user_id, cover_link)
                     VALUES (:title, :body, :user_id, :cover_link)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
-            $imageUrl = isset($this->file['destination']) ? $this->saveToS3() :  null;
-
             $stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
             $stmt->bindValue(':body', $this->body, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', Auth::getUser()->id, PDO::PARAM_INT);
-            $stmt->bindValue(':cover_link', $imageUrl, PDO::PARAM_STR);
+            $stmt->bindValue(':cover_link', $imgUrl, PDO::PARAM_STR);
 
             return $stmt->execute() && Hashtag::save($this, (int) $db->lastInsertId());
         }
