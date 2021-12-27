@@ -1,0 +1,71 @@
+<div class="row bootstrap snippets bootdeys mt-3">
+
+	<div class="col-md-10 col-sm-12 mx-auto">
+		<div class="comment-wrapper">
+			<div class="panel panel-info">
+
+				<div class="panel-body mt-3">
+					<form id="formComment" method="post" action="{{ APP_ROOT }}comments/create">
+						{% if not currentUser %}
+							<div class="pull-right mb-3">
+								<label for="captcha">Please insert captcha</label>
+
+								<input id="captcha" class="form-control" name="captcha" type="text">
+								<div class="invalid-feedback" {{ comment.captchaError ? "style=\"display:block\"" : '' }}>
+									Captcha is invalid, please try again
+								</div>
+
+								<div class="mb-3"></div>
+
+								<img class="pull-right" src="{{ captcha }}" alt="captcha">
+							</div>
+						{% endif %}
+
+						<textarea name='commentBody' class="form-control" placeholder="write a comment..." rows="3">{{comment.commentBody}}</textarea>
+
+						<input type="hidden" value="{{ post.id }}" name="postId"><br><button class="btn btn-dark pull-right">Post</button>
+					</form>
+					<div class="clearfix"></div>
+					<hr>
+					{% if comments %}
+						<ul class="media-list">
+							{% for comment in comments %}
+								<li class="media p-1">
+									{% if comment.authorAvatar %}
+										<a href="{{APP_ROOT}}profile/{{ comment.authorId }}" class="pull-left"><img src="{{ comment.authorAvatar }}" alt="user-avatar" class="img-circle"></a>
+									{% else %}
+										<a href="#" class="pull-left"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="user-avatar" class="img-circle"></a>
+									{% endif %}
+
+									<div class="media-body">
+										<span class="text-muted pull-right">
+											<small class="text-muted">{{ comment.createdAt | date("d-m-y H:i") }}</small>
+										</span>
+										{% if comment.author %}
+											<strong class="text-dark">
+												<a href="{{APP_ROOT}}profile/{{ comment.authorId }}" class="pull-left">
+													{{ comment.author }}
+												</a>
+											</strong>
+										{% else %}
+											anonym
+										{% endif %}
+										<p class="pt-2 mt-4">
+											{{ comment.body }}
+										</p>
+									</div>
+								</li>
+							{% endfor %}
+						{% else %}
+							No comments yet...
+						</ul>
+					{% endif %}
+				</div>
+				<script src="{{ APP_ROOT }}js/script.js"></script>
+
+				<!-- Modal -->
+				{% include "partials/_modal.html.twig" %}
+			</div>
+		</div>
+	</div>
+</div>

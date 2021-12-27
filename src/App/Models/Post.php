@@ -21,7 +21,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
     public function __construct(array $data = [], array $imgsData = [])
     {
         foreach ($data as $key => $val) {
-            $this->$key = htmlspecialchars($val);
+            $this->$key = strip_tags($val);
         }
 
         foreach ($imgsData as $key => $val) {
@@ -109,13 +109,14 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return false;
     }
 
-    public static function getPosts(): array
+    public static function getPosts(int $page = 1, int $limit = 3): array
     {
         $db = static::getDB();
+        $offset = $limit * ($page - 1);
 
         $result = $db->query(
-            'SELECT title, body,
-                p.id AS id,
+            "SELECT title, body,
+                p.id AS id, 
                 u.id AS authorId,
                 p.cover_link AS url,
                 p.created_at AS createdAt,
@@ -124,7 +125,9 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             FROM posts AS p
             JOIN users AS u
             ON u.id = p.user_id
-            ORDER BY createdAt DESC'
+            ORDER BY createdAt DESC
+            LIMIT $limit
+            OFFSET $offset"
         );
 
         $posts = $result->fetchAll(PDO::FETCH_CLASS, get_called_class());
@@ -173,8 +176,9 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
     public function update(array $data, array $imgsData): bool
     {
-        $this->title = $data['title'];
-        $this->body = $data['body'];
+        $this->title = strip_tags($data['title']);
+        $this->body = strip_tags($data['body']);
+        $this->parseHashtagsFromBody();
 
         foreach ($imgsData as $key => $val) {
             $this->file[$key] = $val;
@@ -223,7 +227,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
                 static::deleteFromStorage($this->cover_link, static::IMAGE_TYPE);
             }
 
-            return $isCorrect;
+            return $isCorrect && Hashtag::save($this, (int) $this->id);;
         }
 
         return false;

@@ -16,7 +16,7 @@
 				<div class="col-md-3 mb-2">
 					<img src="{{post.url}}" style="max-width:150px" class="img-thumbnail mx-auto d-block" alt="post cover">
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-10">
 					{% autoescape false %}
 						<p class="card-text">{{ post.body | u.truncate(150, '...') }}</p>
 					{% endautoescape  %}

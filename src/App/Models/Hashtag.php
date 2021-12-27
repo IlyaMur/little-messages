@@ -19,7 +19,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
             $tag = static::getDuplicateTag($hashtag);
 
             if ($tag) {
-                $isCorrect = $db->query("INSERT INTO hashtags_posts VALUES ($tag->id, $postId)");
+                $isCorrect = $db->query("INSERT IGNORE INTO hashtags_posts VALUES ($tag->id, $postId)");
             } else {
                 $stmt = $db->prepare('INSERT INTO hashtags (hashtag) VALUES (:hashtag)');
                 $stmt->bindValue('hashtag', strtolower(substr($hashtag, 1)), PDO::PARAM_STR);

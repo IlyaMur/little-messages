@@ -8,27 +8,26 @@ use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\App\Flash;
 use Ilyamur\PhpMvc\Core\View;
 use Ilyamur\PhpMvc\App\Models\Post;
-use Ilyamur\PhpMvc\App\Models\User;
 use Ilyamur\PhpMvc\App\Models\Comment;
 use Ilyamur\PhpMvc\App\Models\Hashtag;
-use Gregwar\Captcha\CaptchaBuilder;
-use Ilyamur\PhpMvc\App\S3Helper;
+
 
 class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
+    const POST_PER_PAGE = 3;
+
     public function indexAction(): void
     {
-        $pageN = $this->routeParams['page'] ?? 1;
-        $postLimit = 3;
-
-        $paging = ceil(Post::getTotalCount() / $postLimit);
+        $currentPage = $this->routeParams['page'] ?? 1;
+        $paging = ceil(Post::getTotalCount() / static::POST_PER_PAGE);
 
         View::renderTemplate(
             'posts/index.html',
             [
-                'posts' => Post::getPosts(),
-                'pagination' => [
-                    'current' => $pageN,
+                'posts' => Post::getPosts(page: (int) $currentPage, limit: static::POST_PER_PAGE),
+                'pagination' =>
+                [
+                    'current' => $currentPage,
                     'paging' => $paging,
                 ],
                 'comments' => Comment::getLastComments(),
@@ -96,6 +95,9 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
         $post = Post::findById(
             (int) $this->routeParams['id']
         );
+
+        $post->body = htmlspecialchars_decode($post->body);
+        $post->body = strip_tags($post->body);
 
         if (!$post || $post->user_id !== Auth::getUser()->id) {
             Flash::addMessage('You can\'t edit this post', Flash::WARNING);
