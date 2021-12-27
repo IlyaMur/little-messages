@@ -13,25 +13,44 @@
 			<i class="fa fa-backward"></i>
 			Back
 		</a>
-		<div class="card card-body bg-light mt-3">
-
-			<h1>Profile</h1>
-			<dl class="row mt-4">
-				<dt class="col-sm-3">Name:</dt>
-				<dd class="col-sm-9">{{ user.name }}</dd>
-
-				<dt class="col-sm-3">Email:</dt>
-				<dd class="col-sm-9">{{ user.email }}</dd>
-
-				<dt class="col-sm-3">Registration Date:</dt>
-				<dd class="col-sm-9">{{ user.created_at | date("Y / m / d") }}</dd>
-			</dl>
-
+		<div class="card card-body bg-light mt-3 ">
+			<h1 class="text-center mb-3">Profile</h1>
 			<div class="row">
-				<div class="col-3">
-					<a class="btn btn-dark" href="{{ APP_ROOT }}profile/edit">Edit profile</a>
+				<div class="col-lg-6 col-md-8 col-sm-8 mx-auto">
+					{% if user.ava_link %}
+						<img data-fancybox class="img-thumbnail" src="{{ user.ava_link }}" alt="user-avatar">
+					{% else %}
+						<img class="d-block mx-auto rounded" src="https://www.bootdey.com/img/Content/user_1.jpg" alt="user-avatar">
+					{% endif %}
 				</div>
 			</div>
+
+			<div class="row mx-auto mt-3">
+				<div class="col-md-12 ">
+					<dl class="row mt-4">
+						<dt class="col-sm-5">Name:</dt>
+						<dd class="col-sm-7 text-right">{{ user.name }}</dd>
+
+						<dt class="col-sm-5">Email:</dt>
+						<dd class="col-sm-7 text-right">{{ user.email }}</dd>
+
+						<dt class="col-sm-5">Registration:</dt>
+						<dd class="col-sm-7 text-right">{{ user.created_at | date("Y / m / d") }}</dd>
+					</dl>
+
+
+				</div>
+			</div>
+			<a class="btn btn-dark" href="{{ APP_ROOT }}profile/edit">Edit
+			</a>
+
+			<div class="row">
+				<div class="col-12 mt-3 mb-3"></div>
+
+			</div>
+
 		</div>
 
-	{% endblock %}
+
+	</div>
+</div>{% endblock %}

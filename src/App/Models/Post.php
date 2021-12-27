@@ -13,8 +13,7 @@ use Ilyamur\PhpMvc\App\Models\Hashtag;
 
 class Post extends \Ilyamur\PhpMvc\Core\Model
 {
-    const COVER_NAME = 'coverImage';
-    const MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg'];
+    const IMAGE_TYPE = 'coverImage';
 
     public array $errors = [];
     public array $hashtags = [];
@@ -50,7 +49,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
     private function validateInputImage(): void
     {
-        switch ($this->file[static::COVER_NAME]['error']) {
+        switch ($this->file[static::IMAGE_TYPE]['error']) {
             case UPLOAD_ERR_OK:
                 break;
             case UPLOAD_ERR_NO_FILE:
@@ -64,13 +63,13 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         }
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $this->file[static::COVER_NAME]['tmp_name']);
+        $mimeType = finfo_file($finfo, $this->file[static::IMAGE_TYPE]['tmp_name']);
 
         if (!in_array($mimeType, static::MIME_TYPES)) {
             $this->errors[] = 'Invalid format';
         }
 
-        if ($this->file[static::COVER_NAME]['size'] > 650000) {
+        if ($this->file[static::IMAGE_TYPE]['size'] > 650000) {
             $this->errors[] = 'File is too large';
         }
     }
@@ -78,7 +77,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
     public function save(): bool
     {
         $this->validate();
-        $isFileUploaded = file_exists($this->file[static::COVER_NAME]['tmp_name']);
+        $isFileUploaded = file_exists($this->file[static::IMAGE_TYPE]['tmp_name']);
 
         if ($isFileUploaded) {
             $this->validateInputImage();
@@ -176,19 +175,26 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         $this->validate();
 
-        if (file_exists($this->file[static::COVER_NAME]['tmp_name'])) {
+        $isFileUploaded = file_exists($this->file[static::IMAGE_TYPE]['tmp_name']);
+
+        if ($isFileUploaded) {
             $this->validateInputImage();
         }
 
         if (empty($this->errors)) {
-            $s3url = isset($this->file['destination']) ? $this->saveToS3() :  null;
-
-            $str = $s3url ? ', cover_link = :cover_link' : '';
+            if ($isFileUploaded) {
+                $this->generateUploadDestination();
+                $imgUrl = Config::AWS_STORING ? $this->saveToS3(type: static::IMAGE_TYPE) : $this->file['destination'];
+            }
 
             $sql = "UPDATE posts
-                    SET title = :title,
-                        body = :body" . $str .
-                " WHERE id = :id";
+                    SET title = :title, body = :body";
+
+            if (isset($imgUrl)) {
+                $sql .= ', cover_link = :cover_link';
+            }
+
+            $sql .= " WHERE id = :id";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
@@ -196,15 +202,18 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             $stmt->bindValue('title', $this->title, PDO::PARAM_STR);
             $stmt->bindValue('body', $this->body, PDO::PARAM_STR);
             $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
-            if ($s3url) {
-                $stmt->bindValue('cover_link', $s3url, PDO::PARAM_STR);
+            if (isset($imgUrl)) {
+                $stmt->bindValue('cover_link', $imgUrl, PDO::PARAM_STR);
             }
 
             $isCorrect = $stmt->execute();
 
-            if (isset($this->cover_link) && $s3url && $isCorrect) {
-                $s3 = new S3Helper();
-                $s3->deleteFile($this->cover_link);
+            if (
+                isset($this->cover_link) &&
+                isset($imgUrl) &&
+                $isCorrect
+            ) {
+                static::deleteFromStorage($this->cover_link, static::IMAGE_TYPE);
             }
 
             return $isCorrect;
@@ -226,8 +235,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         $isCorrect = $stmt->execute();
 
         if (isset($this->cover_link) && $isCorrect) {
-            $s3 = new S3Helper();
-            $s3->deleteFile($this->cover_link);
+            static::deleteFromStorage($this->cover_link, static::IMAGE_TYPE);
         }
 
         return $isCorrect;

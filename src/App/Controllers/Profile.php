@@ -33,7 +33,7 @@ class Profile extends Authenticated
 
     public function updateAction(): void
     {
-        if ($this->user->update($_POST)) {
+        if ($this->user->update($_POST, $_FILES)) {
             Flash::addMessage('Changes saved');
             $this->redirect('/profile/show');
         }

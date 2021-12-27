@@ -51,7 +51,7 @@
 							</div>
 							<div class="col-md-9">
 								{% autoescape false %}
-									<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
+									<p class="card-text">{{ post.body | u.truncate(150, '...') }}</p>
 								{% endautoescape  %}
 							</div>
 						</div>
@@ -75,16 +75,21 @@
 				<ul id="commentListMain" class="comment-section media-list mt-4 bg-light">
 					{% for comment in comments %}
 						<li class="media">
-							<a href="#" class="pull-left">
+							{% if comment.authorAvatar %}
+								<img src="{{ comment.authorAvatar }}" alt="" class="img-circle index-avatar inline-block-image">
+							{% else %}
 								<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle index-avatar inline-block-image">
-							</a>
+							{% endif %}
+
 							<div class="media-body">
 								<span class="text-muted pull-right">
 									<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
 								</span>
-								<strong class="comment-author text-dark">
-									{{ comment.author ? comment.author : 'anonym'  }}
-								</strong>
+								{% if comment.author %}
+									<strong class="comment-author text-dark">{{ comment.author }}</strong>
+								{% else %}
+									<i class="comment-author">anonym</i>
+								{% endif %}
 								<p>
 									{{ comment.body | u.truncate(15, '...') }}
 								</p>

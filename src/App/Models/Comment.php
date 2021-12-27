@@ -34,7 +34,8 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
     public static function getCommentsById(int $postsId): array
     {
         $sql = 'SELECT 
-                    u.name AS author, 
+                    u.name AS author,
+                    u.ava_link AS authorAvatar,
                     c.body AS body,
                     c.id AS id,
                     u.id AS userId,
@@ -84,6 +85,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         $sql = "SELECT
                     c.created_at AS createdAt,
                     u.name AS author,
+                    u.ava_link AS authorAvatar,
                     c.body AS body,
                     p.title AS postTitle,
                     p.id AS postId

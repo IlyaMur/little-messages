@@ -11,6 +11,8 @@ use Ilyamur\PhpMvc\Config\Config;
 
 abstract class Model
 {
+    const MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg'];
+
     protected static function getDB()
     {
         static $db = null;
@@ -70,5 +72,22 @@ abstract class Model
         }
 
         $this->file['destination'] = $destination;
+    }
+
+    static function isLinkExternal(string $link): bool
+    {
+        $res = preg_match('/amazon/', $link);
+
+        return !!$res;
+    }
+
+    static function deleteFromStorage(string $link, string $type): void
+    {
+        if (static::isLinkExternal($link)) {
+            $s3 = new S3Helper();
+            $s3->deleteFile($link);
+        } else {
+            unlink(__DIR__ . "/../../public/uploads/$type/" . basename($link));
+        }
     }
 }

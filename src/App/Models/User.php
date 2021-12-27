@@ -8,9 +8,13 @@ use PDO;
 use Ilyamur\PhpMvc\App\Mail;
 use Ilyamur\PhpMvc\App\Token;
 use Ilyamur\PhpMvc\Core\View;
+use Ilyamur\PhpMvc\App\S3Helper;
+use Ilyamur\PhpMvc\Config\Config;
 
 class User extends \Ilyamur\PhpMvc\Core\Model
 {
+    const IMAGE_TYPE = 'avaImage';
+
     public array $errors = [];
 
     public function __construct(array $data = [])
@@ -322,10 +326,41 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         return $stmt->fetch() ? true : false;
     }
 
-    public function update(array $data): bool
+    private function validateInputImage(): void
+    {
+        switch ($this->file[static::IMAGE_TYPE]['error']) {
+            case UPLOAD_ERR_OK:
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $this->errors[] = 'No file uploaded';
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+                $this->errors[] = 'File is too large';
+                break;
+            default:
+                $this->errors[] = 'File not uploaded';
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($finfo, $this->file[static::IMAGE_TYPE]['tmp_name']);
+
+        if (!in_array($mimeType, static::MIME_TYPES)) {
+            $this->errors[] = 'Invalid format';
+        }
+
+        if ($this->file[static::IMAGE_TYPE]['size'] > 100000) {
+            $this->errors[] = 'File is too large';
+        }
+    }
+
+    public function update(array $data, array $imgsData): bool
     {
         $this->name = $data['name'];
         $this->email = $data['email'];
+
+        foreach ($imgsData as $key => $val) {
+            $this->file[$key] = $val;
+        }
 
         //  validate only if value was provided
         if ($data['password'] !== '') {
@@ -333,17 +368,31 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         }
 
         $this->validate();
+        $isFileUploaded = file_exists($this->file[static::IMAGE_TYPE]['tmp_name']);
+
+        if ($isFileUploaded) {
+            $this->validateInputImage();
+        }
 
         if (empty($this->errors)) {
+            if ($isFileUploaded) {
+                $this->generateUploadDestination(static::IMAGE_TYPE);
+
+                $imgUrl = Config::AWS_STORING ? $this->saveToS3(type: static::IMAGE_TYPE) : $this->file['destination'];
+            }
+
             $sql = 'UPDATE users
-                    SET name = :name,
-                        email = :email';
+                    SET name = :name, email = :email';
 
             if (isset($this->password)) {
                 $sql .= ', password_hash = :password_hash';
             }
 
-            $sql .= "\nWHERE id = :id";
+            if (isset($imgUrl)) {
+                $sql .= ', ava_link = :ava_link';
+            }
+
+            $sql .= " WHERE id = :id";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
@@ -353,11 +402,25 @@ class User extends \Ilyamur\PhpMvc\Core\Model
                 $stmt->bindValue('password_hash', $passwordHash, PDO::PARAM_STR);
             }
 
+            if (isset($imgUrl)) {
+                $stmt->bindValue('ava_link', $imgUrl, PDO::PARAM_STR);
+            }
+
             $stmt->bindValue('name', $this->name, PDO::PARAM_STR);
             $stmt->bindValue('email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue('id', $this->id, PDO::PARAM_INT);
 
-            return $stmt->execute();
+            $isCorrect = $stmt->execute();
+
+            if (
+                isset($this->ava_link) &&
+                isset($imgUrl) &&
+                $isCorrect
+            ) {
+                static::deleteFromStorage($this->ava_link, static::IMAGE_TYPE);
+            }
+
+            return $isCorrect;
         }
 
         return false;

@@ -30,7 +30,8 @@
 
 
 	{% autoescape false %}
-		<p>{{ post.body | raw|nl2br}}</p>
+		<p class="text-break">{{ post.body | raw|nl2br}}</p>
+
 	{% endautoescape %}
 
 
@@ -77,14 +78,18 @@
 							<ul class="media-list">
 								{% for comment in comments %}
 									<li class="media p-1">
-										<a href="#" class="pull-left"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle"></a>
+										{% if comment.authorAvatar %}
+											<a href="#" class="pull-left"><img src="{{ comment.authorAvatar }}" alt="user-avatar" class="img-circle"></a>
+										{% else %}
+											<a href="#" class="pull-left"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="user-avatar" class="img-circle"></a>
+										{% endif %}
+
 										<div class="media-body">
 											<span class="text-muted pull-right">
 												<small class="text-muted">{{ comment.createdAt | date("d-m-y H:i") }}</small>
 											</span>
 											<strong class="text-dark">{{ comment.author ? comment.author : 'anonym'  }}
 											</strong>
-
 											<p class="pt-2">
 												{{ comment.body }}</p>
 										</div>
