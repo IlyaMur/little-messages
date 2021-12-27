@@ -164,6 +164,13 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return null;
     }
 
+    static function getTotalCount(): ?int
+    {
+        $result = static::getDB()->query('SELECT count(id) AS total FROM posts');
+
+        return (int) $result->fetchColumn() ?: null;
+    }
+
     public function update(array $data, array $imgsData): bool
     {
         $this->title = $data['title'];

@@ -9,7 +9,7 @@
 	<div class="row">
 		{% if currentUser %}
 			<div class="col-md-9 mb-3">
-				<a href="{{ appRoot }}/posts/new" class="btn btn-primary pull-right">
+				<a href="{{ APP_ROOT }}posts/new" class="btn btn-primary pull-right">
 					<i class="fa fa-pencil"></i>
 					Add Post
 				</a>
@@ -17,103 +17,11 @@
 		{% endif %}
 	</div>
 	<div class="row">
-		<div class="col-md-1 mb-2">
-			<h6>
-				#tags:
-			</h6>
-
-			{% for hashtag in hashtags %}
-				<a href="/hashtags/show/{{hashtag.body}}">
-					{{ hashtag.body}}
-				</a>
-
-			{% endfor %}
-		</div>
-
+		{% include "partials/_hashtags_section.html.twig" %}
 		<div class="col-lg-8 col-md-11 mb-3">
-
-
-			{% for post in posts %}
-				<div class="card card-body">
-					<h4 class="card-title">{{ post.title }}</h4>
-					<div class="bg-light p-1 mb-3">
-						Written by
-						<a href="{{APP_ROOT}}profile/{{ post.authorId }}">
-							<strong>
-								{{ post.author }}
-							</strong>
-						</a>
-						on
-						{{ post.createdAt|date("d/m/y H:i") }}
-					</div>
-					{% if post.url %}
-						<div class="row mb-3">
-							<div class="col-md-3 mb-2">
-								<img src="{{post.url}}" style="max-width:150px" class="img-thumbnail mx-auto d-block" alt="post cover">
-							</div>
-							<div class="col-md-9">
-								{% autoescape false %}
-									<p class="card-text">{{ post.body | u.truncate(150, '...') }}</p>
-								{% endautoescape  %}
-							</div>
-						</div>
-					{% else %}
-						{% autoescape false %}
-							<p class="card-text">{{ post.body | u.truncate(250, '...') }}</p>
-						{% endautoescape  %}
-					{% endif %}
-
-
-					<a href="{{ APP_ROOT }}posts/show/{{ post.id }}" class="btn btn-dark">More</a>
-				</div>
-			{% endfor %}
+			{% include "partials/_posts_section.html.twig" %}
+			{% include "partials/_pagination.html.twig" %}
 		</div>
-
-		<div class="col-lg-3 col-md-4 comment-wrapper">
-
-
-			<h4 class="text-center">Last 5 comments</h4>
-			{% if comments %}
-				<ul id="commentListMain" class="comment-section media-list mt-4 bg-light">
-					{% for comment in comments %}
-						<li class="media">
-							{% if comment.authorAvatar %}
-								<a href="{{APP_ROOT}}profile/{{ comment.authorId }}">
-									<img src="{{ comment.authorAvatar }}" alt="" class="img-circle index-avatar inline-block-image">
-								</a>
-							{% else %}
-								<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle index-avatar inline-block-image">
-							{% endif %}
-
-
-							<div class="media-body">
-								<span class="text-muted pull-right">
-									<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
-								</span>
-								{% if comment.author %}
-									<a href="{{APP_ROOT}}profile/{{ comment.authorId }}">
-										<strong class="comment-author text-dark">{{ comment.author }}</strong>
-									</a>
-								{% else %}
-									<i class="comment-author">anonym</i>
-								{% endif %}
-
-
-								<p>
-									{{ comment.body | u.truncate(15, '...') }}
-								</p>
-								<a href="{{ APP_ROOT }}posts/show/{{ comment.postId }}">
-
-									{{ comment.postTitle | u.truncate(17, '...') }}
-								</a>
-							</div>
-						</li>
-					{% endfor %}
-				{% else %}
-					No comments yet...
-				</ul>
-			{% endif %}
-		</div>
+		{% include "partials/_comments_section.html.twig" %}
 	</div>
-
 {% endblock %}

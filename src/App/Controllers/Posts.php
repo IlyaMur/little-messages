@@ -18,10 +18,19 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 {
     public function indexAction(): void
     {
+        $pageN = $this->routeParams['page'] ?? 1;
+        $postLimit = 3;
+
+        $paging = ceil(Post::getTotalCount() / $postLimit);
+
         View::renderTemplate(
             'posts/index.html',
             [
                 'posts' => Post::getPosts(),
+                'pagination' => [
+                    'current' => $pageN,
+                    'paging' => $paging,
+                ],
                 'comments' => Comment::getLastComments(),
                 'hashtags' => Hashtag::getLastActualHashtags()
             ]

@@ -1,0 +1,47 @@
+<div class="col-lg-3 col-md-4 comment-wrapper">
+
+	<ul id="commentListMain" class="comment-section media-list mt-4 bg-light">
+		{% if comments %}
+			<h5 class="text-center">Last 5 comments</h5>
+			{% for comment in comments %}
+				<li class="media">
+					{% if comment.authorAvatar %}
+						<a href="{{ APP_ROOT }}profile/{{ comment.authorId }}">
+							<img src="{{ comment.authorAvatar }}" alt="" class="img-circle index-avatar inline-block-image">
+						</a>
+					{% else %}
+						<img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" class="img-circle index-avatar inline-block-image">
+					{% endif %}
+
+
+					<div class="media-body">
+						<span class="text-muted pull-right">
+							<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
+						</span>
+						{% if comment.author %}
+							<a href="{{APP_ROOT}}profile/{{ comment.authorId }}">
+								<strong class="comment-author text-dark">{{ comment.author }}</strong>
+							</a>
+						{% else %}
+							<i class="comment-author">anonym</i>
+						{% endif %}
+
+
+						<p>
+							{{ comment.body | u.truncate(15, '...') }}
+						</p>
+						<a href="{{ APP_ROOT }}posts/show/{{ comment.postId }}">
+
+							{{ comment.postTitle | u.truncate(17, '...') }}
+						</a>
+					</div>
+				</li>
+			{% endfor %}
+		{% else %}
+			<h5 class="text-center mb-3">Last 5 comments</h5>
+
+
+			No comments yet...
+		</ul>
+	{% endif %}
+</div>

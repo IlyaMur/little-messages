@@ -22,17 +22,18 @@ session_start();
 
 $router = new Ilyamur\PhpMvc\Core\Router();
 
-$router->add(route: '', params: ['controller' => 'Posts', 'action' => 'index']);
+$router->add(route: '', params: ['controller' => 'posts', 'action' => 'index']);
+$router->add(route: 'page/{page:[\d+]}', params: ['controller' => 'posts', 'action' => 'index']);
+$router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
 
-$router->add(route: 'login', params: ['controller' => 'Login', 'action' => 'new']);
-$router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'destroy']);
+$router->add(route: 'login', params: ['controller' => 'login', 'action' => 'new']);
+$router->add(route: 'logout', params: ['controller' => 'login', 'action' => 'destroy']);
 $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);
 $router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
 
 $router->add(route: 'profile/{id:[\da-f]+}', params: ['controller' => 'profile', 'action' => 'show']);
 $router->add(route: 'profile/{action}/{id:[\da-f]+}', params: ['controller' => 'profile']);
 
-$router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
 $router->add(route: 'hashtags/{action}/{hashtag:[а-яa-z]+}', params: ['controller' => 'hashtags']);
 
 $router->add(route: '{controller}/{action}');
