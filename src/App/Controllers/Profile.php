@@ -7,14 +7,17 @@ namespace Ilyamur\PhpMvc\App\Controllers;
 use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\App\Flash;
 use Ilyamur\PhpMvc\Core\View;
+use Ilyamur\PhpMvc\App\Models\User;
 
-class Profile extends Authenticated
+class Profile extends \Ilyamur\PhpMvc\Core\Controller
 {
-    protected function before()
+    protected function before(): void
     {
-        parent::before();
+        $this->user = User::findById((int) $this->routeParams['id']);
 
-        $this->user = Auth::getUser();
+        if (!$this->user) {
+            $this->toRootWithWarning();
+        }
     }
 
     public function showAction(): void
@@ -26,6 +29,10 @@ class Profile extends Authenticated
 
     public function editAction(): void
     {
+        if ($this->user->id !== Auth::getUser()->id) {
+            $this->toRootWithWarning('Access denied');
+        }
+
         View::renderTemplate('profile/edit.html', [
             'user' => $this->user
         ]);
@@ -33,9 +40,13 @@ class Profile extends Authenticated
 
     public function updateAction(): void
     {
+        if ($this->user->id !== Auth::getUser()->id) {
+            $this->toRootWithWarning('Access denied');
+        }
+
         if ($this->user->update($_POST, $_FILES)) {
             Flash::addMessage('Changes saved');
-            $this->redirect('/profile/show');
+            $this->redirect("/profile/{$this->user->id}");
         }
 
         View::renderTemplate('profile/edit.html', [

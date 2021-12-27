@@ -29,6 +29,9 @@ $router->add(route: 'logout', params: ['controller' => 'Login', 'action' => 'des
 $router->add(route: 'signup/activate/{token:[\da-f]+}', params: ['controller' => 'signup', 'action' => 'activate']);
 $router->add(route: 'password/reset/{token:[\da-f]+}', params: ['controller' => 'password', 'action' => 'reset']);
 
+$router->add(route: 'profile/{id:[\da-f]+}', params: ['controller' => 'profile', 'action' => 'show']);
+$router->add(route: 'profile/{action}/{id:[\da-f]+}', params: ['controller' => 'profile']);
+
 $router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
 $router->add(route: 'hashtags/{action}/{hashtag:[а-яa-z]+}', params: ['controller' => 'hashtags']);
 

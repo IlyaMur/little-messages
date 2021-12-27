@@ -23,7 +23,7 @@
 				</ul>
 			{% endif %}
 
-			<form enctype="multipart/form-data" action="{{ APP_ROOT }}profile/update" id="formProfile" method="post">
+			<form enctype="multipart/form-data" action="{{ APP_ROOT }}profile/update/{{ user.id }}" id="formProfile" method="post">
 				<div class="form-group">
 					<label for="inputName">Name</label>
 					<input class="form-control" value="{{ user.name }}" id="inputName" name="name" placeholder="name" type="text" required>

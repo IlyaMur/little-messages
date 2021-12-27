@@ -84,6 +84,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
     {
         $sql = "SELECT
                     c.created_at AS createdAt,
+                    u.id AS authorId,
                     u.name AS author,
                     u.ava_link AS authorAvatar,
                     c.body AS body,

@@ -38,9 +38,11 @@
 					<h4 class="card-title">{{ post.title }}</h4>
 					<div class="bg-light p-1 mb-3">
 						Written by
-						<strong>
-							{{ post.author }}
-						</strong>
+						<a href="{{APP_ROOT}}profile/{{ post.authorId }}">
+							<strong>
+								{{ post.author }}
+							</strong>
+						</a>
 						on
 						{{ post.createdAt|date("d/m/y H:i") }}
 					</div>
@@ -76,20 +78,27 @@
 					{% for comment in comments %}
 						<li class="media">
 							{% if comment.authorAvatar %}
-								<img src="{{ comment.authorAvatar }}" alt="" class="img-circle index-avatar inline-block-image">
+								<a href="{{APP_ROOT}}profile/{{ comment.authorId }}">
+									<img src="{{ comment.authorAvatar }}" alt="" class="img-circle index-avatar inline-block-image">
+								</a>
 							{% else %}
 								<img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle index-avatar inline-block-image">
 							{% endif %}
+
 
 							<div class="media-body">
 								<span class="text-muted pull-right">
 									<small class="text-muted">{{ comment.createdAt | date("H:i") }}</small>
 								</span>
 								{% if comment.author %}
-									<strong class="comment-author text-dark">{{ comment.author }}</strong>
+									<a href="{{APP_ROOT}}profile/{{ comment.authorId }}">
+										<strong class="comment-author text-dark">{{ comment.author }}</strong>
+									</a>
 								{% else %}
 									<i class="comment-author">anonym</i>
 								{% endif %}
+
+
 								<p>
 									{{ comment.body | u.truncate(15, '...') }}
 								</p>

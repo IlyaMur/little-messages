@@ -31,10 +31,10 @@ abstract class Controller
         $this->routeParams = $routeParams;
     }
 
-    protected function before()
+    protected function before(): void
     {
     }
-    protected function after()
+    protected function after(): void
     {
     }
 

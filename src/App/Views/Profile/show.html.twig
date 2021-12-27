@@ -41,8 +41,11 @@
 
 				</div>
 			</div>
-			<a class="btn btn-dark" href="{{ APP_ROOT }}profile/edit">Edit
-			</a>
+			{% if currentUser.id == user.id %}
+				<a class="btn btn-dark" href="{{ APP_ROOT }}profile/edit/{{ user.id }}">Edit
+				</a>
+			{% endif %}
+
 
 			<div class="row">
 				<div class="col-12 mt-3 mb-3"></div>
