@@ -11,9 +11,13 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
 {
     const HASHTAG_REGEXP = '/\#([а-яa-z]+)/iu';
 
-    public static function save(Post $post, int $postId): bool
+    public static function save(Post $post, int $postId, $deletedTags = []): bool
     {
         $db = static::getDB();
+
+        foreach ($deletedTags as $deletedTag) {
+            Hashtag::deleteTagFromPost($deletedTag, $postId);
+        }
 
         foreach (array_unique($post->hashtags[0]) as $hashtag) {
             $tag = static::getDuplicateTag($hashtag);
@@ -60,5 +64,20 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
                 LIMIT $number";
 
         return static::getDB()->query($sql)->fetchAll();
+    }
+
+    static function deleteTagFromPost(string $tag, int $postId): bool
+    {
+        $sql = "DELETE FROM hashtags_posts
+                WHERE hashtag_id = (SELECT id FROM hashtags WHERE hashtag = :hashtag)
+                AND post_id = :post_id;";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue('hashtag', substr($tag, 1), PDO::PARAM_STR);
+        $stmt->bindValue('post_id', $postId, PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 }

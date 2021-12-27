@@ -17,8 +17,7 @@
 			</h2>
 			<p>Edit a post with this form</p>
 		</div>
-		<form id="formPost" enctype="multipart/form-data" action="{{ APP_ROOT }}posts/update/{{ post.id }}" method="post">
-
+		<form id="formEdit" enctype="multipart/form-data" action="{{ APP_ROOT }}posts/update/{{ post.id }}" method="post">
 			{% if post.errors is not empty %}
 				<p>Errors:</p>
 				<ul>
@@ -41,7 +40,6 @@
 
 				<div class="input-group">
 					<textarea id="body" name="body" type="text" class="form-control form-control-lg">{{ post.body }}</textarea>
-
 				</div>
 			</div>
 

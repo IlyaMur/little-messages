@@ -8,6 +8,7 @@ use Ilyamur\PhpMvc\App\Auth;
 use Ilyamur\PhpMvc\App\Flash;
 use Ilyamur\PhpMvc\Core\View;
 use Ilyamur\PhpMvc\App\Models\User;
+use Ilyamur\PhpMvc\App\Models\Comment;
 
 class Profile extends \Ilyamur\PhpMvc\Core\Controller
 {
@@ -22,8 +23,11 @@ class Profile extends \Ilyamur\PhpMvc\Core\Controller
 
     public function showAction(): void
     {
+        $userComments = Comment::getCommentsByUserId((int)$this->user->id);
+
         View::renderTemplate('profile/show.html', [
-            'user' => $this->user
+            'user' => $this->user,
+            'comments' => $userComments
         ]);
     }
 

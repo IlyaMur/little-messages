@@ -32,7 +32,7 @@
 							{% for comment in comments %}
 								<li class="media p-1">
 									{% if comment.authorAvatar %}
-										<a href="{{APP_ROOT}}profile/{{ comment.authorId }}" class="pull-left"><img src="{{ comment.authorAvatar }}" alt="user-avatar" class="img-circle"></a>
+										<a href="{{ APP_ROOT }}profile/{{ comment.userId }}" class="pull-left"><img src="{{ comment.authorAvatar }}" alt="user-avatar" class="img-circle"></a>
 									{% else %}
 										<a href="#" class="pull-left"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="user-avatar" class="img-circle"></a>
 									{% endif %}
@@ -43,7 +43,7 @@
 										</span>
 										{% if comment.author %}
 											<strong class="text-dark">
-												<a href="{{APP_ROOT}}profile/{{ comment.authorId }}" class="pull-left">
+												<a href="{{APP_ROOT}}profile/{{ comment.userId }}" class="pull-left">
 													{{ comment.author }}
 												</a>
 											</strong>

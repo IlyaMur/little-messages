@@ -85,8 +85,19 @@ $('#formPost').validate({
         body: 'required'
     },
     messages: {
-        title: 'title is required',
-        body: 'post body is required'
+        title: 'Title is required',
+        body: 'Post body is required'
+    }
+});
+
+$('#formEdit').validate({
+    rules: {
+        title: 'required',
+        body: 'required'
+    },
+    messages: {
+        title: 'Title is required',
+        body: 'Post body is required'
     }
 });
 

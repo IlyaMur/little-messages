@@ -31,7 +31,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         $this->parseHashtagsFromBody();
     }
 
-    private function parseHashtagsFromBody()
+    private function parseHashtagsFromBody(): void
     {
         preg_match_all(Hashtag::HASHTAG_REGEXP, $this->body, $this->hashtags);
     }
@@ -176,9 +176,17 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
     public function update(array $data, array $imgsData): bool
     {
+        // handle original hashtags
+        $this->parseHashtagsFromBody();
+        $originalHashtags = $this->hashtags;
+
         $this->title = strip_tags($data['title']);
         $this->body = strip_tags($data['body']);
+
+        // handle new hashtags
         $this->parseHashtagsFromBody();
+        // select deleted tags
+        $deletedTags = array_filter($originalHashtags[0], fn ($tag) => !in_array($tag, $this->hashtags[0]));
 
         foreach ($imgsData as $key => $val) {
             $this->file[$key] = $val;
@@ -227,7 +235,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
                 static::deleteFromStorage($this->cover_link, static::IMAGE_TYPE);
             }
 
-            return $isCorrect && Hashtag::save($this, (int) $this->id);;
+            return $isCorrect && Hashtag::save(post: $this, postId: (int) $this->id, deletedTags: $deletedTags);;
         }
 
         return false;

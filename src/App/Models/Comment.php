@@ -31,7 +31,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         }
     }
 
-    public static function getCommentsById(int $postsId): array
+    public static function getCommentsByPostId(int $postsId): array
     {
         $sql = 'SELECT 
                     u.name AS author,
@@ -101,5 +101,40 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         $result = static::getDB()->query($sql, PDO::FETCH_CLASS, get_called_class());
 
         return $result->fetchAll();
+    }
+
+    static function getCommentsByUserId(int $userId, int $limit = 5, int $page = 1): array
+    {
+        $offset = $limit * ($page - 1);
+
+        $sql = "SELECT
+                    u.id AS authorId,
+                    u.name AS author,
+                    u.ava_link AS authorAvatar,
+                    p.title AS postTitle,
+                    p.id AS postId,
+                    c.post_id AS postId,
+                    c.body AS body,
+                    c.created_at AS createdAt
+                FROM comments AS c
+                JOIN users AS u
+                ON c.user_id = u.id
+                JOIN posts AS p
+                ON c.post_id = p.id
+                WHERE u.id = $userId
+                LIMIT $limit
+                OFFSET $offset";
+
+        return static::getDB()->query($sql)->fetchAll();
+    }
+
+    static function getTotalCountByUserId(int $userId): ?int
+    {
+        $db = static::getDB();
+        $stmt = $db->prepare("SELECT count(id) AS total FROM comments WHERE user_id = :user_id");
+        $stmt->bindValue('user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return (int) $stmt->fetchColumn() ?: null;
     }
 }

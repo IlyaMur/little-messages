@@ -26,23 +26,28 @@
 			</div>
 
 			<div class="row mx-auto mt-3">
-				<div class="col-md-12 ">
+				<div class="col-md-10 mx-auto ">
+
 					<dl class="row mt-4">
 						<dt class="col-sm-5">Name:</dt>
 						<dd class="col-sm-7 text-right">{{ user.name }}</dd>
 
 						<dt class="col-sm-5">Email:</dt>
-						<dd class="col-sm-7 text-right">{{ user.email }}</dd>
+						<dd class="col-sm-7 text-right">{{ currentUser.id == user.id ? user.email : '*user hide this data*'  }}</dd>
 
-						<dt class="col-sm-5">Registration:</dt>
+						<dt class="col-sm-5">Reg. date:</dt>
 						<dd class="col-sm-7 text-right">{{ user.created_at | date("Y / m / d") }}</dd>
 					</dl>
 
 
 				</div>
 			</div>
+			<a class="btn btn-secondary " href="{{ APP_ROOT }}comments/{{ user.id }}/page/1">Show user comments
+			</a>
+
 			{% if currentUser.id == user.id %}
-				<a class="btn btn-dark" href="{{ APP_ROOT }}profile/edit/{{ user.id }}">Edit
+				<a class="btn btn-dark mt-5" href="{{ APP_ROOT }}profile/edit/{{ user.id }}">Edit
+
 				</a>
 			{% endif %}
 

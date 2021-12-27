@@ -72,7 +72,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             $this->toRootWithWarning();
         }
 
-        $postComments = Comment::getCommentsById(
+        $postComments = Comment::getCommentsByPostId(
             (int) $this->routeParams['id']
         );
 
