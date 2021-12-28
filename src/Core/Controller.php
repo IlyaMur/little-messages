@@ -82,6 +82,6 @@ abstract class Controller
 
     protected function isAdmin()
     {
-        return !!Auth::getUser()->is_admin;
+        return !!Auth::getUser()?->is_admin;
     }
 }
