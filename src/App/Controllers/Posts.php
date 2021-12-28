@@ -96,13 +96,12 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             (int) $this->routeParams['id']
         );
 
-        $post->body = htmlspecialchars_decode($post->body);
-        $post->body = strip_tags($post->body);
-
         if (!$post || $post->user_id !== Auth::getUser()->id) {
             Flash::addMessage('You can\'t edit this post', Flash::WARNING);
             $this->redirect('/');
         }
+
+        $post->body = strip_tags($post->body);
 
         View::renderTemplate('posts/edit.html', ['post' => $post]);
     }
@@ -115,7 +114,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 
         $post = Post::findById((int) $this->routeParams['id']);
 
-        if (!$post || $post->user_id !== Auth::getUser()->id) {
+        if (!$post || $post->user_id !== Auth::getUser()?->id) {
             Flash::addMessage('You can\'t edit this post', Flash::WARNING);
             $this->redirect('/');
         }
@@ -134,9 +133,8 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
             (int) $this->routeParams['id']
         );
 
-        if (!$post || $post->user_id !== Auth::getUser()->id) {
-            Flash::addMessage('You can\'t delete this post', Flash::WARNING);
-            $this->redirect("/posts/show/$post->id");
+        if (!$post || $post->user_id !== Auth::getUser()?->id) {
+            $this->toRootWithWarning("You can't delete this post");
         }
 
         if ($post->delete()) {

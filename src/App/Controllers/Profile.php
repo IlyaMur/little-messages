@@ -33,7 +33,7 @@ class Profile extends \Ilyamur\PhpMvc\Core\Controller
 
     public function editAction(): void
     {
-        if ($this->user->id !== Auth::getUser()->id) {
+        if ($this->user->id !== Auth::getUser()?->id) {
             $this->toRootWithWarning('Access denied');
         }
 
@@ -44,7 +44,7 @@ class Profile extends \Ilyamur\PhpMvc\Core\Controller
 
     public function updateAction(): void
     {
-        if ($this->user->id !== Auth::getUser()->id) {
+        if ($this->user->id !== Auth::getUser()?->id) {
             $this->toRootWithWarning('Access denied');
         }
 
