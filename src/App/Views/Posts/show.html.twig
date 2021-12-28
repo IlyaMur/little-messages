@@ -18,23 +18,22 @@
 		<strong>
 			<a class="text-warning" href="{{ APP_ROOT }}profile/{{ post.user_id }}">{{ post.author }}</a>
 
-
 		</strong>
 
 		<strong class="text-dark"></strong>
 		on
 		{{ post.created_at|date("d/m/Y H:i") }}
 	</div>
+
+
 	{% if post.cover_link %}
 		<div class="mb-5">
 			<img data-fancybox src="{{post.cover_link}}" style="max-width:275px" class="img-thumbnail mx-auto d-block" alt="post cover">
 		</div>
 	{% endif %}
 
-
 	{% autoescape false %}
 		<p class="text-break">{{ post.body | raw|nl2br}}</p>
-
 	{% endautoescape %}
 
 
@@ -45,6 +44,7 @@
 			Delete
 		</button>
 	{% endif %}
+
 	{% include "partials/_post_comments_section.html.twig" %}
 
 {% endblock %}
