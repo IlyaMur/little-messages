@@ -23,9 +23,9 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
 
     public function indexAction(): void
     {
-        $posts = Post::getPosts(limit: 50);
+        $posts = Post::getPosts(limit: 100);
         View::renderTemplate(
-            'admin/posts/index.html',
+            'Admin/index.html',
             [
                 'posts' => $posts,
             ]

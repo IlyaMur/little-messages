@@ -24,8 +24,6 @@ class View
             $twig->addGlobal('APP_ROOT', Config::ROOT_URL);
         }
 
-
-
         return $twig->render(ucfirst($template) . '.twig', $args);
     }
 
