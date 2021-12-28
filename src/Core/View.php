@@ -16,7 +16,7 @@ class View
         static $twig = null;
 
         if ($twig === null) {
-            $loader = new \Twig\Loader\FilesystemLoader('../src/App/Views');
+            $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../../src/App/Views');
             $twig = new \Twig\Environment($loader);
             $twig->addExtension(new StringExtension());
             $twig->addGlobal('currentUser', Auth::getUser());

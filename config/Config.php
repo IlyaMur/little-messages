@@ -9,7 +9,7 @@ class Config
     const ROOT_URL = '/';
     const APP_VERSION = '1.0.0';
 
-    const AWS_STORING = false;
+    const AWS_STORING = true;
 
     const SHOW_ERRORS = true;
     const SECRET_KEY = 'dummykey';
