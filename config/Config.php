@@ -11,6 +11,6 @@ class Config
 
     const AWS_STORING = true;
 
-    const SHOW_ERRORS = true;
+    const SHOW_ERRORS = false;
     const SECRET_KEY = 'dummykey';
 }
