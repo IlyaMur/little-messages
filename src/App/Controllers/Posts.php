@@ -128,7 +128,7 @@ class Posts extends \Ilyamur\PhpMvc\Core\Controller
         View::renderTemplate('posts/edit.html', ['post' => $post]);
     }
 
-    public function destroyAct()
+    public function destroyAction()
     {
         $post = Post::findById(
             (int) $this->routeParams['id']
