@@ -11,8 +11,6 @@
 					<a class="page-link" href="{{ APP_ROOT }}comments/{{ user.id }}/page/{{ page }}">{{ page }}</a>
 				</li>
 			{% endfor %}
-		{% else %}
-			<h4 class="">No posts yet...</h4>
 		{% endif %}
 
 		{% if pagination.current < pagination.paging %}

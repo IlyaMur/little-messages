@@ -69,7 +69,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             $this->errors[] = 'Invalid format';
         }
 
-        if ($this->file[static::IMAGE_TYPE]['size'] > 650000) {
+        if ($this->file[static::IMAGE_TYPE]['size'] > 250000) {
             $this->errors[] = 'File is too large';
         }
     }

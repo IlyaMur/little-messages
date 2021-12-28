@@ -122,16 +122,18 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
                 JOIN posts AS p
                 ON c.post_id = p.id
                 WHERE u.id = $userId
+                ORDER BY c.created_at DESC
                 LIMIT $limit
                 OFFSET $offset";
 
-        return static::getDB()->query($sql)->fetchAll();
+        return static::getDB()->query($sql, PDO::FETCH_CLASS, get_called_class())->fetchAll();
     }
 
     static function getTotalCountByUserId(int $userId): ?int
     {
         $db = static::getDB();
         $stmt = $db->prepare("SELECT count(id) AS total FROM comments WHERE user_id = :user_id");
+
         $stmt->bindValue('user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
 

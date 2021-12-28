@@ -79,4 +79,9 @@ abstract class Controller
 
         return $captcha->inline();
     }
+
+    protected function isAdmin()
+    {
+        return !!Auth::getUser()->is_admin;
+    }
 }

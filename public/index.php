@@ -26,7 +26,6 @@ $router->add(route: '', params: ['controller' => 'posts', 'action' => 'index']);
 $router->add(route: 'page/{page:[\d+]}', params: ['controller' => 'posts', 'action' => 'index']);
 $router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
 
-$router->add(route: 'comments/{id:\d+}', params: ['controller' => 'comments', 'action' => 'index']);
 $router->add(route: 'comments/{id:\d+}/page/{page:\d+}', params: ['controller' => 'comments', 'action' => 'index']);
 
 $router->add(route: 'login', params: ['controller' => 'login', 'action' => 'new']);
@@ -43,5 +42,6 @@ $router->add(route: '{controller}/{action}');
 $router->add(route: '{controller}/{id:\d+}/{action}');
 
 $router->add(route: 'admin/{controller}/{action}', params: ['namespace' => 'Admin']);
+$router->add(route: 'admin/{controller}/{action}/{id:\d+}', params: ['namespace' => 'Admin']);
 
 $router->dispatch($_SERVER['QUERY_STRING']);
