@@ -8,7 +8,7 @@
 					<form id="formComment" method="post" action="{{ APP_ROOT }}comments/create">
 						{% if not currentUser %}
 							<div class="pull-right mb-3">
-								<label for="captcha">Please insert captcha</label>
+								<label for="captcha">Please enter CAPTCHA</label>
 
 								<input id="captcha" class="form-control" name="captcha" type="text">
 								<div class="invalid-feedback" {{ comment.captchaError ? "style=\"display:block\"" : '' }}>

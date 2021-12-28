@@ -16,9 +16,10 @@
 	<div class="bg-secondary text-white p-2 mb-3">
 		Written by
 		<strong>
-			{{ post.author }}
+			<a class="text-warning" href="{{ APP_ROOT }}/profile/56">{{ post.author }}</a>
 		</strong>
 
+		<strong class="text-dark"></strong>
 		on
 		{{ post.created_at|date("d/m/Y H:i") }}
 	</div>
