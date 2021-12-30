@@ -54,9 +54,9 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
         return $tag ? $tag : null;
     }
 
-    static function getLastActualHashtags($number = 10)
+    static function getLastActualHashtags($number = 10): array
     {
-        $sql = "SELECT hashtag AS body, id
+        $sql = "SELECT DISTINCT hashtag AS body, id
                 FROM hashtags_posts as hp
                 JOIN hashtags AS h
                 ON h.id = hp.hashtag_id

@@ -21,7 +21,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
     public function __construct(array $data = [], array $imgsData = [])
     {
         foreach ($data as $key => $val) {
-            $this->$key = strip_tags($val);
+            $this->$key = htmlspecialchars($val);
         }
 
         foreach ($imgsData as $key => $val) {
@@ -180,8 +180,8 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         $this->parseHashtagsFromBody();
         $originalHashtags = $this->hashtags;
 
-        $this->title = strip_tags($data['title']);
-        $this->body = strip_tags($data['body']);
+        $this->title = htmlspecialchars($data['title']);
+        $this->body = htmlspecialchars($data['body']);
 
         // handle new hashtags
         $this->parseHashtagsFromBody();

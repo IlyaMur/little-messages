@@ -60,18 +60,18 @@ abstract class Controller
         $this->redirect('/login');
     }
 
-    protected function toRootWithWarning(string $msg = 'Nothing found')
+    protected function toRootWithWarning(string $msg = 'Nothing found'): void
     {
         Flash::addMessage($msg, Flash::WARNING);
         $this->redirect('/');
     }
 
-    protected function getCaptcha()
+    protected function getCaptcha(): ?string
     {
         return $_SESSION['phrase'] ?? null;
     }
 
-    protected function generateCaptcha()
+    protected function generateCaptcha(): string
     {
         $captcha = new CaptchaBuilder();
         $captcha->build();
@@ -80,7 +80,7 @@ abstract class Controller
         return $captcha->inline();
     }
 
-    protected function isAdmin()
+    protected function isAdmin(): bool
     {
         return !!Auth::getUser()?->is_admin;
     }
