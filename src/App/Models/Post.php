@@ -293,6 +293,6 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
     protected function insertLinksToHashtags(): void
     {
-        $this->body = preg_replace(Hashtag::HASHTAG_REGEXP, ' <a href="/hashtags/show/$1"> #$1</a> ', $this->body);
+        $this->body = preg_replace(Hashtag::HASHTAG_REGEXP, '<a href="/hashtags/show/$1">#$1</a>', $this->body);
     }
 }
