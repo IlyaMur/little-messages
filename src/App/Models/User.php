@@ -110,7 +110,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         return $user ? $user : null;
     }
 
-    public static function authenticate(string $email, string $password): ?User
+    public static function authenticate(string $email, string $password): ?static
     {
         $user = static::findByEmail($email);
 
@@ -125,7 +125,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         return null;
     }
 
-    public static function findById(int $userId): ?User
+    public static function findById(int $userId): static|false
     {
         $sql = 'SELECT * from users
                 WHERE id = :id';
@@ -137,9 +137,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
-        $user = $stmt->fetch();
-
-        return $user ? $user : null;
+        return $stmt->fetch();
     }
 
     public function rememberLogin(): bool
@@ -219,7 +217,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         );
     }
 
-    public static function findByPasswordReset(string $token): ?User
+    public static function findByPasswordReset(string $token): ?static
     {
         $token = new Token($token);
         $hashedToken = $token->getHash();

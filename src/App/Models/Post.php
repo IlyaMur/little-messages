@@ -139,7 +139,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return $posts;
     }
 
-    public static function findById(int $postsId): ?Post
+    public static function findById(int $postsId): ?static
     {
         $sql = 'SELECT 
                     u.name AS author,
@@ -167,11 +167,11 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return null;
     }
 
-    static function getTotalCount(): ?int
+    static function getTotalCount(): string|false
     {
         $result = static::getDB()->query('SELECT count(id) AS total FROM posts');
 
-        return (int) $result->fetchColumn() ?: null;
+        return $result->fetchColumn();
     }
 
     public function update(array $data, array $imgsData): bool

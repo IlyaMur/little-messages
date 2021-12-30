@@ -39,7 +39,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
         return true;
     }
 
-    static function getDuplicateTag(string $hashtag): ?Hashtag
+    static function getDuplicateTag(string $hashtag): Hashtag|false
     {
         $db = static::getDB();
 
@@ -49,9 +49,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
-        $tag = $stmt->fetch();
-
-        return $tag ? $tag : null;
+        return $stmt->fetch();
     }
 
     static function getLastActualHashtags($number = 10): array
