@@ -103,7 +103,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt = static::getDB()->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         $user = $stmt->fetch();
 
@@ -135,7 +135,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt->bindValue('id', $userId, PDO::PARAM_INT);
 
         $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         return $stmt->fetch();
     }
@@ -229,7 +229,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         $stmt = $db->prepare($sql);
 
         $stmt->bindValue('token_hash', $hashedToken, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         $stmt->execute();
         $user = $stmt->fetch();

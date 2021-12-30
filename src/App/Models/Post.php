@@ -130,7 +130,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
             OFFSET $offset"
         );
 
-        $posts = $result->fetchAll(PDO::FETCH_CLASS, get_called_class());
+        $posts = $result->fetchAll(PDO::FETCH_CLASS, static::class);
 
         foreach ($posts as $post) {
             $post->insertLinksToHashtags();
@@ -155,7 +155,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         $stmt->bindValue('id', $postsId, PDO::PARAM_INT);
 
         $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         $post = $stmt->fetch();
 
@@ -282,7 +282,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->execute();
 
-        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, get_called_class());
+        $posts = $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
 
         foreach ($posts as $post) {
             $post->insertLinksToHashtags();

@@ -47,7 +47,7 @@ class Hashtag extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->bindValue('hashtag', strtolower(substr($hashtag, 1)), PDO::PARAM_STR);
         $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         return $stmt->fetch();
     }

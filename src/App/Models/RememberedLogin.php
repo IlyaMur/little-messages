@@ -22,7 +22,7 @@ class RememberedLogin extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue('hashedToken', $hashedToken, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         $stmt->execute();
 

@@ -52,7 +52,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
         $stmt->bindValue('post_id', $postsId, PDO::PARAM_INT);
 
         $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
         return $stmt->fetchAll();
     }
@@ -98,7 +98,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
                 ORDER BY c.created_at DESC
                 LIMIT $number";
 
-        $result = static::getDB()->query($sql, PDO::FETCH_CLASS, get_called_class());
+        $result = static::getDB()->query($sql, PDO::FETCH_CLASS, static::class);
 
         return $result->fetchAll();
     }
@@ -126,7 +126,7 @@ class Comment extends \Ilyamur\PhpMvc\Core\Model
                 LIMIT $limit
                 OFFSET $offset";
 
-        return static::getDB()->query($sql, PDO::FETCH_CLASS, get_called_class())->fetchAll();
+        return static::getDB()->query($sql, PDO::FETCH_CLASS, static::class)->fetchAll();
     }
 
     static function getTotalCountByUserId(int $userId): ?int
