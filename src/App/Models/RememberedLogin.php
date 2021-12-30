@@ -10,7 +10,7 @@ use Ilyamur\PhpMvc\App\Models\User;
 
 class RememberedLogin extends \Ilyamur\PhpMvc\Core\Model
 {
-    public static function findByToken(string $token): ?RememberedLogin
+    public static function findByToken(string $token): RememberedLogin|false
     {
         $token = new Token($token);
         $hashedToken = $token->getHash();
@@ -26,9 +26,7 @@ class RememberedLogin extends \Ilyamur\PhpMvc\Core\Model
 
         $stmt->execute();
 
-        $rememberedLogin = $stmt->fetch();
-
-        return $rememberedLogin ? $rememberedLogin : null;
+        return $stmt->fetch();
     }
 
     public function getUserByToken()
