@@ -139,7 +139,7 @@ class Post extends \Ilyamur\PhpMvc\Core\Model
         return $posts;
     }
 
-    public static function findById(int $postsId): ?static
+    public static function findById(int $postsId): ?Post
     {
         $sql = 'SELECT 
                     u.name AS author,

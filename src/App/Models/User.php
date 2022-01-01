@@ -110,7 +110,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         return $user ? $user : null;
     }
 
-    public static function authenticate(string $email, string $password): ?static
+    public static function authenticate(string $email, string $password): ?User
     {
         $user = static::findByEmail($email);
 
@@ -217,7 +217,7 @@ class User extends \Ilyamur\PhpMvc\Core\Model
         );
     }
 
-    public static function findByPasswordReset(string $token): ?static
+    public static function findByPasswordReset(string $token): ?User
     {
         $token = new Token($token);
         $hashedToken = $token->getHash();

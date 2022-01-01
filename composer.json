@@ -7,19 +7,17 @@
             "Ilyamur\\PhpMvc\\Config\\": "config/"
         }
     },
-    "authors": [
-        {
-            "name": "Ilya Mur",
-            "email": "ilyamur@hotmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Ilya Mur",
+        "email": "ilyamur@hotmail.com"
+    }],
     "require": {
         "twig/twig": "^3.0",
         "mailjet/mailjet-apiv3-php": "^1.5",
         "twig/string-extra": "^3.3",
         "twig/extra-bundle": "^3.3",
         "gregwar/captcha": "^1.1",
-        "aws/aws-sdk-php": "^3.208"
-
+        "aws/aws-sdk-php": "^3.208",
+        "PHP": "8.0.12"
     }
 }
