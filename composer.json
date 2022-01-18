@@ -1,14 +1,21 @@
 {
-    "name": "ilyamur/php-mvc",
-    "description": "Basic MVC barebone",
+    "name": "ilyamur/my_posts_app",
+    "description": "'PHP on Rails' implementations - blog app with rich auth functional written in plain PHP",
     "autoload": {
         "psr-4": {
-            "Ilyamur\\PhpMvc\\": "src/",
-            "Ilyamur\\PhpMvc\\Config\\": "config/"
+            "Ilyamur\\PhpMvc\\": "src/"
+        },
+        "files": [
+            "config/config.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ilyamur\\PhpMvc\\Tests\\": "tests/"
         }
     },
     "authors": [{
-        "name": "Ilya Mur",
+        "name": "Ilya Muratov",
         "email": "ilyamur@hotmail.com"
     }],
     "require": {
@@ -17,7 +24,10 @@
         "twig/string-extra": "^3.3",
         "twig/extra-bundle": "^3.3",
         "gregwar/captcha": "^1.1",
-        "aws/aws-sdk-php": "^3.208",
-        "PHP": "8.0.12"
+        "aws/aws-sdk-php": "^3.208"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.6",
+        "phpunit/phpunit": "^9.5"
     }
 }

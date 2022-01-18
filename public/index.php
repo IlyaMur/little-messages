@@ -10,17 +10,13 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-error_reporting(E_ALL);
-set_error_handler('Ilyamur\PhpMvc\Core\Error::errorHandler');
-set_exception_handler('Ilyamur\PhpMvc\Core\Error::exceptionHandler');
-
 session_start();
 
 /**
  * Routing
  */
 
-$router = new Ilyamur\PhpMvc\Core\Router();
+$router = new Ilyamur\PhpMvc\Service\Router();
 
 $router->add(route: '', params: ['controller' => 'posts', 'action' => 'index']);
 $router->add(route: 'page/{page:[\d+]}', params: ['controller' => 'posts', 'action' => 'index']);

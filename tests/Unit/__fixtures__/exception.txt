@@ -1,0 +1,1 @@
+<h1>Fatal error</h1><p>Uncaught exception: 'Exception'</p><p>Message: 'testExceptionMessage'</p><p>Stack trace:<pre>#0
