@@ -12,7 +12,6 @@ class Mail
     public static function send(string $to, string $subject, string $text, string $html, string $name): void
     {
         $mj = new Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'), true, ['version' => 'v3.1']);
-
         $body = [
             'Messages' => [
                 [
@@ -32,7 +31,6 @@ class Mail
                 ]
             ]
         ];
-
-        $response = $mj->post(Resources::$Email, ['body' => $body]);
+        $mj->post(Resources::$Email, ['body' => $body]);
     }
 }

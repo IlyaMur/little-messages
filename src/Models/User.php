@@ -176,19 +176,15 @@ class User extends BaseModel
         $hashToken = $token->getHash();
         $this->passwordResetToken = $token->getValue();
 
-        $expiryTimestamp = time() + 60 * 60 * 2;
-
         $sql = 'UPDATE users
                 SET password_reset_hash = :token_hash,
                     password_reset_expires_at = :expires_at
                 WHERE id = :id';
-
         $db = static::getDB();
 
         $stmt = $db->prepare($sql);
-
         $stmt->bindValue(':token_hash', $hashToken, PDO::PARAM_STR);
-        $stmt->bindValue(':expires_at', date('Y-m-d H:i:s', $expiryTimestamp), PDO::PARAM_STR);
+        $stmt->bindValue(':expires_at', date('Y-m-d H:i:s', time() + 60 * 60 * 2), PDO::PARAM_STR);
         $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 
         return $stmt->execute();

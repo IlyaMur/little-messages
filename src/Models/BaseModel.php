@@ -43,11 +43,8 @@ abstract class BaseModel
     protected function generateUploadDestination(string $type = 'coverImage'): void
     {
         $pathinfo = pathinfo($this->file[$type]['name']);
-
         $base = $pathinfo['filename'];
-
         $base = mb_substr(preg_replace('/[^a-zA-Z0-0_-]/', '_', $base), 0, 200);
-
         if (AWS_STORING) {
             $destination = dirname($this->file[$type]["tmp_name"]) . '/' .  $base . '.' . $pathinfo['extension'];
 
@@ -66,7 +63,6 @@ abstract class BaseModel
             if (!move_uploaded_file($this->file[$type]['tmp_name'], $uploadPath)) {
                 throw new Exception('Error caused file uploading');
             }
-
             $destination = "/uploads/$type/$filename";
         }
 

@@ -14,11 +14,9 @@ class Hashtag extends BaseModel
     public static function save(Post $post, int $postId, $deletedTags = []): bool
     {
         $db = static::getDB();
-
         foreach ($deletedTags as $deletedTag) {
             Hashtag::deleteTagFromPost($deletedTag, $postId);
         }
-
         foreach (array_unique($post->hashtags[0]) as $hashtag) {
             $tag = static::getDuplicateTag($hashtag);
 
