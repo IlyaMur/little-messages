@@ -5,10 +5,27 @@ namespace Ilyamur\PhpMvc\Models;
 use PDO;
 use Ilyamur\PhpMvc\Service\Auth;
 
+/**
+ * Comment model
+ *
+ * PHP version 8.0
+ */
 class Comment extends BaseModel
 {
+    /**
+     * Error messages
+     *
+     * @var array
+     */
     public array $errors = [];
 
+    /**
+     * Class constructor
+     *
+     * @param array $data Initial property values (optional)
+     * 
+     * @return void
+     */
     public function __construct(array $data = [])
     {
         foreach ($data as $key => $val) {
@@ -16,12 +33,20 @@ class Comment extends BaseModel
         }
     }
 
+    /**
+     * Validate comment and check its captcha
+     * 
+     * @param array $data Initial property values (optional)
+     *
+     * @return void
+     */
     public function validate(string $correctCaptcha): void
     {
         if (trim($this->commentBody) === '') {
             $this->errors[] = 'Write something in a comment...';
         }
 
+        // if user anonym check captcha
         if (!Auth::getUser()) {
             if ($this->captcha !== $correctCaptcha) {
                 $this->errors[] = 'Incorrect captcha';
@@ -31,6 +56,13 @@ class Comment extends BaseModel
         }
     }
 
+    /**
+     * Get comments by posts id
+     * 
+     * @param id $postsId specific post id
+     *
+     * @return array
+     */
     public static function getCommentsByPostId(int $postsId): array
     {
         $sql = 'SELECT 
@@ -57,8 +89,16 @@ class Comment extends BaseModel
         return $stmt->fetchAll();
     }
 
+    /**
+     * Save comment to db
+     * 
+     * @param string $captcha captcha code
+     *
+     * @return bool
+     */
     public function save(string $captcha): bool
     {
+        // validate captcha
         $this->validate($captcha);
 
         if (empty($this->errors)) {
@@ -80,6 +120,13 @@ class Comment extends BaseModel
         return false;
     }
 
+    /**
+     * Get number of last comments from DB
+     * 
+     * @param int $number Number of comments
+     *
+     * @return array
+     */
     public static function getLastComments(int $number = 5): array
     {
         $sql = "SELECT
@@ -103,6 +150,15 @@ class Comment extends BaseModel
         return $result->fetchAll();
     }
 
+    /**
+     * Get comments by specific user id
+     * 
+     * @param int $userId User id
+     * @param int $limit Pagination limit (optional)
+     * @param int $page number of page (optional)
+     *
+     * @return array
+     */
     public static function getCommentsByUserId(int $userId, int $limit = 5, int $page = 1): array
     {
         $offset = $limit * ($page - 1);
@@ -129,6 +185,13 @@ class Comment extends BaseModel
         return static::getDB()->query($sql, PDO::FETCH_CLASS, static::class)->fetchAll();
     }
 
+    /**
+     * Get total comments count by specific user id
+     * 
+     * @param int $userId User id
+     *
+     * @return mixed
+     */
     public static function getTotalCountByUserId(int $userId): ?int
     {
         $db = static::getDB();
