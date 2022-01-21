@@ -10,8 +10,18 @@ use Ilyamur\PhpMvc\Views\BaseView;
 use Ilyamur\PhpMvc\Models\User;
 use Ilyamur\PhpMvc\Models\Comment;
 
+/**
+ * Profile controller
+ *
+ * PHP version 8.0
+ */
 class Profile extends BaseController
 {
+    /**
+     * Before filter - called before each action method
+     *
+     * @return void
+     */
     protected function before(): void
     {
         $this->user = User::findById((int) $this->routeParams['id']);
@@ -21,6 +31,11 @@ class Profile extends BaseController
         }
     }
 
+    /**
+     * Show the profile
+     *
+     * @return void
+     */
     public function showAction(): void
     {
         $userComments = Comment::getCommentsByUserId((int)$this->user->id);
@@ -31,6 +46,11 @@ class Profile extends BaseController
         ]);
     }
 
+    /**
+     * Show the form for editing the profile
+     *
+     * @return void
+     */
     public function editAction(): void
     {
         if ($this->user->id !== Auth::getUser()?->id) {
@@ -42,6 +62,11 @@ class Profile extends BaseController
         ]);
     }
 
+    /**
+     * Update the profile
+     *
+     * @return void
+     */
     public function updateAction(): void
     {
         if ($this->user->id !== Auth::getUser()?->id) {

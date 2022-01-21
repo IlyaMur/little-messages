@@ -9,8 +9,18 @@ use Ilyamur\PhpMvc\Service\Flash;
 use Ilyamur\PhpMvc\Views\BaseView;
 use Ilyamur\PhpMvc\Models\User;
 
+/**
+ * Login controller
+ *
+ * PHP version 8.0
+ */
 class Login extends BaseController
 {
+    /**
+     * Show the login page
+     *
+     * @return void
+     */
     public function newAction(): void
     {
         if (Auth::getUser()) {
@@ -20,6 +30,11 @@ class Login extends BaseController
         BaseView::renderTemplate('Login/new.html');
     }
 
+    /**
+     * Log in a user
+     *
+     * @return void
+     */
     public function createAction(): void
     {
         $user = User::authenticate($_POST['email'], $_POST['password']);
@@ -37,6 +52,11 @@ class Login extends BaseController
         BaseView::renderTemplate('Login/new.html', ['email' => $_POST['email'], 'rememberMe' => $rememberMe]);
     }
 
+    /**
+     * Log out a user
+     *
+     * @return void
+     */
     public function destroyAction(): void
     {
         Auth::logout();
@@ -44,6 +64,11 @@ class Login extends BaseController
         $this->redirect('/login/show-logout-message');
     }
 
+    /**
+     * Show a "logged out" flash message and redirect to the homepage.
+     * 
+     * @return void
+     */
     public function showLogoutMessageAction()
     {
         Flash::addMessage('Logout successfuly');

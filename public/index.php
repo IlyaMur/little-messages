@@ -8,16 +8,22 @@ declare(strict_types=1);
  * PHP version 8.0
  */
 
+/**
+ * Composer
+ */
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
+/**
+ * Sessions
+ */
 session_start();
 
 /**
  * Routing
  */
-
 $router = new Ilyamur\PhpMvc\Service\Router();
 
+// Add the routes
 $router->add(route: '', params: ['controller' => 'posts', 'action' => 'index']);
 $router->add(route: 'page/{page:[\d+]}', params: ['controller' => 'posts', 'action' => 'index']);
 $router->add(route: 'posts/{action}/{id:\d+}', params: ['controller' => 'posts']);
