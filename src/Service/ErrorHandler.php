@@ -6,8 +6,23 @@ namespace Ilyamur\PhpMvc\Service;
 
 use Ilyamur\PhpMvc\Views\BaseView;
 
+/**
+ * Error and exception handler
+ *
+ * PHP version 8.0
+ */
 class ErrorHandler
 {
+    /**
+     * Error handler. Convert all errors to Exceptions by throwing an ErrorException.
+     *
+     * @param int $level  Error level
+     * @param string $message  Error message
+     * @param string $file  Filename the error was raised in
+     * @param int $line  Line number in the file
+     *
+     * @return void
+     */
     public static function errorHandler(int $level, string $message, string $file, int $line)
     {
         if (error_reporting() !== 0) {
@@ -15,10 +30,18 @@ class ErrorHandler
         }
     }
 
+    /**
+     * Exception handler.
+     * Selecting an exception output. Log or render to the screen.
+     * 
+     * @param Exception $exception  The exception
+     *
+     * @return void
+     */
     public static function exceptionHandler(\Throwable $exception)
     {
+        // Code is 404 (not found) or 500 (general error)
         $code = $exception->getCode();
-
         if ($code != 404) {
             $code = 500;
         }

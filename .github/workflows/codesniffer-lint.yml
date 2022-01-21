@@ -1,4 +1,4 @@
-name: CodeSniffer-Linter
+name: CodeSniffer-PSR12
 
 on: push
 

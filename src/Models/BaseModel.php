@@ -8,8 +8,18 @@ use PDO;
 use Exception;
 use Ilyamur\PhpMvc\Service\S3Helper;
 
+/**
+ * Base model
+ *
+ * PHP version 8.0
+ */
 abstract class BaseModel
 {
+    /**
+     * Get the PDO database connection
+     *
+     * @return mixed
+     */
     public const MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg'];
 
     protected static function getDB()
@@ -34,12 +44,23 @@ abstract class BaseModel
         return $db;
     }
 
+    /**
+     * Upload file to S3 storage
+     *
+     * @return mixed
+     */
     protected function saveToS3(string $type): string
     {
         $s3 = new S3Helper();
         return $s3->uploadFile($this->file['destination'], $type);
     }
 
+    /**
+     * Generate destination to upload.
+     * Validates a file and selects destination between local and S3 storages
+     *
+     * @return void
+     */
     protected function generateUploadDestination(string $type = 'coverImage'): void
     {
         $pathinfo = pathinfo($this->file[$type]['name']);
@@ -69,6 +90,11 @@ abstract class BaseModel
         $this->file['destination'] = $destination;
     }
 
+    /**
+     * Check if link external or not
+     *
+     * @return bool
+     */
     public static function isLinkExternal(string $link): bool
     {
         $res = preg_match('/amazon/', $link);
@@ -76,6 +102,11 @@ abstract class BaseModel
         return !!$res;
     }
 
+    /**
+     * Deletinig file from storage
+     *
+     * @return void
+     */
     public static function deleteFromStorage(string $link, string $type): void
     {
         if (static::isLinkExternal($link)) {
