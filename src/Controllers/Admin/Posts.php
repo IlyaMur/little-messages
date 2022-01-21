@@ -8,8 +8,18 @@ use Ilyamur\PhpMvc\Service\Flash;
 use Ilyamur\PhpMvc\Views\BaseView;
 use Ilyamur\PhpMvc\Models\Post;
 
+/**
+ * Posts admin controller
+ *
+ * PHP version 8.0
+ */
 class Posts extends \Ilyamur\PhpMvc\Controllers\BaseController
 {
+    /**
+     * Require the user to be admin before giving access to all methods in the controller
+     *
+     * @return void
+     */
     protected function before(): void
     {
         if (!$this->isAdmin()) {
@@ -17,6 +27,11 @@ class Posts extends \Ilyamur\PhpMvc\Controllers\BaseController
         }
     }
 
+    /**
+     * Render all posts from the blog
+     *
+     * @return void
+     */
     public function indexAction(): void
     {
         $posts = Post::getPosts(limit: 100);
@@ -28,6 +43,11 @@ class Posts extends \Ilyamur\PhpMvc\Controllers\BaseController
         );
     }
 
+    /**
+     * Deleting a post and rendering Flash message
+     *
+     * @return void
+     */
     public function destroyAction()
     {
         $post = Post::findById(

@@ -11,10 +11,24 @@ use Ilyamur\PhpMvc\Models\Post;
 use Ilyamur\PhpMvc\Models\Comment;
 use Ilyamur\PhpMvc\Models\Hashtag;
 
+/**
+ * Posts controller
+ *
+ * PHP version 8.0
+ */
 class Posts extends BaseController
 {
+    /**
+     * Posts rendering per page
+     * @var int
+     */
     public const POST_PER_PAGE = 3;
 
+    /**
+     * Render posts with pagination
+     * 
+     * @return void
+     */
     public function indexAction(): void
     {
         $currentPage = $this->routeParams['page'] ?? 1;
@@ -35,6 +49,11 @@ class Posts extends BaseController
         );
     }
 
+    /**
+     * Render form for creating new post
+     * 
+     * @return void
+     */
     public function newAction(): void
     {
         if (!Auth::getUser()) {
@@ -44,6 +63,11 @@ class Posts extends BaseController
         BaseView::renderTemplate('posts/new.html');
     }
 
+    /**
+     * Creating new post
+     * 
+     * @return void
+     */
     public function createAction()
     {
         if (!Auth::getUser()) {
@@ -61,6 +85,11 @@ class Posts extends BaseController
         BaseView::renderTemplate('posts/new.html', ['post' => $post]);
     }
 
+    /**
+     * Render specific post and its comments
+     * 
+     * @return void
+     */
     public function showAction(): void
     {
         $post = Post::findById(
@@ -85,6 +114,11 @@ class Posts extends BaseController
         );
     }
 
+    /**
+     * Show form for editing specific post
+     * 
+     * @return void
+     */
     public function editAction(): void
     {
         if (!Auth::getUser()) {
@@ -105,6 +139,11 @@ class Posts extends BaseController
         BaseView::renderTemplate('posts/edit.html', ['post' => $post]);
     }
 
+    /**
+     * Update specific post
+     * 
+     * @return void
+     */
     public function updateAction(): void
     {
         if (!Auth::getUser()) {
@@ -126,6 +165,11 @@ class Posts extends BaseController
         BaseView::renderTemplate('posts/edit.html', ['post' => $post]);
     }
 
+    /**
+     * Deleting specific post
+     * 
+     * @return void
+     */
     public function destroyAction()
     {
         $post = Post::findById(

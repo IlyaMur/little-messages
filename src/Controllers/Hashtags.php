@@ -8,8 +8,18 @@ use Ilyamur\PhpMvc\Views\BaseView;
 use Ilyamur\PhpMvc\Models\Post;
 use Ilyamur\PhpMvc\Models\Comment;
 
+/**
+ * Hashtags controller
+ *
+ * PHP version 8.0
+ */
 class Hashtags extends BaseController
 {
+    /**
+     * Show posts with specific hashtag
+     *
+     * @return void
+     */
     public function showAction()
     {
         BaseView::renderTemplate(

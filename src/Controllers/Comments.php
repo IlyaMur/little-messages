@@ -4,17 +4,30 @@ declare(strict_types=1);
 
 namespace Ilyamur\PhpMvc\Controllers;
 
-use Ilyamur\PhpMvc\Service\Auth;
 use Ilyamur\PhpMvc\Service\Flash;
 use Ilyamur\PhpMvc\Views\BaseView;
 use Ilyamur\PhpMvc\Models\Post;
 use Ilyamur\PhpMvc\Models\User;
 use Ilyamur\PhpMvc\Models\Comment;
 
+/**
+ * Comments controller
+ *
+ * PHP version 8.0
+ */
 class Comments extends BaseController
 {
+    /**
+     * Comments rendering per page
+     * @var int
+     */
     public const COMMENTS_PER_PAGE = 5;
 
+    /**
+     * Creating new comment and rendering page with it
+     *
+     * @return void
+     */
     public function createAction()
     {
         $comment = new Comment($_POST);
@@ -41,6 +54,11 @@ class Comments extends BaseController
         );
     }
 
+    /**
+     * Rendering comments with pagination
+     *
+     * @return void
+     */
     public function indexAction()
     {
         $user = User::findById((int) $this->routeParams['id']);
