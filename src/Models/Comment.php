@@ -23,7 +23,7 @@ class Comment extends BaseModel
      * Class constructor
      *
      * @param array $data Initial property values (optional)
-     * 
+     *
      * @return void
      */
     public function __construct(array $data = [])
@@ -35,7 +35,7 @@ class Comment extends BaseModel
 
     /**
      * Validate comment and check its captcha
-     * 
+     *
      * @param array $data Initial property values (optional)
      *
      * @return void
@@ -58,7 +58,7 @@ class Comment extends BaseModel
 
     /**
      * Get comments by posts id
-     * 
+     *
      * @param id $postsId specific post id
      *
      * @return array
@@ -91,7 +91,7 @@ class Comment extends BaseModel
 
     /**
      * Save comment to db
-     * 
+     *
      * @param string $captcha captcha code
      *
      * @return bool
@@ -122,7 +122,7 @@ class Comment extends BaseModel
 
     /**
      * Get number of last comments from DB
-     * 
+     *
      * @param int $number Number of comments
      *
      * @return array
@@ -152,7 +152,7 @@ class Comment extends BaseModel
 
     /**
      * Get comments by specific user id
-     * 
+     *
      * @param int $userId User id
      * @param int $limit Pagination limit (optional)
      * @param int $page number of page (optional)
@@ -187,7 +187,7 @@ class Comment extends BaseModel
 
     /**
      * Get total comments count by specific user id
-     * 
+     *
      * @param int $userId User id
      *
      * @return mixed

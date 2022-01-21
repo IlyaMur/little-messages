@@ -9,7 +9,6 @@ namespace Ilyamur\PhpMvc\Service;
  */
 class Flash
 {
-
     /**
      * Success message type
      * @var string

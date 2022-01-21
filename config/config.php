@@ -43,6 +43,6 @@ define('SHOW_ERRORS', true);
 define('LOG_DIR', __DIR__ . '/../logs/' . date('Y-m-d') . '.txt');
 
 // high level errors handlers
-error_reporting(E_ALL);
-set_error_handler('Ilyamur\PhpMvc\Service\ErrorHandler::errorHandler');
-set_exception_handler('Ilyamur\PhpMvc\Service\ErrorHandler::exceptionHandler');
+// error_reporting(E_ALL);
+// set_error_handler('Ilyamur\PhpMvc\Service\ErrorHandler::errorHandler');
+// set_exception_handler('Ilyamur\PhpMvc\Service\ErrorHandler::exceptionHandler');

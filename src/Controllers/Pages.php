@@ -15,7 +15,7 @@ class Pages extends BaseController
 {
     /**
      * Show about page
-     * 
+     *
      * @return void
      */
     public function aboutAction()

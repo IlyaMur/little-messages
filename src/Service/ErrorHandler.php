@@ -33,7 +33,7 @@ class ErrorHandler
     /**
      * Exception handler.
      * Selecting an exception output. Log or render to the screen.
-     * 
+     *
      * @param Exception $exception  The exception
      *
      * @return void

@@ -159,7 +159,7 @@ class Router
     }
 
     /**
-     * Remove the query string variables from the URL (if any). 
+     * Remove the query string variables from the URL (if any).
      *
      *   URL                           $_SERVER['QUERY_STRING']  Route
      *   -------------------------------------------------------------------

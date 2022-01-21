@@ -26,7 +26,7 @@ class Posts extends BaseController
 
     /**
      * Render posts with pagination
-     * 
+     *
      * @return void
      */
     public function indexAction(): void
@@ -51,7 +51,7 @@ class Posts extends BaseController
 
     /**
      * Render form for creating new post
-     * 
+     *
      * @return void
      */
     public function newAction(): void
@@ -65,7 +65,7 @@ class Posts extends BaseController
 
     /**
      * Creating new post
-     * 
+     *
      * @return void
      */
     public function createAction()
@@ -87,7 +87,7 @@ class Posts extends BaseController
 
     /**
      * Render specific post and its comments
-     * 
+     *
      * @return void
      */
     public function showAction(): void
@@ -116,7 +116,7 @@ class Posts extends BaseController
 
     /**
      * Show form for editing specific post
-     * 
+     *
      * @return void
      */
     public function editAction(): void
@@ -141,7 +141,7 @@ class Posts extends BaseController
 
     /**
      * Update specific post
-     * 
+     *
      * @return void
      */
     public function updateAction(): void
@@ -167,7 +167,7 @@ class Posts extends BaseController
 
     /**
      * Deleting specific post
-     * 
+     *
      * @return void
      */
     public function destroyAction()

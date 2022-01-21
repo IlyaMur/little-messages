@@ -66,7 +66,7 @@ class Login extends BaseController
 
     /**
      * Show a "logged out" flash message and redirect to the homepage.
-     * 
+     *
      * @return void
      */
     public function showLogoutMessageAction()

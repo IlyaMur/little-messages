@@ -41,7 +41,7 @@ class Post extends BaseModel
      *
      * @param array $data Initial property values (optional)
      * @param array $imgsData uploaded image data (optional)
-     * 
+     *
      * @return void
      */
     public function __construct(array $data = [], array $imgsData = [])
@@ -160,10 +160,10 @@ class Post extends BaseModel
 
     /**
      * Get posts from db
-     * 
+     *
      * @param array $page Page number (optional)
      * @param array $limit Pagination limit per page (optional)
-     * 
+     *
      * @return array
      */
     public static function getPosts(int $page = 1, int $limit = 3): array
@@ -198,7 +198,7 @@ class Post extends BaseModel
 
     /**
      * Get specific post from db by id
-     * 
+     *
      * @param int $postsId Post id
      *
      * @return array
@@ -233,7 +233,7 @@ class Post extends BaseModel
 
     /**
      * Get total posts count
-     * 
+     *
      * @param int $postsId Post id
      *
      * @return mixed
@@ -314,7 +314,7 @@ class Post extends BaseModel
 
     /**
      * Delete specific post
-     * 
+     *
      * @return bool
      */
     public function delete(): bool
@@ -338,7 +338,7 @@ class Post extends BaseModel
 
     /**
      * Find specific post by its hashtag
-     * 
+     *
      * @return array
      */
     public static function findPostsByHashtag(string $hashtag): array
@@ -374,7 +374,7 @@ class Post extends BaseModel
 
     /**
      * Insert <a> tags to posts body
-     * 
+     *
      * @return void
      */
     protected function insertLinksToHashtags(): void

@@ -21,7 +21,6 @@ class User extends BaseModel
      *
      * @var string
      */
-
     public const IMAGE_TYPE = 'avaImage';
 
     /**
@@ -421,7 +420,7 @@ class User extends BaseModel
      *
      * @param string $data Hashed token
      *
-     * @return boolean  
+     * @return boolean
      */
     protected static function findActivationToken(string $hashedToken): bool
     {
@@ -441,7 +440,7 @@ class User extends BaseModel
     /**
      * Validate and check uploaded image
      *
-     * @return void  
+     * @return void
      */
     private function validateInputImage(): void
     {

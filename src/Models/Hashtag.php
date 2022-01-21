@@ -23,18 +23,18 @@ class Hashtag extends BaseModel
 
     /**
      * Save hashtag to the db
-     * 
+     *
      * @param Post $post post Model
      * @param int $postId Post id
      * @param array $deletedTags Old tags for deletion
-     * 
+     *
      * @return bool
      */
     public static function save(Post $post, int $postId, array $deletedTags = []): bool
     {
         $db = static::getDB();
 
-        // delete old redundant tags 
+        // delete old redundant tags
         foreach ($deletedTags as $deletedTag) {
             Hashtag::deleteTagFromPost($deletedTag, $postId);
         }
@@ -65,9 +65,9 @@ class Hashtag extends BaseModel
 
     /**
      * Find if hashtag already persists in the db
-     * 
+     *
      * @param string $hashtag Hashtag
-     * 
+     *
      * @return mixed
      */
     public static function getDuplicateTag(string $hashtag): Hashtag|false
@@ -85,9 +85,9 @@ class Hashtag extends BaseModel
 
     /**
      * Get number of last hashtags from the db
-     * 
+     *
      * @param int $number Number of hashtags
-     * 
+     *
      * @return array
      */
     public static function getLastActualHashtags(int $number = 10): array
@@ -104,10 +104,10 @@ class Hashtag extends BaseModel
 
     /**
      * Delete specific tag from hashtags_posts table
-     * 
-     * @param int $postId Post id 
+     *
+     * @param int $postId Post id
      * @param string $tag Hashtag
-     * 
+     *
      * @return array
      */
     public static function deleteTagFromPost(string $tag, int $postId): bool
