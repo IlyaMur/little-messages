@@ -5,19 +5,45 @@ declare(strict_types=1);
 namespace Ilyamur\PhpMvc\Models;
 
 use PDO;
-use Exception;
 use Ilyamur\PhpMvc\Service\Auth;
-use Ilyamur\PhpMvc\Service\S3Helper;
-use Ilyamur\PhpMvc\Config\Config;
 use Ilyamur\PhpMvc\Models\Hashtag;
 
+/**
+ * Post model
+ *
+ * PHP version 8.0
+ */
 class Post extends BaseModel
 {
+    /**
+     * Image type for uploading
+     *
+     * @var string
+     */
     protected const IMAGE_TYPE = 'coverImage';
 
+    /**
+     * Error messages
+     *
+     * @var array
+     */
     public array $errors = [];
+
+    /**
+     * Posts hashtags
+     *
+     * @var array
+     */
     public array $hashtags = [];
 
+    /**
+     * Class constructor
+     *
+     * @param array $data Initial property values (optional)
+     * @param array $imgsData uploaded image data (optional)
+     * 
+     * @return void
+     */
     public function __construct(array $data = [], array $imgsData = [])
     {
         foreach ($data as $key => $val) {
@@ -28,14 +54,25 @@ class Post extends BaseModel
             $this->file[$key] = $val;
         }
 
+        // parse hashtags from post body
         $this->parseHashtagsFromBody();
     }
 
+    /**
+     * Finding hashtags in the post body by regexp
+     *
+     * @return void
+     */
     private function parseHashtagsFromBody(): void
     {
         preg_match_all(Hashtag::HASHTAG_REGEXP, $this->body, $this->hashtags);
     }
 
+    /**
+     * Validate post
+     *
+     * @return void
+     */
     protected function validate(): void
     {
         if (trim($this->title) === '') {
@@ -47,6 +84,11 @@ class Post extends BaseModel
         }
     }
 
+    /**
+     * Validate posts image
+     *
+     * @return void
+     */
     private function validateInputImage(): void
     {
         switch ($this->file[static::IMAGE_TYPE]['error']) {
@@ -65,15 +107,22 @@ class Post extends BaseModel
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $this->file[static::IMAGE_TYPE]['tmp_name']);
 
+        // validation of uploaded file by allowed image types
         if (!in_array($mimeType, static::MIME_TYPES)) {
             $this->errors[] = 'Invalid format';
         }
 
+        // checking image size
         if ($this->file[static::IMAGE_TYPE]['size'] > 250000) {
             $this->errors[] = 'File is too large';
         }
     }
 
+    /**
+     * Save posts to db
+     *
+     * @return bool
+     */
     public function save(): bool
     {
         $this->validate();
@@ -109,6 +158,14 @@ class Post extends BaseModel
         return false;
     }
 
+    /**
+     * Get posts from db
+     * 
+     * @param array $page Page number (optional)
+     * @param array $limit Pagination limit per page (optional)
+     * 
+     * @return array
+     */
     public static function getPosts(int $page = 1, int $limit = 3): array
     {
         $db = static::getDB();
@@ -139,6 +196,13 @@ class Post extends BaseModel
         return $posts;
     }
 
+    /**
+     * Get specific post from db by id
+     * 
+     * @param int $postsId Post id
+     *
+     * @return array
+     */
     public static function findById(int $postsId): ?Post
     {
         $sql = 'SELECT 
@@ -167,6 +231,13 @@ class Post extends BaseModel
         return null;
     }
 
+    /**
+     * Get total posts count
+     * 
+     * @param int $postsId Post id
+     *
+     * @return mixed
+     */
     public static function getTotalCount(): string|false
     {
         $result = static::getDB()->query('SELECT count(id) AS total FROM posts');
@@ -241,6 +312,11 @@ class Post extends BaseModel
         return false;
     }
 
+    /**
+     * Delete specific post
+     * 
+     * @return bool
+     */
     public function delete(): bool
     {
         $sql = 'DELETE FROM posts
@@ -260,6 +336,11 @@ class Post extends BaseModel
         return $isCorrect;
     }
 
+    /**
+     * Find specific post by its hashtag
+     * 
+     * @return array
+     */
     public static function findPostsByHashtag(string $hashtag): array
     {
         $sql = 'SELECT DISTINCT title, body,
@@ -291,6 +372,11 @@ class Post extends BaseModel
         return $posts;
     }
 
+    /**
+     * Insert <a> tags to posts body
+     * 
+     * @return void
+     */
     protected function insertLinksToHashtags(): void
     {
         $this->body = preg_replace(Hashtag::HASHTAG_REGEXP, '<a href="/hashtags/show/$1">#$1</a>', $this->body);
