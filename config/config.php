@@ -11,12 +11,12 @@ define('ROOT_URL', '/');
 /**
  * Database settings
  */
-
 define('DB_HOST', getenv('DB_HOST'));
 define('DB_NAME', getenv('DB_NAME'));
 define('DB_USER', getenv('DB_USER'));
 define('DB_PASSWORD', getenv('DB_PASSWORD'));
 
+// Key for tokens hashing
 define('SECRET_KEY', getenv('SECRET_KEY'));
 
 /**
