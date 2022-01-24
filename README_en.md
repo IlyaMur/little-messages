@@ -49,7 +49,7 @@ The template engine [Twig](https://twig.symfony.com/) was chosen as the basis fo
 - `$ git clone` the repo.
 - `$ make install` to install dependencies.
 - Set the root in the web server settings to the `public/` directory.
-- Import SQL from the `my_posts.sql` file into the selected DBMS.
+- Import SQL from the `myposts.sql` file into the selected DBMS.
 - In `config/config.php` set the data for accessing the database, storage and hashing settings.
 
 
