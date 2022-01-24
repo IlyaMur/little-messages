@@ -38,13 +38,13 @@ The currently application has:
 - Administrative component.
 
 Most of the functionality was written from scratch, ready-made solutions were avoided whenever possible.
-The template engine [Twig] (https://twig.symfony.com/) was chosen as the basis for the views, as a flexible and safe solution with a concise syntax.
+The template engine [Twig](https://twig.symfony.com/) was chosen as the basis for the views, as a flexible and safe solution with a concise syntax.
 
 ![Main page](https://i.imgur.com/AUtFld3.png)   
 
 ## Install  
 
-- PHP version >= 8.0 (application uses named arguments and other PHP new features).
+- PHP version >= 8.0 (application uses named arguments and other new PHP features).
 - `$ git clone` the repo.
 - `$ make install` to install dependencies.
 - Set the root in the web server settings to the `public/` directory.
@@ -58,7 +58,7 @@ Despite the fact that in the process of writing the application the goal was to 
 - Twig Template Engine.
 - SDK Mailjet.
 - SDK AWS.
-- Gregwar/Captcha
+- Gregwar/Captcha.
 
 ## How It Works
 
