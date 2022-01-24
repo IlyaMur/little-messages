@@ -1,4 +1,4 @@
-# MyTasks
+# MyPosts
 
 ![CodeSniffer-PSR-12](https://github.com/IlyaMur/myposts_app/workflows/CodeSniffer-PSR-12/badge.svg)
 ![PHPUnit-Tests](https://github.com/IlyaMur/myposts_app/workflows/PHPUnit-Tests/badge.svg)
@@ -19,10 +19,11 @@
 
 ## О Приложении  
 
-**My Tasks** - приложение-блог созданное на базе фреймворка [PHP On Rails](https://github.com/IlyaMur/php_on_rails_mvc).  
+**My Posts** - приложение-блог созданное на базе фреймворка [PHP On Rails](https://github.com/IlyaMur/php_on_rails_mvc).  
 Блог создан в процессе обучения, но обладает богатым функционалом.  
 
-Осуществлен деплой приложения на сервис Heroku, оно доступно по адресу - http://myposts-app.herokuapp.com.
+Осуществлен деплой приложения на сервис Heroku.   
+MyPosts доступен по адресу - http://myposts-app.herokuapp.com.
 
 В приложении реализованы:
 - Полноценные системы аутентификации и авторизации пользователей.
@@ -35,7 +36,7 @@
 - Административная составляющая.
 
 Большая часть функционала написана с нуля, готовые решение по возможности избегались.  
-Основой для представлений был выбран шаблонизатор Twig, как гибкое и безопасное решение с лаконичным синтаксисом.
+Основой для представлений был выбран шаблонизатор [Twig](https://twig.symfony.com/), как гибкое и безопасное решение с лаконичным синтаксисом.
 
 ## Установка  
 
