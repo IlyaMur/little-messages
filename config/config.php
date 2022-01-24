@@ -17,13 +17,13 @@ define('DB_NAME', getenv('DB_NAME'));
 define('DB_USER', getenv('DB_USER'));
 define('DB_PASSWORD', getenv('DB_PASSWORD'));
 
-define('SECRET_KEY', 'dummykey');
+define('SECRET_KEY', getenv('SECRET_KEY'));
 
 /**
  * STORING SETTINGS
  */
 
-// if false - img storing locally
+// If false - images storing locally
 define('AWS_STORING', false);
 
 define('S3_REGION', getenv('S3_REGION'));
@@ -36,13 +36,13 @@ define('S3_BUCKET_NAME', getenv('S3_BUCKET_NAME'));
  * EXCEPTIONS/ERRORS 
  */
 
-// showing errors info
+// Showing errors info
 define('SHOW_ERRORS', true);
 
-// logs directory
+// Logs directory
 define('LOG_DIR', __DIR__ . '/../logs/' . date('Y-m-d') . '.txt');
 
-// high level errors handlers
+// High level errors handlers
 error_reporting(E_ALL);
 set_error_handler('Ilyamur\PhpMvc\Service\ErrorHandler::errorHandler');
 set_exception_handler('Ilyamur\PhpMvc\Service\ErrorHandler::exceptionHandler');
