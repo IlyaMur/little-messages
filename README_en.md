@@ -17,6 +17,7 @@
     - [Hashtags](#hashtags)
     - [Image storing](#image-storing)
     - [Templates](#templates)
+    - [Administration](#administration)
     - [Errors](#errors)
 
 ## Overview  
@@ -27,7 +28,7 @@ The blog was created in the learning process, but has rich functionality.
 The application was deployed to the Heroku service. 
 MyPosts is available at http://myposts-app.herokuapp.com.
 
-The currently application has:
+The application currently has:
 - Full-fledged systems of authentication and authorization of users.
 - Account activation and password reset by mail (based on the MailJet service).
 - Storage of user data, both locally and on a third-party service (AWS S3).
