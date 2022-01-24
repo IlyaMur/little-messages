@@ -1,6 +1,6 @@
 {
     "name": "ilyamur/my_posts_app",
-    "description": "'PHP on Rails' implementations - blog app with rich auth functional written in plain PHP",
+    "description": "'PHP on Rails' implementations - the blog app with rich auth functional written in plain PHP",
     "autoload": {
         "psr-4": {
             "Ilyamur\\PhpMvc\\": "src/"

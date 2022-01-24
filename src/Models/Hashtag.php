@@ -15,14 +15,14 @@ use Ilyamur\PhpMvc\Models\Post;
 class Hashtag extends BaseModel
 {
     /**
-     * Hastag regexp for parsing posts body
+     * Hastag regexp for parsing post body
      *
      * @var string
      */
     public const HASHTAG_REGEXP = '/\#([а-яa-z]+)/iu';
 
     /**
-     * Save hashtag to the db
+     * Save hashtag to the DB
      *
      * @param Post $post post Model
      * @param int $postId Post id
@@ -64,7 +64,7 @@ class Hashtag extends BaseModel
     }
 
     /**
-     * Find if hashtag already persists in the db
+     * Find if hashtag already persists in the DB
      *
      * @param string $hashtag Hashtag
      *
@@ -84,7 +84,7 @@ class Hashtag extends BaseModel
     }
 
     /**
-     * Get number of last hashtags from the db
+     * Get number of last hashtags from the DB
      *
      * @param int $number Number of hashtags
      *
@@ -103,7 +103,7 @@ class Hashtag extends BaseModel
     }
 
     /**
-     * Delete specific tag from hashtags_posts table
+     * Deleting specific tag from hashtags_posts table
      *
      * @param int $postId Post id
      * @param string $tag Hashtag

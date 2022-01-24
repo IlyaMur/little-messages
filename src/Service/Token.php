@@ -18,9 +18,9 @@ class Token
     /**
      * Class constructor. Create a new random token or assign an existing one if passed in.
      *
-     * @param string $value (optional) A token value
+     * @param string $tokenValue (optional) A token value
      *
-     * @return string  A 32-character token
+     * @return void
      */
     public function __construct($tokenValue = null)
     {

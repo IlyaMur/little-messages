@@ -16,12 +16,17 @@ use Ilyamur\PhpMvc\Service\S3Helper;
 abstract class BaseModel
 {
     /**
+     * Array of allowed image types
+     *
+     * @var array
+     */
+    public const MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg'];
+
+    /**
      * Get the PDO database connection
      *
      * @return mixed
      */
-    public const MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg'];
-
     protected static function getDB()
     {
         static $db = null;
@@ -56,7 +61,7 @@ abstract class BaseModel
     }
 
     /**
-     * Generate destination to upload.
+     * Generate the destination to upload.
      * Validates a file and selects destination between local and S3 storages
      *
      * @return void

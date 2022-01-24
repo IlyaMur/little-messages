@@ -9,7 +9,7 @@ declare(strict_types=1);
 define('ROOT_URL', '/');
 
 /**
- * Database SETTINGS
+ * Database settings
  */
 
 define('DB_HOST', getenv('DB_HOST'));
@@ -43,6 +43,6 @@ define('SHOW_ERRORS', true);
 define('LOG_DIR', __DIR__ . '/../logs/' . date('Y-m-d') . '.txt');
 
 // high level errors handlers
-// error_reporting(E_ALL);
-// set_error_handler('Ilyamur\PhpMvc\Service\ErrorHandler::errorHandler');
-// set_exception_handler('Ilyamur\PhpMvc\Service\ErrorHandler::exceptionHandler');
+error_reporting(E_ALL);
+set_error_handler('Ilyamur\PhpMvc\Service\ErrorHandler::errorHandler');
+set_exception_handler('Ilyamur\PhpMvc\Service\ErrorHandler::exceptionHandler');

@@ -6,13 +6,34 @@ namespace Ilyamur\PhpMvc\Service;
 
 use Aws\S3\S3Client;
 
+/**
+ * S3Helper
+ *
+ * PHP version 8.0
+ */
 class S3Helper
 {
+    /**
+     * Folder name for image storing
+     *
+     * @var string
+     */
     private const BUCKET_FOLDER = 'my_posts';
+
+    /**
+     * Access type for S3
+     *
+     * @var string
+     */
     private const ACL_PUBLIC_READ = 'public-read';
 
     private S3Client $client;
 
+    /**
+     * Class constructor. Set parameters to S3Client object
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->client = new S3Client(
@@ -27,6 +48,14 @@ class S3Helper
         );
     }
 
+    /**
+     * Generate destination for uploading file
+     * 
+     * @param string $fileSrc File source
+     * @param string $type File type (avatar or post cover)
+     * 
+     * @return string Path to the file
+     */
     private static function generateFileDestinationName(string $fileSrc, string $type): string
     {
         return sprintf(
@@ -38,6 +67,14 @@ class S3Helper
         );
     }
 
+    /**
+     * Upload file to S3
+     * 
+     * @param string $fileSrc File source
+     * @param string $type File type (avatar or post cover)
+     * 
+     * @return string URL
+     */
     public function uploadFile(string $fileSrc, string $type): string
     {
         $source = fopen($fileSrc, 'rb');
@@ -60,6 +97,13 @@ class S3Helper
         return $result['ObjectURL'];
     }
 
+    /**
+     * Deleting file from S3
+     * 
+     * @param string $objectUrl File URL
+     * 
+     * @return void
+     */
     public function deleteFile(string $objectUrl): void
     {
         $filekey = str_replace(getenv('S3_URL'), '', $objectUrl);
