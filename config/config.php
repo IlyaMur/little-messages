@@ -20,7 +20,7 @@ define('DB_PASSWORD', getenv('DB_PASSWORD'));
 define('SECRET_KEY', getenv('SECRET_KEY'));
 
 /**
- * STORING SETTINGS
+ * Storing settings
  */
 
 // If false - images storing locally
@@ -33,7 +33,7 @@ define('S3_SECRET_KEY', getenv('S3_SECRET_KEY'));
 define('S3_BUCKET_NAME', getenv('S3_BUCKET_NAME'));
 
 /**
- * EXCEPTIONS/ERRORS 
+ * Exceptions/Errors 
  */
 
 // Showing errors info
