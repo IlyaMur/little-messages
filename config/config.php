@@ -2,22 +2,28 @@
 
 declare(strict_types=1);
 
+use Dotenv\Dotenv;
+
 /**
  * Configuration file
  */
+
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
 define('ROOT_URL', '/');
 
 /**
  * Database settings
  */
-define('DB_HOST', getenv('DB_HOST'));
-define('DB_NAME', getenv('DB_NAME'));
-define('DB_USER', getenv('DB_USER'));
-define('DB_PASSWORD', getenv('DB_PASSWORD'));
+
+define('DB_USER', $_ENV['MYSQL_USER']);
+define('DB_PASSWORD',  $_ENV['MYSQL_PASSWORD']);
+define('DB_HOST', $_ENV['MYSQL_HOST']);
+define('DB_NAME',  $_ENV['MYSQL_DATABASE']);
 
 // Key for tokens hashing
-define('SECRET_KEY', getenv('SECRET_KEY'));
+define('SECRET_KEY', $_ENV['SECRET_KEY']);
 
 /**
  * Storing settings
@@ -26,11 +32,11 @@ define('SECRET_KEY', getenv('SECRET_KEY'));
 // If false - images storing locally
 define('AWS_STORING', false);
 
-define('S3_REGION', getenv('S3_REGION'));
-define('S3_URL', getenv('S3_URL'));
-define('S3_ACCESS_KEY', getenv('S3_ACCESS_KEY'));
-define('S3_SECRET_KEY', getenv('S3_SECRET_KEY'));
-define('S3_BUCKET_NAME', getenv('S3_BUCKET_NAME'));
+define('S3_REGION',  $_ENV['S3_REGION']);
+define('S3_URL',  $_ENV['S3_URL']);
+define('S3_ACCESS_KEY',  $_ENV['S3_ACCESS_KEY']);
+define('S3_SECRET_KEY',  $_ENV['S3_SECRET_KEY']);
+define('S3_BUCKET_NAME',  $_ENV['S3_BUCKET_NAME']);
 
 /**
  * Exceptions/Errors 

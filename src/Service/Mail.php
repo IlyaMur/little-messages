@@ -27,7 +27,7 @@ class Mail
      */
     public static function send(string $to, string $subject, string $text, string $html, string $name): void
     {
-        $mj = new Client(getenv('MJ_APIKEY_PUBLIC'), getenv('MJ_APIKEY_PRIVATE'), true, ['version' => 'v3.1']);
+        $mj = new Client($_ENV['MJ_APIKEY_PUBLIC'], $_ENV['MJ_APIKEY_PRIVATE'], true, ['version' => 'v3.1']);
         $body = [
             'Messages' => [
                 [
