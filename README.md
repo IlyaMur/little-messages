@@ -52,7 +52,7 @@ MyPosts доступен по адресу - http://myposts-app.herokuapp.com.
 
 Прежде всего, необходимо склонировать репозиторий
 
-    $ git clone https://github.com/IlyaMur/my_posts_app.git  
+    $ git clone https://github.com/IlyaMur/myposts_app.git  
     $ cd my_posts_app
 
 И подготовить файл `.env`

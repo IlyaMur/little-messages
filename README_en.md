@@ -50,7 +50,7 @@ The template engine [Twig](https://twig.symfony.com/) was chosen as the basis fo
 
 First of all, you need to clone the repository  
 
-    $ git clone https://github.com/IlyaMur/my_posts_app.git  
+    $ git clone https://github.com/IlyaMur/myposts_app.git  
     $ cd ,my_posts_app
 
 And prepare `.env` file  
