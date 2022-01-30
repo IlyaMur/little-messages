@@ -87,7 +87,7 @@ To install dependencies:
 
 Configure your web server to have the `public/` folder as the web root.
 
-Import SQL from the `database/myposts.sql` file into the selected DBMS 
+Import SQL from the `database/myposts_db.sql` file into the selected DBMS 
 
 Pretty URLs are enabled using web server rewrite rules. An [.htaccess](public/.htaccess) file is included in the `public` folder.
 
