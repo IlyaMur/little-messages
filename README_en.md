@@ -9,7 +9,10 @@
 **Table of contents**
   - [Overview](#Overview)
   - [Install](#Install)
-    - [Used Libraries](#used-libraries)
+    - [Docker build](#docker-build)
+    - [Local installation](#local-installation)
+    - [Configuration](#configuration)
+    - [Used libraries](#used-libraries)
   - [How It Works](#how-it-works)
     - [Authentication and authorization system](#authentication-and-authorization-system)
     - [Posts](#posts)
@@ -45,21 +48,58 @@ The template engine [Twig](https://twig.symfony.com/) was chosen as the basis fo
 
 ## Install  
 
-- PHP version >= 8.0 (application uses named arguments and other new PHP features).
-- `$ git clone` the repo.
-- `$ make install` to install dependencies.
-- Set the root in the web server settings to the `public/` directory.
-- Import SQL from the `myposts.sql` file into the selected DBMS.
-- In `config/config.php` set the data for accessing the database, storage and hashing settings.
+First of all, you need to clone the repository  
 
+    $ git clone https://github.com/IlyaMur/my_posts_app.git  
+    $ cd ,my_posts_app
+
+And prepare `.env` file  
+
+    $ make env-prepare
+
+### Docker build
+
+Optionally, change the connection parameters in the `.env` file.
+
+```dotenv
+MYSQL_USER='user'
+MYSQL_HOST='mariadb'
+APACHE_DEFAULT_PORT='80'
+MYSQL_PASSWORD='testpassword'
+```
+
+Build and run the application
+
+    $ make docker-start # build the project and upload the db dump to it  
+    $ make docker-stop  # stop and remove containers  
+    $ make docker-bash  # bash session in docker container
+    $ make docker-test  # run tests in docker container
+
+By default the app will be available at `http://localhost`
+
+### Local installation
+
+`PHP >= 8.0`
+
+To install dependencies:  
+
+    $ make install
+
+Configure your web server to have the `public/` folder as the web root.
+
+Import SQL from the `database/myposts.sql` file into the selected DBMS 
+
+Pretty URLs are enabled using web server rewrite rules. An [.htaccess](public/.htaccess) file is included in the `public` folder.
 
 ### Used Libraries
 
 Despite the fact that in the process of writing the application the goal was to create functionality from scratch, there are some dependencies in the MyPosts app:
-- Twig Template Engine.
-- SDK Mailjet.
-- SDK AWS.
-- Gregwar/Captcha.
+
+- Twig Template Engine
+- SDK Mailjet
+- SDK AWS
+- Gregwar/Captcha
+- vlucas/phpdotenv
 
 ## How It Works
 

@@ -6,12 +6,12 @@ lint:
 
 test:
 	composer exec --verbose phpunit -- --testsuite gh-actions
-	
+
 docker-start: 
 	docker-compose up -d && make docker-install
 
 docker-stop: 
-	docker-compose down
+	docker-compose down 
 
 docker-install:
 	docker exec -it php-apache composer install
