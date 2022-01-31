@@ -119,7 +119,7 @@ The corresponding constants are available to override these settings in the conf
 
 ### Authentication and authorization system
 
-MyTasks implements a user registration and authorization systems from scratch.
+MyTasks implements user registration and authorization systems from scratch.
 
 The authentication form is validated both on the server side and on the client side.  
 After registration, an email with an activation link is sent to the user's email address.  
